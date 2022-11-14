@@ -1,0 +1,98 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["react-app", "airbnb", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "arrowFunctions": true,
+      "destructuring": true,
+      "forOf": true,
+      "impliedStrict": true,
+      "jsx": true,
+      "modules": true,
+      "spread": true,
+      "templateStrings": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "prettier/prettier": ["off"],
+    "quotes": [
+      "error",
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "react/jsx-key": ["warn", {}],
+    "react/jsx-max-depth": [
+      "off",
+      {
+        "max": 1
+      }
+    ],
+    "react/jsx-no-bind": [
+      "error",
+      {
+        "allowArrowFunctions": true,
+        "allowBind": false,
+        "allowFunctions": false,
+        "ignoreRefs": true,
+        "ignoreDOMComponents": true
+      }
+    ],
+    "react/jsx-no-literals": [
+      "off",
+      {
+        "noStrings": true,
+        "allowedStrings": [],
+        "ignoreProps": false,
+        "noAttributeStrings": false
+      }
+    ],
+    "react/no-adjacent-inline-elements": ["error"],
+    "react/no-direct-mutation-state": ["error"],
+    "react/prefer-read-only-props": ["error"],
+    "react/jsx-handler-names": ["error"],
+    "react/react-in-jsx-scope": ["off"],
+    "function-call-argument-newline": ["off", "consistent"],
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "react/prop-types": [
+      "error",
+      {
+        "ignore": [],
+        "customValidators": [],
+        "skipUndeclared": false
+      }
+    ],
+    "no-shadow": [
+      "off",
+      {
+        "builtinGlobals": false,
+        "hoist": "functions",
+        "allow": null
+      }
+    ],
+    "react/forbid-prop-types": [
+      "error",
+      {
+        "checkChildContextTypes": true,
+        "checkContextTypes": true,
+        "forbid": ["array", "object"]
+      }
+    ],
+    "default-param-last": ["off"],
+    "strict": ["error", "global"]
+  }
+}
