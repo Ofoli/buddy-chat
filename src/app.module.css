@@ -1,0 +1,14 @@
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgb(227, 226, 226);
+  width: 100vw;
+  height: 100vh;
+}
+
+.app_paper {
+  width: 90%;
+  height: 96%;
+}

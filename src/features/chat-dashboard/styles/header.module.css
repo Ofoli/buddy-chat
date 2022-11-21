@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 70px;
+  padding: 40px;
+  border-bottom: 1px solid rgb(214, 213, 213);
+}
+
+.name {
+  margin: 0;
+}
