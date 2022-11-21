@@ -7,8 +7,14 @@
 }
 
 .side_space {
-  width: 400px;
+  width: 25%;
   min-width: 300px;
   height: inherit;
-  border-right: 1px solid black;
+  border-right: 1px solid lightgray;
+}
+
+.chat_space {
+  width: 75%;
+  min-width: 250px;
+  height: inherit;
 }

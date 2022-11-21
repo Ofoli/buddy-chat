@@ -1,6 +1,6 @@
 import { Paper } from "@mui/material";
 import classes from "./app.module.css";
-import Dashboard from "./features/chat-dashboard/containers/Dashboard";
+import Dashboard from "./features/chat-dashboard/containers/layout/Dashboard";
 
 function App() {
   return (

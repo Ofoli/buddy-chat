@@ -1,5 +1,5 @@
 import { Avatar, Grid } from "@mui/material";
-import classes from "../styles/recent-chat.module.css";
+import classes from "../../styles/recent-chat.module.css";
 
 type Data = {
   id: string;

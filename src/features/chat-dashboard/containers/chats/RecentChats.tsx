@@ -1,4 +1,4 @@
-import RecentChat from "../components/RecentChat";
+import RecentChat from "../../components/ui/RecentChat";
 
 const styles = {
   height: "800px",

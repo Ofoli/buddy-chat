@@ -1,6 +1,6 @@
 import { Grid, Avatar } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import classes from "../styles/header.module.css";
+import classes from "../../styles/header.module.css";
 
 export default function Header() {
   return (

@@ -1,8 +1,8 @@
 import { Grid } from "@mui/material";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import classes from "../styles/side-space.module.css";
-import SearchRecentChats from "../components/SearchRecentChats";
-import RecentChats from "./RecentChats";
+import classes from "../../styles/side-space.module.css";
+import SearchRecentChats from "../../components/form/SearchRecentChats";
+import RecentChats from "../chats/RecentChats";
 
 export default function SideSpace() {
   return (

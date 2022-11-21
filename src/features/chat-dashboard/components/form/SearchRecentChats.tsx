@@ -1,4 +1,4 @@
-import classes from "../styles/search-recent-chats.module.css";
+import classes from "../../styles/search-recent-chats.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 export default function SearchRecentChats() {
   return (
