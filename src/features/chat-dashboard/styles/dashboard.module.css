@@ -1,0 +1,14 @@
+.spaces {
+  width: 100%;
+  height: 890px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.side_space {
+  width: 400px;
+  min-width: 300px;
+  height: inherit;
+  border-right: 1px solid black;
+}

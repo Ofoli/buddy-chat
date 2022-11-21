@@ -1,0 +1,28 @@
+.container {
+  height: 80px;
+  padding: 0 30px;
+}
+.container:hover {
+  background: whitesmoke;
+}
+.text_group {
+  margin-left: 15px;
+  width: 250px;
+  text-align: left;
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.text_group p {
+  margin: 0;
+  padding: 0;
+}
+
+.text_name {
+  font-weight: bold;
+  font-size: 17px;
+}
+.text_message {
+  color: gray;
+}
