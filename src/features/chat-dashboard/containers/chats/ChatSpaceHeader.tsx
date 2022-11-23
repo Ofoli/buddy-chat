@@ -10,8 +10,7 @@ const styles: Styles = {
   main: {
     paddingLeft: "15px",
     paddingRight: "40px",
-    background: "green",
-    height: "8%",
+    height: "80px",
   },
   name: {
     padding: 0,

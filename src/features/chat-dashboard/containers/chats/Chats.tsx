@@ -1,3 +1,10 @@
+import Chat from "../../components/ui/Chat";
+import classes from "../../styles/chats-and-chat.module.css";
 export default function Chats() {
-  return <div style={{ height: "84%" }}>Chats</div>;
+  return (
+    <div className={classes.chats}>
+      <Chat type="sender" />
+      <Chat type="receiver" />
+    </div>
+  );
 }
