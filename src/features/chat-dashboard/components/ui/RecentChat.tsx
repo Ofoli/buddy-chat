@@ -20,9 +20,15 @@ export default function RecentChat(props: RecentChatProps) {
         </Grid>
         <Grid item>
           <div className={classes.text_group}>
-            <div>
-              <p className={classes.text_name}>{data.name}</p>
-              <p className={classes.text_message}>{data.message}</p>
+            <div style={{ width: "100%" }}>
+              <div className={classes.text_group_child}>
+                <p className={classes.text_name}>{data.name}</p>
+                <p className={classes.text_time}>11:22</p>
+              </div>
+              <div className={classes.text_group_child}>
+                <p className={classes.text_message}>{data.message}</p>
+                <p className={classes.unread_chat_count}>3</p>
+              </div>
             </div>
           </div>
         </Grid>

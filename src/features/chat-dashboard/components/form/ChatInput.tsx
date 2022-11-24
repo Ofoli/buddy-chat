@@ -1,4 +1,3 @@
-import { Grid } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import classes from "../../styles/chat-input.module.css";

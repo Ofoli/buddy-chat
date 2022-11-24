@@ -7,7 +7,7 @@
 }
 .text_group {
   margin-left: 15px;
-  width: 250px;
+  width: 265px;
   text-align: left;
   height: 80px;
   display: flex;
@@ -19,10 +19,30 @@
   padding: 0;
 }
 
+.text_group_child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .text_name {
   font-weight: bold;
   font-size: 17px;
 }
 .text_message {
   color: gray;
+}
+
+.text_time {
+  font-size: 12px;
+}
+.unread_chat_count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: black;
+  color: white;
 }
