@@ -44,5 +44,5 @@
 }
 .input[contenteditable]:empty::before {
   content: "Write a message...";
-  color: gray;
+  color: white;
 }

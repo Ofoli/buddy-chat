@@ -32,6 +32,7 @@ export default function Chat(props: ChatProps) {
           kjbwkvEKJVwlkn;sveJWbev;kjbwkvEKJVwlkn
           sveJWbev;kjbwkvEKJVwlkn;sveJWbev;kjbwkvEKJVw
         </div>
+        <p className={classes.chat_time}>11:22</p>
       </div>
     </div>
   );

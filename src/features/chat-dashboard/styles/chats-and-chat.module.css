@@ -41,6 +41,14 @@
   text-align: left;
   min-height: 30px;
 }
+
+.chat_time {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 11px;
+}
 .sender_chat_container::before {
   content: "";
   width: 0px;

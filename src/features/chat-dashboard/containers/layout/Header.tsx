@@ -6,7 +6,9 @@ export default function Header() {
   return (
     <div className={classes.header}>
       <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item>Buddy-Chat</Grid>
+        <Grid item>
+          <h2>Buddy-Chat</h2>
+        </Grid>
         <Grid item>
           <Grid container alignItems="center" justifyContent="center" gap={2}>
             <Avatar src="" alt="PK" />
