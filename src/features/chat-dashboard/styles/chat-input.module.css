@@ -1,4 +1,48 @@
 .main {
   height: 70px;
-  background: red;
+  background: whitesmoke;
+}
+
+.grid_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.icon_container {
+  width: 40px;
+}
+.icon {
+  width: 30px;
+  height: 30px;
+}
+
+.input_container {
+  width: calc(100% - 100px);
+  height: 45px;
+}
+
+.input {
+  min-height: 45px;
+  max-height: 50px;
+  width: 100%;
+  background: black;
+  color: white;
+  border-radius: 5px;
+  text-align: left;
+  padding: 10px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.input:focus {
+  outline: none;
+}
+.input[contenteditable]:empty::before {
+  content: "Write a message...";
+  color: gray;
 }
