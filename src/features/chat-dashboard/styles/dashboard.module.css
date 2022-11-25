@@ -17,4 +17,20 @@
   width: calc(100% - 400px);
   min-width: 250px;
   height: inherit;
+  display: flex;
+}
+.chat_panel_default {
+  width: 100%;
+  height: inherit;
+}
+.chat_panel {
+  width: 50%;
+  height: inherit;
+}
+.result_panel_default {
+  display: none;
+}
+.result_panel {
+  height: inherit;
+  border-left: 1px solid lightgray;
 }
