@@ -1,5 +1,6 @@
 import Header from "./Header";
 import classes from "../../styles/dashboard.module.css";
+import DashboardProvider from "../../context/DashboardProvide";
 import SideSpace from "./SideSpace";
 import ChatSpace from "./ChatSpace";
 
@@ -19,18 +20,20 @@ const currentClasses = resultSpaceActive ? classStrs.shared : classStrs.default;
 export default function Dashboard() {
   return (
     <div style={{ height: "100%" }}>
-      <Header />
-      <div className={classes.spaces}>
-        <div className={classes.side_space}>
-          <SideSpace />
-        </div>
-        <div className={classes.chat_space}>
-          <div className={currentClasses.chatPanel}>
-            <ChatSpace />
+      <DashboardProvider>
+        <Header />
+        <div className={classes.spaces}>
+          <div className={classes.side_space}>
+            <SideSpace />
           </div>
-          <div className={currentClasses.resultPanel}>a</div>
+          <div className={classes.chat_space}>
+            <div className={currentClasses.chatPanel}>
+              <ChatSpace />
+            </div>
+            <div className={currentClasses.resultPanel}>a</div>
+          </div>
         </div>
-      </div>
+      </DashboardProvider>
     </div>
   );
 }

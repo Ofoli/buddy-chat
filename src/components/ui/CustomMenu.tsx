@@ -2,12 +2,12 @@ import Menu from "@mui/material/Menu";
 
 interface MenuProp {
   anchorEl: HTMLElement | null;
-  open: boolean;
   onClose: () => void;
-  children: JSX.Element;
+  children: ChildrenType;
 }
 export default function CustomMenu(props: MenuProp) {
-  const { anchorEl, open, onClose, children } = props;
+  const { anchorEl, onClose, children } = props;
+  const open = Boolean(anchorEl);
 
   return (
     <div>

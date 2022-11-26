@@ -6,7 +6,6 @@ import { CustomMenu } from "../../index/imports";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const openMenu = Boolean(anchorEl);
   const handleCloseMenu = () => setAnchorEl(null);
   const handleOpenMenu = (event: React.BaseSyntheticEvent) => {
     setAnchorEl(event.currentTarget);
@@ -26,7 +25,7 @@ export default function Header() {
           </Grid>
         </Grid>
       </Grid>
-      <CustomMenu anchorEl={anchorEl} open={openMenu} onClose={handleCloseMenu}>
+      <CustomMenu anchorEl={anchorEl} onClose={handleCloseMenu}>
         <div style={{ width: "120px" }}>
           <MenuItem>Profile</MenuItem>
           <MenuItem>Settings</MenuItem>

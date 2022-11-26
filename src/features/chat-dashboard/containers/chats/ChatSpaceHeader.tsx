@@ -1,10 +1,12 @@
-import { Grid, Avatar } from "@mui/material";
+import { useState } from "react";
+import { Grid, Avatar, MenuItem } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
+import { CustomMenu } from "../../index/imports";
 interface Styles {
   main: React.CSSProperties;
   name: React.CSSProperties;
+  menuItem: React.CSSProperties;
 }
 const styles: Styles = {
   main: {
@@ -18,9 +20,19 @@ const styles: Styles = {
     fontWeight: "bold",
     fontSize: "17px",
   },
+  menuItem: {
+    fontSize: "14px",
+    margin: "auto 10px",
+  },
 };
 
 export default function ChatSpaceHeader() {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const handleCloseMenu = () => setAnchorEl(null);
+  const handleOpenMenu = (event: React.BaseSyntheticEvent) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   return (
     <div style={styles.main}>
       <Grid
@@ -41,9 +53,14 @@ export default function ChatSpaceHeader() {
         </Grid>
         <Grid item>
           <SearchIcon />
-          <MoreVertIcon />
+          <MoreVertIcon onClick={handleOpenMenu} />
         </Grid>
       </Grid>
+      <CustomMenu anchorEl={anchorEl} onClose={handleCloseMenu}>
+        <MenuItem style={styles.menuItem}>Contact Info</MenuItem>
+        <MenuItem style={styles.menuItem}>Clear chats</MenuItem>
+        <MenuItem style={styles.menuItem}>Delete chat</MenuItem>
+      </CustomMenu>
     </div>
   );
 }
