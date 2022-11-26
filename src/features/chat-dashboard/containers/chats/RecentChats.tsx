@@ -78,7 +78,7 @@ export default function RecentChats() {
   return (
     <div style={styles}>
       {recentChats.map((recentChat) => (
-        <RecentChat key={recentChat.id} data={recentChat} />
+        <RecentChat key={recentChat.id} chat={recentChat} />
       ))}
     </div>
   );
