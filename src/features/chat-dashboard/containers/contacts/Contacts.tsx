@@ -20,7 +20,7 @@ export default function Contacts() {
         </div>
         <p>Add New Contact</p>
       </Grid>
-      <p className={classes.title}>Contact List</p>
+      <p className={classes.title}>My Contacts</p>
       {contacts.map((idx) => (
         <Contact
           key={idx}
