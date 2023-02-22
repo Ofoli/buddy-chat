@@ -2,10 +2,16 @@ import { Grid } from "@mui/material";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import Contact from "../../components/ui/Contact";
 import classes from "../../styles/contacts.module.css";
+import { CustomModal } from "../../index/imports";
+import useContactsLogicHook from "../../logic-hooks/contacts";
 
 const contacts = [1, 2, 3];
 
 export default function Contacts() {
+  const { modals, handlers } = useContactsLogicHook();
+  const { isAddContactFormOpen } = modals;
+  const { openAddContactForm, closeAddContactForm } = handlers;
+
   return (
     <div>
       <Grid
@@ -14,6 +20,7 @@ export default function Contacts() {
         alignItems="center"
         justifyContent="flex-start"
         gap={3}
+        onClick={openAddContactForm}
       >
         <div className={classes.icon_container}>
           <PersonAddAlt1Icon sx={{ width: 35, height: 35, color: "white" }} />
@@ -29,6 +36,9 @@ export default function Contacts() {
           picUrl=""
         />
       ))}
+      <CustomModal open={isAddContactFormOpen} onCancel={closeAddContactForm}>
+        <p>coming...</p>
+      </CustomModal>
     </div>
   );
 }

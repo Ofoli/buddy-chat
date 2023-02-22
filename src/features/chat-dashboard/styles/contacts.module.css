@@ -1,8 +1,12 @@
 .add_container {
-  margin: 30px;
+  padding: 10px 30px;
+  cursor: pointer;
 }
 .add_container p {
   font-size: 17px;
+}
+.add_container:hover {
+  background: var(--clr-primary-100);
 }
 .title {
   font-size: 17px;
