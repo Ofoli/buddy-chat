@@ -1,0 +1,14 @@
+.antd_form_item {
+  /* display: block !important; */
+  width: 90%;
+  margin: 15px 5%;
+}
+.antd_form_input_text {
+  height: 50px;
+  border-radius: 5px;
+}
+.antd_form_input_number {
+  width: 100% !important;
+  height: 50px !important;
+  border-radius: 5px !important;
+}

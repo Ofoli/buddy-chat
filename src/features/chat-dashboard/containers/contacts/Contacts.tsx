@@ -3,6 +3,7 @@ import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import Contact from "../../components/ui/Contact";
 import classes from "../../styles/contacts.module.css";
 import { CustomModal } from "../../index/imports";
+import AddContact from "./add-contact";
 import useContactsLogicHook from "../../logic-hooks/contacts";
 
 const contacts = [1, 2, 3];
@@ -36,8 +37,12 @@ export default function Contacts() {
           picUrl=""
         />
       ))}
-      <CustomModal open={isAddContactFormOpen} onCancel={closeAddContactForm}>
-        <p>coming...</p>
+      <CustomModal
+        title="Create New Contact"
+        open={isAddContactFormOpen}
+        onCancel={closeAddContactForm}
+      >
+        <AddContact />
       </CustomModal>
     </div>
   );
