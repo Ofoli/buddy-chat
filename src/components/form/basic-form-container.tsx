@@ -1,10 +1,8 @@
 import { Form } from "antd";
-import { Grid } from "@mui/material";
 import BaseButton from "./button";
-
 interface FormContainerProps {
   children: ChildrenType;
-  onSubmit: () => void;
+  onSubmit: (vals: ObjectOfStringAndNumbers) => void;
 }
 
 export default function BasicFormContainer({
@@ -14,11 +12,9 @@ export default function BasicFormContainer({
   const [form] = Form.useForm();
 
   return (
-    <div>
-      <Form layout="vertical" onFinish={onSubmit} form={form}>
-        {children}
-        <BaseButton label="Create Contact" onClick={form.submit} />
-      </Form>
-    </div>
+    <Form layout="vertical" onFinish={onSubmit} form={form}>
+      {children}
+      <BaseButton label="Create Contact" onClick={form.submit} />
+    </Form>
   );
 }
