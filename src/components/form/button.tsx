@@ -5,6 +5,8 @@ const styles = {
   height: "50px",
   borderRadius: "5px",
   margin: "10px 5%",
+  background: "black",
+  border: "none",
 };
 
 interface ButtonProps {
