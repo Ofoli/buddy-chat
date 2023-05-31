@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 // import {  applyMiddleware, compose } from "redux";
 // import createSagaMiddleware from "redux-saga";
-import rootReducer from "./reducers/rootReducer";
+import rootReducer from "./reducers/root-reducer";
 // import rootSaga from "../sagas/rootSaga";
 
 //functions to persist state in local storage

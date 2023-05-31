@@ -1,0 +1,13 @@
+.login__container {
+  width: 100%;
+  height: 100%;
+}
+
+.side_info__container {
+  height: 100%;
+  background: var(--clr-primary-100);
+}
+
+.login__form_container {
+  height: 100%;
+}
