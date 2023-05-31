@@ -8,6 +8,16 @@
   background: var(--clr-primary-100);
 }
 
+.side_info__body {
+  height: 80%;
+}
+.side_info__message {
+  width: 60%;
+}
+.side_info__btn_container {
+  width: 70%;
+}
+
 .login__form_container {
   height: 100%;
 }

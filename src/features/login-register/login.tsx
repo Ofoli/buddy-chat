@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import classes from "./login-register.module.css";
+import classes from "./styles/login-register.module.css";
 import { BaseButton, AppLogo } from "./index/imports";
 
 export default function Login() {
@@ -12,11 +12,23 @@ export default function Login() {
     >
       <Grid item md={5} className={classes.side_info__container}>
         <AppLogo />
-        <h2>Hello, Friend</h2>
-        <p>Enter your personal details and let us shoot with other Friends</p>
-        <div>
-          <BaseButton label="Register" onClick={() => console.log()} />
-        </div>
+        <Grid
+          className={classes.side_info__body}
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          gap={2}
+        >
+          <h1>Hello, Friend</h1>
+          <p className={classes.side_info__message}>
+            Enter your personal details and let us shoot with other Friends.
+            Stay connect at all times
+          </p>
+          <div className={classes.side_info__btn_container}>
+            <BaseButton label="Register" onClick={() => console.log("click")} />
+          </div>
+        </Grid>
       </Grid>
       <Grid item md={7} className={classes.login__form_container}>
         form
