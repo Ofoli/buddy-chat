@@ -10,4 +10,9 @@
 
 .icon {
   color: darkgrey;
+  cursor: pointer;
+}
+
+.back {
+  cursor: pointer;
 }

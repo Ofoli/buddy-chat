@@ -10,7 +10,7 @@
   width: 400px;
   min-width: 300px;
   height: inherit;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid var(--clr-primary-300);
 }
 
 .chat_space {
@@ -32,5 +32,5 @@
 }
 .result_panel {
   height: inherit;
-  border-left: 1px solid lightgray;
+  border-left: 1px solid var(--clr-primary-300);
 }

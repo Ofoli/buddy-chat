@@ -1,0 +1,27 @@
+.app_logo {
+  width: 170px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+}
+
+.app_logo__icon_container {
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.app_logo__icon {
+  width: 30px;
+  height: 30px;
+}
+
+.app_logo__name {
+  margin: 0;
+  font-weight: bold;
+  font-size: 18px;
+}
