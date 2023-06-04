@@ -18,7 +18,7 @@ interface SelectInputProps extends BaseInputProps {
 const TextRules: Rule[] = [{ required: true, message: "Please input a name!" }];
 const EmailRules: Rule[] = [
   { type: "email", message: "Please enter a valid email address" },
-  { required: true, message: "Please input an email!" },
+  { required: true, message: "Email field cannot be empty!" },
 ];
 const NumberRules: Rule[] = [
   { required: true, message: "Number cannot be empty" },
@@ -27,6 +27,9 @@ const NumberRules: Rule[] = [
     message: "Please enter a valid phone number",
   },
   { validator: validateNumber },
+];
+const PasswordRules: Rule[] = [
+  { required: true, message: "Password field cannot be empty!" },
 ];
 
 function Text({ name, label, type }: TextInputProps) {
@@ -51,7 +54,11 @@ function DisabledFormItem(props: BaseInputProps) {
 }
 function PasswordInput(props: BaseInputProps) {
   return (
-    <Form.Item className={classes.antd_form_item} {...props}>
+    <Form.Item
+      className={classes.antd_form_item}
+      {...props}
+      rules={PasswordRules}
+    >
       <Input.Password className={classes.antd_form_input_text} />
     </Form.Item>
   );

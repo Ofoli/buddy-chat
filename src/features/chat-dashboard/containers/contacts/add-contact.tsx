@@ -5,7 +5,7 @@ function AddContact() {
     console.log({ values });
   };
   return (
-    <BasicFormContainer onSubmit={onSubmit}>
+    <BasicFormContainer onSubmit={onSubmit} btnLabel="Create Contact">
       <Text name="fullname" label="Full Name" type="text" />
       <Text name="email" label="Email" type="email" />
       <NumberInput name="phone" label="Phone Number" />
