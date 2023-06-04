@@ -3,21 +3,15 @@ import { Paper, Grid } from "@mui/material";
 import { BaseButton, AppLogo } from "../index/imports";
 import LoginForm from "./login-form";
 import RegisterForm from "./register-form";
+import useLoginRegisterLogic from "../logic-hooks/login-register";
 
-const paperStyles = {
-  width: "70%",
-  height: "calc(100% - 200px)",
-};
-
-interface LoginRegisterBaseProps {
-  name: string;
-  children: ChildrenType;
-}
 export default function LoginRegisterBase() {
-  const toggleComponent = () => console.log("toggle");
+  const { state, handlers } = useLoginRegisterLogic();
+  const { toggleButtonLabel, isLoginComponent, isRegisterComponent } = state;
+  const { toggleComponent, handleLoginSubmit, handleRegisterSubmit } = handlers;
 
   return (
-    <Paper elevation={0} style={paperStyles}>
+    <Paper elevation={0} className={classes.main}>
       <Grid
         container
         alignItems="center"
@@ -42,7 +36,7 @@ export default function LoginRegisterBase() {
             <div className={classes.side_info__btn_container}>
               <BaseButton
                 type="secondary"
-                label="register"
+                label={toggleButtonLabel}
                 onClick={toggleComponent}
               />
             </div>
@@ -50,8 +44,10 @@ export default function LoginRegisterBase() {
         </Grid>
         <Grid item md={7}>
           <div className={classes.form__container}>
-            {/* <LoginForm /> */}
-            <RegisterForm />
+            {isLoginComponent && <LoginForm onSubmit={handleLoginSubmit} />}
+            {isRegisterComponent && (
+              <RegisterForm onSubmit={handleRegisterSubmit} />
+            )}
           </div>
         </Grid>
       </Grid>

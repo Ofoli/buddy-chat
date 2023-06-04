@@ -59,7 +59,10 @@ function PasswordInput(props: BaseInputProps) {
       {...props}
       rules={PasswordRules}
     >
-      <Input.Password className={classes.antd_form_input_text} />
+      <Input.Password
+        className={classes.antd_form_input_text}
+        autoComplete=""
+      />
     </Form.Item>
   );
 }
