@@ -1,11 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import {  applyMiddleware, compose } from "redux";
-// import createSagaMiddleware from "redux-saga";
-import rootReducer from "./reducers/root-reducer";
-// import rootSaga from "../sagas/rootSaga";
+import createSagaMiddleware from "redux-saga";
+import rootReducer from "./root-reducer";
+import rootSaga from "../sagas/root";
 
 //functions to persist state in local storage
-const saveStateToLocalStorage = (state: any) => {
+const saveStateToLocalStorage = (state: ReturnType<typeof store.getState>) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem("partner-admin-panel", serializedState);
@@ -26,21 +25,9 @@ const loadStateFromLocalStorage = () => {
     return undefined;
   }
 };
+
 const persistState = loadStateFromLocalStorage();
-
-// const composeEnhancers =
-//   (process.env.NODE_ENV !== "production" &&
-//     typeof window !== "undefined" &&
-//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-//   compose;
-// localStorage.clear();
-// const sagaMiddleware = createSagaMiddleware();
-// const store = createStore(
-//   rootReducer,
-//   persistState,
-//   composeEnhancers(applyMiddleware(sagaMiddleware))
-// );
-
+const sagaMiddleware = createSagaMiddleware();
 const showDevTools =
   process.env.NODE_ENV !== "production" && typeof window !== "undefined";
 
@@ -48,9 +35,10 @@ const store = configureStore({
   reducer: rootReducer,
   devTools: showDevTools,
   preloadedState: persistState,
+  middleware: [sagaMiddleware],
 });
 
-// sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga);
 
 store.subscribe(() => saveStateToLocalStorage(store.getState()));
 
