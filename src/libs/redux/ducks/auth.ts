@@ -2,6 +2,8 @@ import type { AuthState, User, LoginPayload } from "../types/auth";
 
 export const LOGIN_REQUESTED = "LOGIN_REQUESTED";
 export const LOGIN_SUCCESSFUL = "LOGIN_SUCCESSFUL";
+export const REGISTER_REQUESTED = "REGISTER_REQUESTED";
+export const REGISTER_SUCCESSFUL = "REGISTER_SUCCESSFUL";
 export const LOGOUT = "LOGOUT";
 
 export const logout = () => ({ type: LOGOUT });
