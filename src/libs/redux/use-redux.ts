@@ -3,7 +3,7 @@ import type { StoreType } from "./store";
 
 const SLICES = {
   authSlice: "authSlice",
-  //   uiSlice: "uiSlice",
+  uiSlice: "uiSlice",
 } as const;
 
 const useReduxHooks = () => {

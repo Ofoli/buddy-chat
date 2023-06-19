@@ -9,9 +9,16 @@ type AuthState = {
   user: User | null;
   loggedIn: boolean;
 };
-type LoginPayload = {
+
+type LoginData = {
   email: string;
   password: string;
 };
 
-export type { AuthState, User, LoginPayload };
+type RegisterData = {
+  fullname: string;
+  email: string;
+  password: string;
+};
+
+export type { AuthState, User, LoginData, RegisterData };
