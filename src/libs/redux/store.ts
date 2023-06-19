@@ -4,7 +4,7 @@ import rootReducer from "./root-reducer";
 import rootSaga from "../sagas/root";
 
 //functions to persist state in local storage
-const saveStateToLocalStorage = (state: ReturnType<typeof store.getState>) => {
+const saveStateToLocalStorage = (state: StoreType) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem("partner-admin-panel", serializedState);
@@ -38,8 +38,9 @@ const store = configureStore({
   middleware: [sagaMiddleware],
 });
 
-sagaMiddleware.run(rootSaga);
+export type StoreType = ReturnType<typeof store.getState>;
 
+sagaMiddleware.run(rootSaga);
 store.subscribe(() => saveStateToLocalStorage(store.getState()));
 
 export default store;
