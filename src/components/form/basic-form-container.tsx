@@ -1,16 +1,16 @@
 import { Form } from "antd";
 import BaseButton from "./button";
-interface FormContainerProps {
+interface FormContainerProps<T> {
   btnLabel: string;
   children: ChildrenType;
-  onSubmit: (vals: ObjectOfStringAndNumbers) => void;
+  onSubmit: (vals: T) => void;
 }
 
-export default function BasicFormContainer({
+export default function BasicFormContainer<T>({
   btnLabel,
   children,
   onSubmit,
-}: FormContainerProps) {
+}: FormContainerProps<T>) {
   const [form] = Form.useForm();
 
   return (

@@ -1,11 +1,15 @@
 import { BasicFormContainer, Text, NumberInput } from "../../index/imports";
+import type { ContactData } from "../../../../types/form-data";
 
 function AddContact() {
-  const onSubmit = (values: ObjectOfStringAndNumbers) => {
+  const onSubmit = (values: ContactData) => {
     console.log({ values });
   };
   return (
-    <BasicFormContainer onSubmit={onSubmit} btnLabel="Create Contact">
+    <BasicFormContainer<ContactData>
+      onSubmit={onSubmit}
+      btnLabel="Create Contact"
+    >
       <Text name="fullname" label="Full Name" type="text" />
       <Text name="email" label="Email" type="email" />
       <NumberInput name="phone" label="Phone Number" />

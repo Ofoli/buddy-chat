@@ -1,0 +1,42 @@
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { serverTimestamp, setDoc, getDoc } from "firebase/firestore";
+import { auth } from "../index/config";
+import { createDocRef, USER_COLLECTION } from "../index/db";
+import type { LoginData, RegisterData } from "../../../types/form-data";
+
+export async function registerUserApiRequest(data: RegisterData) {
+  const { fullname, email, password } = data;
+  const { user } = await createUserWithEmailAndPassword(auth, email, password);
+  const { uid: id, photoURL } = user;
+
+  const setUserDocRef = createDocRef(USER_COLLECTION, user.uid);
+  await setDoc(setUserDocRef, {
+    fullname,
+    email,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+
+  return { email, fullname, id, photoUrl: photoURL ?? "" };
+}
+export async function loginUserApiRequest(data: LoginData) {
+  const { email, password } = data;
+  const { user } = await signInWithEmailAndPassword(auth, email, password);
+  const { uid: id, photoURL } = user;
+
+  const userRef = createDocRef(USER_COLLECTION, id);
+  const { data: getUser } = await getDoc(userRef);
+  const userInfo = getUser();
+
+  if (!userInfo) throw new Error("Could Not Fetch User Info");
+
+  return { id, email, fullname: userInfo.fullname, photoUrl: photoURL ?? "" };
+}
+
+export async function logoutUserApiRequest() {
+  await signOut(auth);
+}
