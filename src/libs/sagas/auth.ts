@@ -1,8 +1,24 @@
 import { takeLatest, all } from "redux-saga/effects";
 import { combineWatchers } from "./root";
+import {
+  startAction,
+  stopAction,
+  addRequestError,
+  removeRequestError,
+  addRequestSuccessMessage,
+  removeRequestSuccessMessage,
+} from "../redux/ducks/ui";
+import {
+  LOGIN_REQUESTED,
+  REGISTER_REQUESTED,
+  loginRequested,
+  loginSuccessful,
+  registerRequested,
+  registerSuccessful,
+} from "../redux/ducks/auth";
 
 //handle user login
-function* loginUser() {
+function* loginUser({ payload }: ReturnType<typeof loginRequested>) {
   //   const { receiveLoginSuccess } = authfxns;
   //   try {
   //     yield put(startAction(LOGIN_PARTNER.EMAIL_PASSWORD_REQUESTED));
@@ -22,18 +38,25 @@ function* loginUser() {
   //     yield put(stopAction(LOGIN_PARTNER.EMAIL_PASSWORD_REQUESTED));
   //   }
 
-  yield console.log("tru");
+  yield console.log("logging in with data....", payload);
+}
+
+function* registerUser({ payload }: ReturnType<typeof registerRequested>) {
+  yield console.log("registering with data....", payload);
 }
 
 //====================
 //---WATCHERS---------
 //====================
-function* watchUserLoginRequest() {
-  yield takeLatest("LOGIN_PARTNER", loginUser);
+function* watchLoginRequest() {
+  yield takeLatest(LOGIN_REQUESTED, loginUser);
+}
+function* watchRegiserRequest() {
+  yield takeLatest(REGISTER_REQUESTED, registerUser);
 }
 
 function* authSaga() {
-  const sagas = combineWatchers([watchUserLoginRequest]);
+  const sagas = combineWatchers([watchLoginRequest, watchRegiserRequest]);
   yield all(sagas);
 }
 
