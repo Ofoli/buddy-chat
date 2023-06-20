@@ -2,7 +2,7 @@ interface User {
   id: string;
   email: string;
   fullname: string;
-  profileSrc: string;
+  photoUrl: string;
 }
 
 type AuthState = {

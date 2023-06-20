@@ -1,48 +1,68 @@
-import { takeLatest, all } from "redux-saga/effects";
+import { takeLatest, all, put } from "redux-saga/effects";
 import { combineWatchers } from "./root";
-import {
-  startAction,
-  stopAction,
-  addRequestError,
-  removeRequestError,
-  addRequestSuccessMessage,
-  removeRequestSuccessMessage,
-} from "../redux/ducks/ui";
+import { startAction, stopAction, addRequestError } from "../redux/ducks/ui";
 import {
   LOGIN_REQUESTED,
+  LOGOUT_REQUESTED,
   REGISTER_REQUESTED,
+  logoutSuccessful,
   loginRequested,
   loginSuccessful,
   registerRequested,
   registerSuccessful,
 } from "../redux/ducks/auth";
+import {
+  registerUserApiRequest,
+  loginUserApiRequest,
+  logoutUserApiRequest,
+} from "../firebase/services/user";
+import type { User } from "../redux/types/auth";
+import type { FirebaseError } from "firebase/app";
 
 //handle user login
 function* loginUser({ payload }: ReturnType<typeof loginRequested>) {
-  //   const { receiveLoginSuccess } = authfxns;
-  //   try {
-  //     yield put(startAction(LOGIN_PARTNER.EMAIL_PASSWORD_REQUESTED));
-  //     const {
-  //       data: { authToken, data },
-  //     } = yield loginUserAPIrequest("/login", payload);
-  //     const { id, email } = data;
-  //     yield put(receiveLoginSuccess({ authToken, id, email, loggedIn: true }));
-  //   } catch (err) {
-  //     yield put(
-  //       addRequestError({
-  //         request: LOGIN_PARTNER.EMAIL_PASSWORD_REQUESTED,
-  //         error: err.response.data,
-  //       })
-  //     );
-  //   } finally {
-  //     yield put(stopAction(LOGIN_PARTNER.EMAIL_PASSWORD_REQUESTED));
-  //   }
-
-  yield console.log("logging in with data....", payload);
+  try {
+    yield put(startAction(LOGIN_REQUESTED));
+    const user: User = yield loginUserApiRequest(payload);
+    yield put(loginSuccessful(user));
+  } catch (err) {
+    const { message } = err as FirebaseError;
+    yield put(
+      addRequestError({
+        action: LOGIN_REQUESTED,
+        message,
+      })
+    );
+  } finally {
+    yield put(stopAction(LOGIN_REQUESTED));
+  }
 }
 
 function* registerUser({ payload }: ReturnType<typeof registerRequested>) {
-  yield console.log("registering with data....", payload);
+  try {
+    yield put(startAction(REGISTER_REQUESTED));
+    const user: User = yield registerUserApiRequest(payload);
+    yield put(registerSuccessful(user));
+  } catch (err) {
+    const { message } = err as FirebaseError;
+    yield put(
+      addRequestError({
+        action: REGISTER_REQUESTED,
+        message,
+      })
+    );
+  } finally {
+    yield put(stopAction(REGISTER_REQUESTED));
+  }
+}
+
+function* logoutUser() {
+  try {
+    yield logoutUserApiRequest();
+    yield put(logoutSuccessful());
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 //====================
@@ -55,8 +75,16 @@ function* watchRegiserRequest() {
   yield takeLatest(REGISTER_REQUESTED, registerUser);
 }
 
+function* watchLogoutRequest() {
+  yield takeLatest(LOGOUT_REQUESTED, logoutUser);
+}
+
 function* authSaga() {
-  const sagas = combineWatchers([watchLoginRequest, watchRegiserRequest]);
+  const sagas = combineWatchers([
+    watchLoginRequest,
+    watchRegiserRequest,
+    watchLogoutRequest,
+  ]);
   yield all(sagas);
 }
 

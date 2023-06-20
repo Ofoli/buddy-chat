@@ -4,9 +4,11 @@ export const LOGIN_REQUESTED = "LOGIN_REQUESTED";
 export const LOGIN_SUCCESSFUL = "LOGIN_SUCCESSFUL";
 export const REGISTER_REQUESTED = "REGISTER_REQUESTED";
 export const REGISTER_SUCCESSFUL = "REGISTER_SUCCESSFUL";
-export const LOGOUT = "LOGOUT";
+export const LOGOUT_REQUESTED = "LOGOUT_REQUESTED";
+export const LOGOUT_SUCCESSFUL = "LOGOUT_SUCCESSFUL";
 
-export const logout = () => ({ type: LOGOUT });
+export const logoutRequested = () => ({ type: LOGOUT_REQUESTED });
+export const logoutSuccessful = () => ({ type: LOGIN_SUCCESSFUL });
 export const loginRequested = (payload: LoginData) => ({
   type: LOGIN_REQUESTED,
   payload,
@@ -40,7 +42,7 @@ export default function authReducer(
     case LOGIN_SUCCESSFUL:
     case REGISTER_SUCCESSFUL:
       return { ...payload, loggedIn: true };
-    case LOGOUT:
+    case LOGOUT_SUCCESSFUL:
       return initialState;
     default:
       return state;
