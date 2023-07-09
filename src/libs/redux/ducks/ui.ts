@@ -1,4 +1,5 @@
-import type { RequestStatus, UIState } from "../types/ui";
+import type { UIState } from "../../../types/store-slices";
+import type { RequestStatus } from "../../../types/ui";
 import {
   addRequestStatus,
   removeRequestStatus,
@@ -84,6 +85,7 @@ export default function uiReducer(
     case REQUEST_ERROR.ADD: {
       const error = payload as RequestStatus;
       const updatedErrors = addRequestStatus(state.errors, error);
+      console.log({ updatedErrors });
       return {
         ...state,
         erorrs: updatedErrors,
@@ -94,7 +96,7 @@ export default function uiReducer(
       const updatedErrors = removeRequestStatus(state.errors, action);
       return {
         ...state,
-        erorrs: updatedErrors,
+        errors: updatedErrors,
       };
     }
     case REQUEST_SUCCESS.ADD: {
@@ -110,7 +112,7 @@ export default function uiReducer(
       const updatedErrors = removeRequestStatus(state.successMessages, action);
       return {
         ...state,
-        erorrs: updatedErrors,
+        errors: updatedErrors,
       };
     }
 

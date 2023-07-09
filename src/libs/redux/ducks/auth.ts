@@ -1,4 +1,5 @@
-import type { AuthState, User, LoginData, RegisterData } from "../types/auth";
+import type { AuthState } from "../../../types/store-slices";
+import type { User, LoginData, RegisterData } from "../../../types/user";
 
 export const LOGIN_REQUESTED = "LOGIN_REQUESTED";
 export const LOGIN_SUCCESSFUL = "LOGIN_SUCCESSFUL";

@@ -1,6 +1,6 @@
 import classes from "../styles/login-register.module.css";
 import { Paper, Grid } from "@mui/material";
-import { BaseButton, AppLogo } from "../index/imports";
+import { BaseButton, AppLogo, Notification } from "../index/imports";
 import LoginForm from "./login-form";
 import RegisterForm from "./register-form";
 import useLoginRegisterLogic from "../logic-hooks/login-register";
@@ -44,6 +44,9 @@ export default function LoginRegisterBase() {
         </Grid>
         <Grid item md={7}>
           <div className={classes.form__container}>
+            {!!{} && (
+              <Notification severity="error" onClose={() => console.log()} />
+            )}
             {isLoginComponent && <LoginForm onSubmit={handleLoginSubmit} />}
             {isRegisterComponent && (
               <RegisterForm onSubmit={handleRegisterSubmit} />

@@ -5,6 +5,7 @@ import {
   loginRequested,
   registerRequested,
 } from "../../../libs/redux/ducks/auth";
+import { UIState } from "../../../types/store-slices";
 
 type ComponentType = "Login" | "Register";
 
@@ -14,8 +15,10 @@ const COMPONENTS = {
 } as const;
 
 export default function useLoginRegisterLogic() {
-  const { dispatch } = useReduxHooks();
   const [component, setComponent] = useState<ComponentType>(COMPONENTS.LOGIN);
+  const { dispatch, SLICES, sliceSelector } = useReduxHooks();
+  const uiSlice = sliceSelector(SLICES.uiSlice) as UIState;
+  const error = uiSlice.errors.find((error) => error.action === "");
 
   const isLoginComponent = component === COMPONENTS.LOGIN;
   const isRegisterComponent = component === COMPONENTS.REGISTER;
@@ -23,7 +26,7 @@ export default function useLoginRegisterLogic() {
     ? COMPONENTS.REGISTER
     : COMPONENTS.LOGIN;
   const toggleComponent = () => setComponent(toggleButtonLabel);
-
+  const handleErrorClose = () => dispatch({ type: "jkbsvkjv" });
   const handleLoginSubmit = (values: LoginData) =>
     dispatch(loginRequested(values));
   const handleRegisterSubmit = (values: RegisterData) =>
