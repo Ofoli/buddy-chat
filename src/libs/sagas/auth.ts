@@ -16,7 +16,7 @@ import {
   loginUserApiRequest,
   logoutUserApiRequest,
 } from "../firebase/services/user";
-import type { User } from "../redux/types/auth";
+import type { User } from "../../types/user";
 import type { FirebaseError } from "firebase/app";
 
 //handle user login

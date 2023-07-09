@@ -6,7 +6,7 @@ import {
 import { serverTimestamp, setDoc, getDoc } from "firebase/firestore";
 import { auth } from "../index/config";
 import { createDocRef, USER_COLLECTION } from "../index/db";
-import type { LoginData, RegisterData } from "../../../types/form-data";
+import type { LoginData, RegisterData } from "../../../types/user";
 
 export async function registerUserApiRequest(data: RegisterData) {
   const { fullname, email, password } = data;

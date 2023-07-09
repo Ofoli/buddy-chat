@@ -11,4 +11,12 @@ type ContactData = {
   email: string;
   phpne: number;
 };
-export type { LoginData, RegisterData, ContactData };
+
+interface User {
+  id: string;
+  email: string;
+  fullname: string;
+  photoUrl: string;
+}
+
+export type { LoginData, RegisterData, ContactData, User };
