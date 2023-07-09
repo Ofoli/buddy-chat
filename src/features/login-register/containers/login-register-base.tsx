@@ -7,8 +7,14 @@ import useLoginRegisterLogic from "../logic-hooks/login-register";
 
 export default function LoginRegisterBase() {
   const { state, handlers } = useLoginRegisterLogic();
-  const { toggleButtonLabel, isLoginComponent, isRegisterComponent } = state;
-  const { toggleComponent, handleLoginSubmit, handleRegisterSubmit } = handlers;
+  const { toggleButtonLabel, isLoginComponent, isRegisterComponent, error } =
+    state;
+  const {
+    toggleComponent,
+    handleLoginSubmit,
+    handleRegisterSubmit,
+    handleErrorClose,
+  } = handlers;
 
   return (
     <Paper elevation={0} className={classes.main}>
@@ -44,8 +50,12 @@ export default function LoginRegisterBase() {
         </Grid>
         <Grid item md={7}>
           <div className={classes.form__container}>
-            {!!{} && (
-              <Notification severity="error" onClose={() => console.log()} />
+            {error !== undefined && (
+              <Notification
+                message={error.message}
+                severity="error"
+                onClose={handleErrorClose}
+              />
             )}
             {isLoginComponent && <LoginForm onSubmit={handleLoginSubmit} />}
             {isRegisterComponent && (
