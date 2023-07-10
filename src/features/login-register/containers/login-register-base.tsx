@@ -7,8 +7,14 @@ import useLoginRegisterLogic from "../logic-hooks/login-register";
 
 export default function LoginRegisterBase() {
   const { state, handlers } = useLoginRegisterLogic();
-  const { toggleButtonLabel, isLoginComponent, isRegisterComponent, error } =
-    state;
+  const {
+    toggleButtonLabel,
+    isLoginComponent,
+    isRegisterComponent,
+    isLoginLoading,
+    isRegisterLoading,
+    error,
+  } = state;
   const {
     toggleComponent,
     handleLoginSubmit,
@@ -57,9 +63,17 @@ export default function LoginRegisterBase() {
                 onClose={handleErrorClose}
               />
             )}
-            {isLoginComponent && <LoginForm onSubmit={handleLoginSubmit} />}
+            {isLoginComponent && (
+              <LoginForm
+                onSubmit={handleLoginSubmit}
+                isLoading={isLoginLoading}
+              />
+            )}
             {isRegisterComponent && (
-              <RegisterForm onSubmit={handleRegisterSubmit} />
+              <RegisterForm
+                onSubmit={handleRegisterSubmit}
+                isLoading={isRegisterLoading}
+              />
             )}
           </div>
         </Grid>
