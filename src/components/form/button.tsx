@@ -19,12 +19,24 @@ type BtnType = "primary" | "secondary";
 interface ButtonProps {
   type?: BtnType;
   label: string;
+  loading?: boolean;
   onClick: () => void;
 }
-function BaseButton({ type = "primary", label, onClick }: ButtonProps) {
+function BaseButton({
+  label,
+  onClick,
+  type = "primary",
+  loading = false,
+}: ButtonProps) {
   const styles = selectStyle(type);
   return (
-    <Button type="primary" size="large" onClick={onClick} style={styles}>
+    <Button
+      type="primary"
+      size="large"
+      onClick={onClick}
+      style={styles}
+      loading={loading}
+    >
       {label}
     </Button>
   );

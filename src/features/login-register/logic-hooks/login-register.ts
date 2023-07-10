@@ -31,6 +31,9 @@ export default function useLoginRegisterLogic() {
     ? COMPONENTS.REGISTER
     : COMPONENTS.LOGIN;
 
+  const isLoginLoading = uiSlice.loadingActions.includes(LOGIN_REQUESTED);
+  const isRegisterLoading = uiSlice.loadingActions.includes(REGISTER_REQUESTED);
+
   const toggleComponent = () => setComponent(toggleButtonLabel);
   const handleErrorClose = () => dispatch(removeRequestError(error!.action));
   const handleLoginSubmit = (values: LoginData) =>
@@ -39,7 +42,14 @@ export default function useLoginRegisterLogic() {
     dispatch(registerRequested(values));
 
   return {
-    state: { isLoginComponent, isRegisterComponent, toggleButtonLabel, error },
+    state: {
+      isLoginComponent,
+      isRegisterComponent,
+      isLoginLoading,
+      isRegisterLoading,
+      toggleButtonLabel,
+      error,
+    },
     handlers: {
       toggleComponent,
       handleLoginSubmit,
