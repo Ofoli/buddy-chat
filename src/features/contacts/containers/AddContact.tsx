@@ -1,5 +1,5 @@
-import { BasicFormContainer, Text, NumberInput } from "../../index/imports";
-import type { ContactData } from "../../../../types/user";
+import { BasicFormContainer, Text, NumberInput } from "../index/imports";
+import type { ContactData } from "../../../types/user";
 
 function AddContact() {
   const onSubmit = (values: ContactData) => {

@@ -1,6 +1,6 @@
-import ChatInput from "../../components/form/ChatInput";
-import Chats from "../chats/Chats";
-import ChatSpaceHeader from "../chats/ChatSpaceHeader";
+import ChatInput from "../components/ChatInput";
+import Chats from "./Chats";
+import ChatSpaceHeader from "./ChatSpaceHeader";
 
 const styles: React.CSSProperties = {
   height: "inherit",

@@ -1,6 +1,6 @@
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import classes from "../../styles/chat-input.module.css";
+import classes from "../styles/chat-input.module.css";
 
 export default function ChatInput() {
   return (

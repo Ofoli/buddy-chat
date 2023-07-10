@@ -1,4 +1,4 @@
-import RecentChat from "../../components/ui/RecentChat";
+import RecentChat from "../components/RecentChat";
 
 const styles = {
   height: "800px",
@@ -26,7 +26,7 @@ export default function RecentChats() {
       picUrl: "",
     },
     {
-      id: "chat_02",
+      id: "chat_03",
       name: "Albert Kubus",
       message: "hi, how are you",
       picUrl: "",

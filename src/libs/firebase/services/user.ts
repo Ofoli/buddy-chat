@@ -29,9 +29,11 @@ export async function loginUserApiRequest(data: LoginData) {
   const { uid: id, photoURL } = user;
 
   const userRef = createDocRef(USER_COLLECTION, id);
-  const { data: getUser } = await getDoc(userRef);
-  const userInfo = getUser();
+  const userDoc = await getDoc(userRef);
 
+  if (!userDoc.exists) throw new Error("User not found");
+
+  const userInfo = userDoc.data();
   if (!userInfo) throw new Error("Could Not Fetch User Info");
 
   return { id, email, fullname: userInfo.fullname, photoUrl: photoURL ?? "" };
@@ -40,3 +42,5 @@ export async function loginUserApiRequest(data: LoginData) {
 export async function logoutUserApiRequest() {
   await signOut(auth);
 }
+
+//sazUWm7QeEaDYXorASwXL05RJYF2

@@ -42,7 +42,7 @@ export default function authReducer(
   switch (type) {
     case LOGIN_SUCCESSFUL:
     case REGISTER_SUCCESSFUL:
-      return { ...payload, loggedIn: true };
+      return { user: payload, loggedIn: true };
     case LOGOUT_SUCCESSFUL:
       return initialState;
     default:
