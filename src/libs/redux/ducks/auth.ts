@@ -9,7 +9,7 @@ export const LOGOUT_REQUESTED = "LOGOUT_REQUESTED";
 export const LOGOUT_SUCCESSFUL = "LOGOUT_SUCCESSFUL";
 
 export const logoutRequested = () => ({ type: LOGOUT_REQUESTED });
-export const logoutSuccessful = () => ({ type: LOGIN_SUCCESSFUL });
+export const logoutSuccessful = () => ({ type: LOGOUT_SUCCESSFUL });
 export const loginRequested = (payload: LoginData) => ({
   type: LOGIN_REQUESTED,
   payload,
