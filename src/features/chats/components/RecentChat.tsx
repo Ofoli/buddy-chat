@@ -1,4 +1,4 @@
-import CardTemplate from "./CardTemplate";
+import { CardTemplate } from "../index/imports";
 
 interface RecentChatType {
   id: string;

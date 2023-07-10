@@ -1,6 +1,6 @@
-import classes from "../../styles/search-recent-chats.module.css";
+import classes from "./ui.module.css";
 import SearchIcon from "@mui/icons-material/Search";
-export default function SearchRecentChats() {
+export default function SearchHistory() {
   return (
     <div className={classes.search_container}>
       <SearchIcon className={classes.search_icon} />

@@ -1,12 +1,11 @@
-import classes from "../../styles/chats-and-chat.module.css";
+import classes from "../styles/chats-and-chat.module.css";
 
 const CHAT_TYPES = {
   sender: "sender",
   receiver: "receiver",
 };
 
-type ChatType = "sender" | "receiver";
-
+type ChatType = keyof typeof CHAT_TYPES;
 interface ChatProps {
   type: ChatType;
 }
@@ -20,7 +19,6 @@ export default function Chat(props: ChatProps) {
   const { type } = props;
   const selectedClass = getClassName(type);
 
-  console.log({ selectedClass });
   return (
     <div className={selectedClass.parent}>
       <div className={selectedClass.child}>

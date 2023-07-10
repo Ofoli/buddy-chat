@@ -1,4 +1,4 @@
-import CardTemplate from "./CardTemplate";
+import CardTemplate from "../../../components/ui/CardTemplate";
 
 interface ContactProp {
   name: string;

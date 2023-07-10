@@ -1,6 +1,6 @@
 import { Paper } from "@mui/material";
 import classes from "./app.module.css";
-import Dashboard from "./features/chat-dashboard/containers/layout/Dashboard";
+import Dashboard from "./features/dashboard/containers/Dashboard";
 import LoginRegisterBase from "./features/login-register/containers/login-register-base";
 
 import useReduxHooks from "./libs/redux/use-redux";

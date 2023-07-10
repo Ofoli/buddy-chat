@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Grid, Avatar, MenuItem } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { CustomMenu } from "../../index/imports";
+import { CustomMenu } from "../index/imports";
 interface Styles {
   main: React.CSSProperties;
   name: React.CSSProperties;

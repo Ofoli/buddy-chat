@@ -1,8 +1,8 @@
 import Header from "./Header";
-import classes from "../../styles/dashboard.module.css";
-import DashboardProvider from "../../context/DashboardProvide";
+import classes from "../styles/dashboard.module.css";
+import DashboardProvider from "../context/DashboardProvider";
 import SideSpace from "./SideSpace";
-import ChatSpace from "./ChatSpace";
+import { ChatSpace } from "../index/imports";
 
 const classStrs = {
   default: {

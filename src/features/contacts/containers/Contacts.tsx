@@ -1,10 +1,10 @@
 import { Grid } from "@mui/material";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import Contact from "../../components/ui/Contact";
-import classes from "../../styles/contacts.module.css";
-import { CustomModal } from "../../index/imports";
-import AddContact from "./add-contact";
-import useContactsLogicHook from "../../logic-hooks/contacts";
+import Contact from "../components/Contact";
+import classes from "../styles/contacts.module.css";
+import { CustomModal } from "../index/imports";
+import AddContact from "./AddContact";
+import useContactsLogicHook from "../logic-hooks/contacts";
 
 const contacts = [1, 2, 3];
 
