@@ -1,4 +1,5 @@
-import type { AuthState, User, LoginData, RegisterData } from "../types/auth";
+import type { AuthState } from "../../../types/store-slices";
+import type { User, LoginData, RegisterData } from "../../../types/user";
 
 export const LOGIN_REQUESTED = "LOGIN_REQUESTED";
 export const LOGIN_SUCCESSFUL = "LOGIN_SUCCESSFUL";
@@ -8,7 +9,7 @@ export const LOGOUT_REQUESTED = "LOGOUT_REQUESTED";
 export const LOGOUT_SUCCESSFUL = "LOGOUT_SUCCESSFUL";
 
 export const logoutRequested = () => ({ type: LOGOUT_REQUESTED });
-export const logoutSuccessful = () => ({ type: LOGIN_SUCCESSFUL });
+export const logoutSuccessful = () => ({ type: LOGOUT_SUCCESSFUL });
 export const loginRequested = (payload: LoginData) => ({
   type: LOGIN_REQUESTED,
   payload,
@@ -41,7 +42,7 @@ export default function authReducer(
   switch (type) {
     case LOGIN_SUCCESSFUL:
     case REGISTER_SUCCESSFUL:
-      return { ...payload, loggedIn: true };
+      return { user: payload, loggedIn: true };
     case LOGOUT_SUCCESSFUL:
       return initialState;
     default:

@@ -1,4 +1,6 @@
 import BaseButton from "../../../components/form/button";
+import Notification from "../../../components/ui/notification";
+
 import {
   Text,
   PasswordInput,
@@ -6,7 +8,7 @@ import {
 } from "../../../components/form/basic-inputs";
 import BasicFormContainer from "../../../components/form/basic-form-container";
 import AppLogo from "../../../components/logo/app-logo";
-import type { LoginData, RegisterData } from "../../../types/form-data";
+import type { LoginData, RegisterData } from "../../../types/user";
 
 export type { LoginData, RegisterData };
 
@@ -17,4 +19,5 @@ export {
   PasswordInput,
   NumberInput,
   AppLogo,
+  Notification,
 };
