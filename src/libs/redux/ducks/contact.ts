@@ -37,7 +37,7 @@ export const requestDeleteContact = (payload: DeleteContactType) => ({
   payload,
 });
 export const requestFetchContacts = (userId: string) => ({
-  type: DELETE_CONTACT_REQUESTED,
+  type: FETCH_CONTACTS_REQUESTED,
   payload: userId,
 });
 

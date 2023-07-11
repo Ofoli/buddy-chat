@@ -6,11 +6,11 @@ import { CustomModal } from "../index/imports";
 import AddContact from "./AddContact";
 import useContactsLogicHook from "../logic-hooks/contacts";
 
-const contacts = [1, 2, 3];
+// const contacts = [1, 2, 3];
 
 export default function Contacts() {
   const { state, handlers } = useContactsLogicHook();
-  const { isAddContactFormOpen } = state;
+  const { isAddContactFormOpen, contacts } = state;
   const { openAddContactForm, closeAddContactForm } = handlers;
 
   return (
@@ -29,12 +29,12 @@ export default function Contacts() {
         <p>Add New Contact</p>
       </Grid>
       <p className={classes.title}>My Contacts</p>
-      {contacts.map((idx) => (
+      {contacts.map((contact) => (
         <Contact
-          key={idx}
-          name="Some Name"
-          aboutme="this is a new ui we just inherited"
-          picUrl=""
+          key={contact.id}
+          name={contact.fullname}
+          aboutme={contact.email}
+          picUrl={contact.photoUrl}
         />
       ))}
       <CustomModal

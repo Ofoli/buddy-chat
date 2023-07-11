@@ -15,7 +15,6 @@ import {
 } from "../firebase/services/contact";
 import type { Contact, DeleteContactType } from "../../types/user";
 import type { FirebaseError } from "firebase/app";
-import { yellow } from "@mui/material/colors";
 
 function* createContact({
   payload,
