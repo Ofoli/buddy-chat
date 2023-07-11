@@ -1,6 +1,11 @@
 import { takeLatest, all, put } from "redux-saga/effects";
 import { combineWatchers } from "./root";
-import { startAction, stopAction, addRequestError } from "../redux/ducks/ui";
+import {
+  startAction,
+  stopAction,
+  addRequestError,
+  addRequestSuccessMessage,
+} from "../redux/ducks/ui";
 import * as actions from "../redux/ducks/contact";
 import {
   createContactApiRequest,
@@ -10,6 +15,7 @@ import {
 } from "../firebase/services/contact";
 import type { Contact, DeleteContactType } from "../../types/user";
 import type { FirebaseError } from "firebase/app";
+import { yellow } from "@mui/material/colors";
 
 function* createContact({
   payload,
@@ -18,6 +24,12 @@ function* createContact({
     yield put(startAction(actions.ADD_CONTACT_REQUESTED));
     const contact: Contact = yield createContactApiRequest(payload);
     yield put(actions.receiveAddContactSuccess(contact));
+    yield put(
+      addRequestSuccessMessage({
+        action: actions.ADD_CONTACT_REQUESTED,
+        message: "Contact Added Successfully",
+      })
+    );
   } catch (err) {
     const { message } = err as FirebaseError;
     yield put(

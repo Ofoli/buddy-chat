@@ -9,8 +9,8 @@ import useContactsLogicHook from "../logic-hooks/contacts";
 const contacts = [1, 2, 3];
 
 export default function Contacts() {
-  const { modals, handlers } = useContactsLogicHook();
-  const { isAddContactFormOpen } = modals;
+  const { state, handlers } = useContactsLogicHook();
+  const { isAddContactFormOpen } = state;
   const { openAddContactForm, closeAddContactForm } = handlers;
 
   return (
@@ -42,7 +42,7 @@ export default function Contacts() {
         open={isAddContactFormOpen}
         onCancel={closeAddContactForm}
       >
-        <AddContact />
+        <AddContact onClose={closeAddContactForm} />
       </CustomModal>
     </div>
   );

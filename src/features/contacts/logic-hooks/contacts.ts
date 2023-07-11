@@ -7,8 +7,10 @@ export default function useContactsLogicHook() {
   const closeAddContactForm = () => setIsAddContactFormOpen(false);
 
   return {
-    modals: { isAddContactFormOpen },
-    data: {},
-    handlers: { openAddContactForm, closeAddContactForm },
+    state: { isAddContactFormOpen },
+    handlers: {
+      openAddContactForm,
+      closeAddContactForm,
+    },
   };
 }
