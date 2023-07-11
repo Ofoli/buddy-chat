@@ -19,9 +19,9 @@ const COMPONENTS = {
 
 export default function useLoginRegisterLogic() {
   const [component, setComponent] = useState<ComponentType>(COMPONENTS.LOGIN);
-  const { dispatch, SLICES, sliceSelector } = useReduxHooks();
-  const uiSlice = sliceSelector(SLICES.uiSlice) as UIState;
-  const error = uiSlice.errors.find(
+  const { dispatch, slices } = useReduxHooks();
+  const { errors, loadingActions } = slices.uiSlice;
+  const error = errors.find(
     ({ action }) => action === LOGIN_REQUESTED || action === REGISTER_REQUESTED
   );
 
@@ -31,8 +31,8 @@ export default function useLoginRegisterLogic() {
     ? COMPONENTS.REGISTER
     : COMPONENTS.LOGIN;
 
-  const isLoginLoading = uiSlice.loadingActions.includes(LOGIN_REQUESTED);
-  const isRegisterLoading = uiSlice.loadingActions.includes(REGISTER_REQUESTED);
+  const isLoginLoading = loadingActions.includes(LOGIN_REQUESTED);
+  const isRegisterLoading = loadingActions.includes(REGISTER_REQUESTED);
 
   const toggleComponent = () => setComponent(toggleButtonLabel);
   const handleErrorClose = () => dispatch(removeRequestError(error!.action));

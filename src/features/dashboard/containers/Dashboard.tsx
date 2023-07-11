@@ -1,8 +1,8 @@
 import Header from "./Header";
 import classes from "../styles/dashboard.module.css";
-import DashboardProvider from "../context/DashboardProvider";
 import SideSpace from "./SideSpace";
 import { ChatSpace } from "../index/imports";
+import useDashboardLogic from "../logic-hooks/dashboard";
 
 const classStrs = {
   default: {
@@ -14,26 +14,27 @@ const classStrs = {
     resultPanel: classes.result_panel,
   },
 };
-const resultSpaceActive = false;
-const currentClasses = resultSpaceActive ? classStrs.shared : classStrs.default;
 
 export default function Dashboard() {
+  const { isResultPanelOpen } = useDashboardLogic();
+  const currentClasses = isResultPanelOpen
+    ? classStrs.shared
+    : classStrs.default;
+
   return (
     <div style={{ height: "100%" }}>
-      <DashboardProvider>
-        <Header />
-        <div className={classes.spaces}>
-          <div className={classes.side_space}>
-            <SideSpace />
-          </div>
-          <div className={classes.chat_space}>
-            <div className={currentClasses.chatPanel}>
-              <ChatSpace />
-            </div>
-            <div className={currentClasses.resultPanel}>a</div>
-          </div>
+      <Header />
+      <div className={classes.spaces}>
+        <div className={classes.side_space}>
+          <SideSpace />
         </div>
-      </DashboardProvider>
+        <div className={classes.chat_space}>
+          <div className={currentClasses.chatPanel}>
+            <ChatSpace />
+          </div>
+          <div className={currentClasses.resultPanel}>a</div>
+        </div>
+      </div>
     </div>
   );
 }

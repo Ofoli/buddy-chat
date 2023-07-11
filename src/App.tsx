@@ -6,8 +6,8 @@ import LoginRegisterBase from "./features/login-register/containers/login-regist
 import useReduxHooks from "./libs/redux/use-redux";
 
 function App() {
-  const { SLICES, sliceSelector } = useReduxHooks();
-  const { loggedIn } = sliceSelector(SLICES.authSlice);
+  const { slices } = useReduxHooks();
+  const { loggedIn } = slices.authSlice;
 
   const loginRegister = <LoginRegisterBase />;
   const dashboard = (

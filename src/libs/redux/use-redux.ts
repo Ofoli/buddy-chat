@@ -1,16 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import type { StoreType } from "./store";
-
-const SLICES = {
-  authSlice: "authSlice",
-  uiSlice: "uiSlice",
-} as const;
+import type { AuthState, UIState } from "../../types/store-slices";
 
 const useReduxHooks = () => {
   const dispatch = useDispatch();
-  const store = useSelector((state: StoreType) => state);
-  const sliceSelector = (slice: keyof typeof SLICES) => store[slice];
-  return { dispatch, sliceSelector, SLICES };
+
+  const slices = {
+    authSlice: useSelector((state: StoreType) => state.authSlice) as AuthState,
+    uiSlice: useSelector((state: StoreType) => state.uiSlice) as UIState,
+  };
+
+  return { dispatch, slices };
 };
 
 export default useReduxHooks;

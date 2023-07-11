@@ -22,6 +22,9 @@ export const REQUEST_SUCCESS = {
   RESET: "RESET_ALL_SUCCESS_MESSAGES",
 } as const;
 
+const OPEN_RESULT_PANEL = "OPEN_RESULT_PANEL";
+const CLOSE_RESULT_PANEL = "CLOSE_RESULT_PANEL";
+
 //loading
 export const startAction = (action: string) => ({
   type: LOADING.START,
@@ -56,10 +59,15 @@ export const resetAllRequestSuccessMessages = () => ({
   type: REQUEST_SUCCESS.RESET,
 });
 
+//result panel
+export const openResultPanel = () => ({ type: OPEN_RESULT_PANEL });
+export const closeResultPanel = () => ({ type: CLOSE_RESULT_PANEL });
+
 const initialState: UIState = {
   loadingActions: [],
   errors: [],
   successMessages: [],
+  isResultPanelOpen: false,
 };
 
 export default function uiReducer(
@@ -114,7 +122,10 @@ export default function uiReducer(
         succesMessages: updatedErrors,
       };
     }
-
+    case OPEN_RESULT_PANEL:
+      return { ...state, isResultPanelOpen: true };
+    case CLOSE_RESULT_PANEL:
+      return { ...state, isResultPanelOpen: false };
     default:
       return state;
   }
