@@ -7,8 +7,9 @@ type RegisterData = LoginData & {
 };
 
 type ContactData = {
-  name: string;
+  fullname: string;
   email: string;
+  userId: string;
 };
 
 interface User {
@@ -23,4 +24,16 @@ interface Contact extends User {
   // onlineStatus: "Online" | "Offline";
 }
 
-export type { LoginData, RegisterData, ContactData, User, Contact };
+type DeleteContactType = {
+  id: string;
+  userId: string;
+};
+
+export type {
+  LoginData,
+  RegisterData,
+  ContactData,
+  User,
+  Contact,
+  DeleteContactType,
+};

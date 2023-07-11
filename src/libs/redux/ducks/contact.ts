@@ -1,5 +1,9 @@
 import type { ContactState } from "../../../types/store-slices";
-import type { Contact, ContactData } from "../../../types/user";
+import type {
+  Contact,
+  ContactData,
+  DeleteContactType,
+} from "../../../types/user";
 
 export const SELECT_CONTACT = "SELECT_CONTACT";
 export const CLEAR_SELECTED_CONTACT = "CLEAR_SELECTED_CONTACT";
@@ -28,10 +32,7 @@ export const requestUpdateContact = (payload: Contact) => ({
   type: UPDATE_CONTACT_REQUESTED,
   payload,
 });
-export const requestDeleteContact = (payload: {
-  userId: string;
-  id: string;
-}) => ({
+export const requestDeleteContact = (payload: DeleteContactType) => ({
   type: DELETE_CONTACT_REQUESTED,
   payload,
 });
