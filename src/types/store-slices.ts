@@ -10,6 +10,7 @@ type UIState = {
   loadingActions: string[];
   errors: RequestStatus[];
   successMessages: RequestStatus[];
+  isResultPanelOpen: boolean;
 };
 
 export type { AuthState, UIState };

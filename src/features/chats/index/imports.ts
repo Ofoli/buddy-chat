@@ -5,9 +5,10 @@ import BaseButton from "../../../components/form/button";
 import CardTemplate from "../../../components/ui/CardTemplate";
 import { logoutRequested } from "../../../libs/redux/ducks/auth";
 import useReduxHooks from "../../../libs/redux/use-redux";
-import type { AuthState } from "../../../types/store-slices";
 
-export type { AuthState };
+import type { AuthState, UIState } from "../../../types/store-slices";
+
+export type { AuthState, UIState };
 export {
   CustomMenu,
   BasicFormContainer,

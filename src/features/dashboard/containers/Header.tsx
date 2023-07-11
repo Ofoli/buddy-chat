@@ -3,7 +3,7 @@ import classes from "../styles/header.module.css";
 import { Grid, Avatar, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { CustomMenu } from "../index/imports";
-import useHeaderLogic from "../../chats/logic-hooks/header";
+import useHeaderLogic from "../logic-hooks/header";
 
 export default function Header() {
   const { currentUser, handleUserLogout } = useHeaderLogic();
