@@ -116,10 +116,13 @@ export default function uiReducer(
     }
     case REQUEST_SUCCESS.REMOVE: {
       const action = payload as string;
-      const updatedErrors = removeRequestStatus(state.successMessages, action);
+      const updatedSuccessMessages = removeRequestStatus(
+        state.successMessages,
+        action
+      );
       return {
         ...state,
-        succesMessages: updatedErrors,
+        successMessages: updatedSuccessMessages,
       };
     }
     case OPEN_RESULT_PANEL:

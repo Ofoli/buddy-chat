@@ -7,9 +7,9 @@ type RegisterData = LoginData & {
 };
 
 type ContactData = {
-  name: string;
+  fullname: string;
   email: string;
-  phpne: number;
+  userId: string;
 };
 
 interface User {
@@ -19,4 +19,21 @@ interface User {
   photoUrl: string;
 }
 
-export type { LoginData, RegisterData, ContactData, User };
+interface Contact extends User {
+  userId: string;
+  // onlineStatus: "Online" | "Offline";
+}
+
+type DeleteContactType = {
+  id: string;
+  userId: string;
+};
+
+export type {
+  LoginData,
+  RegisterData,
+  ContactData,
+  User,
+  Contact,
+  DeleteContactType,
+};

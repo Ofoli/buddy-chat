@@ -1,12 +1,31 @@
 import { Grid } from "@mui/material";
-import { useState } from "react";
+import { useState, createContext, useContext, SetStateAction } from "react";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import classes from "../styles/side-space.module.css";
 import RecentChats from "../../chats/containers/RecentChats";
 import { SearchHistory, Contacts } from "../index/imports";
 
-export default function SideSpace() {
+type SideSpaceType = {
+  showContacts: boolean;
+  setShowContacts: StateSetter<boolean>;
+};
+
+const SideSpaceContext = createContext<SideSpaceType | null>(null);
+export const useSideSpaceContext = () =>
+  useContext(SideSpaceContext) as SideSpaceType;
+
+function SideSpaceProvider({ children }: { children: ChildrenType }) {
   const [showContacts, setShowContacts] = useState(false);
+
+  return (
+    <SideSpaceContext.Provider value={{ showContacts, setShowContacts }}>
+      {children}
+    </SideSpaceContext.Provider>
+  );
+}
+
+function SideSpaceComponent() {
+  const { showContacts, setShowContacts } = useSideSpaceContext()!;
   const activateShowContacts = () => setShowContacts(true);
   const deactivateShowContacts = () => setShowContacts(false);
 
@@ -36,5 +55,13 @@ export default function SideSpace() {
       </Grid>
       {showContacts ? <Contacts /> : <RecentChats />}
     </div>
+  );
+}
+
+export default function SideSpace() {
+  return (
+    <SideSpaceProvider>
+      <SideSpaceComponent />
+    </SideSpaceProvider>
   );
 }

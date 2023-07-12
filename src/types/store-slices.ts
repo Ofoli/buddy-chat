@@ -1,4 +1,4 @@
-import type { User } from "./user";
+import type { User, Contact } from "./user";
 import type { RequestStatus } from "./ui";
 
 type AuthState = {
@@ -13,4 +13,9 @@ type UIState = {
   isResultPanelOpen: boolean;
 };
 
-export type { AuthState, UIState };
+type ContactState = {
+  selectedContactId: string;
+  contacts: Contact[];
+};
+
+export type { AuthState, UIState, ContactState };

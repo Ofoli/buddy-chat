@@ -30,6 +30,7 @@
 .card_template__container {
   height: 80px;
   padding: 0 30px;
+  cursor: pointer;
 }
 .card_template__container:hover {
   background: whitesmoke;

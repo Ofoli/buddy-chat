@@ -1,20 +1,36 @@
-import { BasicFormContainer, Text, NumberInput } from "../index/imports";
-import type { ContactData } from "../../../types/user";
+import { BasicFormContainer, Text } from "../index/imports";
+import useAddContactLogic from "../logic-hooks/add-contact";
+import type { ContactFormData } from "../logic-hooks/add-contact";
 
-function AddContact() {
-  const onSubmit = (values: ContactData) => {
-    console.log({ values });
-  };
-  return (
-    <BasicFormContainer<ContactData>
-      onSubmit={onSubmit}
+interface AddContactProps {
+  onClose: () => void;
+}
+function AddContact({ onClose }: AddContactProps) {
+  const { state, handlers } = useAddContactLogic(onClose);
+  const { isLoading, error, successMessage, isSuccess } = state;
+  const { handleSubmit, closeModal } = handlers;
+
+  const AddContactForm = (
+    <BasicFormContainer<ContactFormData>
       btnLabel="Create Contact"
+      onSubmit={handleSubmit}
+      isLoading={isLoading}
     >
+      <p>{error !== undefined && error.message}</p>
       <Text name="fullname" label="Full Name" type="text" />
       <Text name="email" label="Email" type="email" />
-      <NumberInput name="phone" label="Phone Number" />
     </BasicFormContainer>
   );
+
+  const ContactCreatedForm = (
+    <BasicFormContainer btnLabel="Close" onSubmit={closeModal}>
+      <h3 style={{ textAlign: "center" }}>{successMessage}</h3>
+    </BasicFormContainer>
+  );
+
+  if (isSuccess) return ContactCreatedForm;
+
+  return AddContactForm;
 }
 
 export default AddContact;
