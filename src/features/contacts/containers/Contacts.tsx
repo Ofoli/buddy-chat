@@ -11,7 +11,8 @@ import useContactsLogicHook from "../logic-hooks/contacts";
 export default function Contacts() {
   const { state, handlers } = useContactsLogicHook();
   const { isAddContactFormOpen, contacts } = state;
-  const { openAddContactForm, closeAddContactForm } = handlers;
+  const { openAddContactForm, closeAddContactForm, handleContactClick } =
+    handlers;
 
   return (
     <div>
@@ -32,9 +33,8 @@ export default function Contacts() {
       {contacts.map((contact) => (
         <Contact
           key={contact.id}
-          name={contact.fullname}
-          aboutme={contact.email}
-          picUrl={contact.photoUrl}
+          contact={contact}
+          onClick={() => handleContactClick(contact.id)}
         />
       ))}
       <CustomModal

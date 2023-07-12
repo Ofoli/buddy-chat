@@ -3,6 +3,7 @@ import { Grid, Avatar, MenuItem } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { CustomMenu } from "../index/imports";
+import useChatHeaderLogic from "../logic-hooks/chat-header";
 
 interface Styles {
   main: React.CSSProperties;
@@ -28,6 +29,7 @@ const styles: Styles = {
 };
 
 export default function ChatSpaceHeader() {
+  const contactFullname = useChatHeaderLogic();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const handleCloseMenu = () => setAnchorEl(null);
   const handleOpenMenu = (event: React.BaseSyntheticEvent) => {
@@ -48,7 +50,7 @@ export default function ChatSpaceHeader() {
               <Avatar src="" alt="PK" sx={{ width: 45, height: 45 }} />
             </Grid>
             <Grid item>
-              <p style={styles.name}>Phusuk Kamal</p>
+              <p style={styles.name}>{contactFullname}</p>
             </Grid>
           </Grid>
         </Grid>

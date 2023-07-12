@@ -120,7 +120,6 @@ export default function uiReducer(
         state.successMessages,
         action
       );
-      console.log(updatedSuccessMessages);
       return {
         ...state,
         successMessages: updatedSuccessMessages,

@@ -1,11 +1,20 @@
 import CardTemplate from "../../../components/ui/CardTemplate";
+import { Contact } from "../index/imports";
 
 interface ContactProp {
-  name: string;
-  aboutme: string;
-  picUrl: string;
+  contact: Contact;
+  onClick: () => void;
 }
 
-export default function Contact({ name, aboutme, picUrl }: ContactProp) {
-  return <CardTemplate name={name} text={aboutme} picUrl={picUrl} />;
+export default function UserContact({ contact, onClick }: ContactProp) {
+  const { fullname, email, photoUrl } = contact;
+
+  return (
+    <CardTemplate
+      name={fullname}
+      text={email}
+      picUrl={photoUrl}
+      onClick={onClick}
+    />
+  );
 }

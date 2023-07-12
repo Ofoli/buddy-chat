@@ -3,6 +3,7 @@ import CustomModal from "../../../components/ui/CustomModal";
 import BasicFormContainer from "../../../components/form/basic-form-container";
 import { Text } from "../../../components/form/basic-inputs";
 import BaseButton from "../../../components/form/button";
+import { useSideSpaceContext } from "../../dashboard/containers/SideSpace";
 import useReduxHooks from "../../../libs/redux/use-redux";
 import { removeRequestSuccessMessage } from "../../../libs/redux/ducks/ui";
 import {
@@ -25,6 +26,7 @@ export {
   CustomModal,
   Text,
   BaseButton,
+  useSideSpaceContext,
   //redux
   ADD_CONTACT_REQUESTED,
   useReduxHooks,

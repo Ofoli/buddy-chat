@@ -6,6 +6,7 @@ interface CardProps {
   text: string;
   picUrl: string;
   isChatCard?: boolean;
+  onClick?: () => void;
 }
 
 export default function CardTemplate({
@@ -13,9 +14,10 @@ export default function CardTemplate({
   text,
   picUrl,
   isChatCard,
+  onClick,
 }: CardProps) {
   return (
-    <div className={classes.card_template__container}>
+    <div className={classes.card_template__container} onClick={onClick}>
       <Grid container alignItems="center" justifyContent="flex-start">
         <Grid item>
           <Avatar sx={{ width: 56, height: 56 }} src={picUrl} alt="ops" />
