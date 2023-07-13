@@ -6,7 +6,6 @@ import {
   deleteDoc,
   query,
   where,
-  getDocs,
 } from "firebase/firestore";
 import {
   createDocRef,
