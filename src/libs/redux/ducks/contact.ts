@@ -67,11 +67,11 @@ const initialState = {
 export default function contactReducer(
   state: ContactState = initialState,
   action: { type: string; payload: string | Contact | Contact[] }
-) {
+): ContactState {
   const { type, payload } = action;
   switch (type) {
     case SELECT_CONTACT: {
-      return { ...state, selectedContactId: payload };
+      return { ...state, selectedContactId: payload as string };
     }
     case CLEAR_SELECTED_CONTACT: {
       return { ...state, selectedContactId: "" };

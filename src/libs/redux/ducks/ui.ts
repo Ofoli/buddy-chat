@@ -73,16 +73,16 @@ const initialState: UIState = {
 export default function uiReducer(
   state = initialState,
   action: { type: string; payload: RequestStatus | string | undefined }
-) {
+): UIState {
   const { type, payload } = action;
 
   switch (type) {
-    case LOADING.START:
+    case LOADING.START: {
       return {
         ...state,
-        loadingActions: [...state.loadingActions, payload],
+        loadingActions: [...state.loadingActions, payload as string],
       };
-
+    }
     case LOADING.STOP:
       return {
         ...state,

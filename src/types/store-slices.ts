@@ -1,4 +1,4 @@
-import type { User, Contact } from "./user";
+import type { User, Contact, Chat } from "./user";
 import type { RequestStatus } from "./ui";
 
 type AuthState = {
@@ -18,4 +18,9 @@ type ContactState = {
   contacts: Contact[];
 };
 
-export type { AuthState, UIState, ContactState };
+type ChatState = {
+  recentChats: Chat[];
+  chats: Chat[];
+};
+
+export type { AuthState, UIState, ContactState, ChatState };
