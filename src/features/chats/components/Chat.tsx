@@ -1,13 +1,8 @@
 import classes from "../styles/chats-and-chat.module.css";
 
-const CHAT_TYPES = {
-  sender: "sender",
-  receiver: "receiver",
-};
-
-type ChatType = keyof typeof CHAT_TYPES;
 interface ChatProps {
-  type: ChatType;
+  userIsSource: boolean;
+  message: string;
 }
 
 type SelectedClassType = {
@@ -16,27 +11,20 @@ type SelectedClassType = {
 };
 
 export default function Chat(props: ChatProps) {
-  const { type } = props;
-  const selectedClass = getClassName(type);
+  const { userIsSource, message } = props;
+  const selectedClass = getClassName(userIsSource);
 
   return (
     <div className={selectedClass.parent}>
       <div className={selectedClass.child}>
-        <div className={classes.chat}>
-          lkn;sveJWbev;kjbwkvEKJVwlkn;sveJWbev
-          kjbwkvEKJVwlkn;sveJWbev;kjbwkvEKJVwlkn sveJWbev;kjbwkvEKJVwlkn
-          sveJWbev;kjbwkvEKJVwlkn sveJWbev;kjbwkvEKJVwlkn sveJWbev
-          kjbwkvEKJVwlkn;sveJWbev kjbwkvEKJVwlkn;sveJWbev
-          kjbwkvEKJVwlkn;sveJWbev;kjbwkvEKJVwlkn
-          sveJWbev;kjbwkvEKJVwlkn;sveJWbev;kjbwkvEKJVw
-        </div>
+        <div className={classes.chat}>{message}</div>
         <p className={classes.chat_time}>11:22</p>
       </div>
     </div>
   );
 }
 
-const getClassName = (type: ChatType): SelectedClassType => {
+const getClassName = (userIsSource: boolean): SelectedClassType => {
   const senderClasses = {
     parent: classes.sender_container_parent,
     child: classes.sender_chat_container,
@@ -45,5 +33,5 @@ const getClassName = (type: ChatType): SelectedClassType => {
     parent: classes.receiver_container_parent,
     child: classes.receiver_chat_container,
   };
-  return type === CHAT_TYPES.sender ? senderClasses : receiverClasses;
+  return userIsSource ? senderClasses : receiverClasses;
 };
