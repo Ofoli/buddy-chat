@@ -1,17 +1,23 @@
 import { CardTemplate } from "../index/imports";
 
-interface RecentChatType {
-  id: string;
-  name: string;
+interface RecentChatProps {
   message: string;
-  picUrl: string;
+  contactInfo: { name: string; picUrl: string };
+  onClick: () => void;
 }
 
-type RecentChatProps = {
-  chat: RecentChatType;
-};
-export default function RecentChat({ chat }: RecentChatProps) {
-  const { name, message, picUrl } = chat;
-
-  return <CardTemplate name={name} text={message} picUrl={picUrl} isChatCard />;
+export default function RecentChat({
+  message,
+  contactInfo,
+  onClick,
+}: RecentChatProps) {
+  return (
+    <CardTemplate
+      name={contactInfo.name}
+      text={message}
+      picUrl={contactInfo.picUrl}
+      onClick={onClick}
+      isChatCard
+    />
+  );
 }

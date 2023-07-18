@@ -6,8 +6,6 @@ import { CustomModal } from "../index/imports";
 import AddContact from "./AddContact";
 import useContactsLogicHook from "../logic-hooks/contacts";
 
-// const contacts = [1, 2, 3];
-
 export default function Contacts() {
   const { state, handlers } = useContactsLogicHook();
   const { isAddContactFormOpen, contacts } = state;

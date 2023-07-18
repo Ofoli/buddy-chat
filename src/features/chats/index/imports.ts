@@ -3,9 +3,10 @@ import { Text, NumberInput } from "../../../components/form/basic-inputs";
 import BasicFormContainer from "../../../components/form/basic-form-container";
 import BaseButton from "../../../components/form/button";
 import CardTemplate from "../../../components/ui/CardTemplate";
-import { logoutRequested } from "../../../libs/redux/ducks/auth";
 import useReduxHooks from "../../../libs/redux/use-redux";
+import { logoutRequested } from "../../../libs/redux/ducks/auth";
 import { requestCreateChat } from "../../../libs/redux/ducks/chat";
+import { setSelectedContact } from "../../../libs/redux/ducks/contact";
 
 export {
   CustomMenu,
@@ -18,4 +19,5 @@ export {
   logoutRequested,
   useReduxHooks,
   requestCreateChat,
+  setSelectedContact,
 };
