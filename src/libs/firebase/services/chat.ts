@@ -1,0 +1,61 @@
+import {
+  serverTimestamp,
+  setDoc,
+  getDoc,
+  addDoc,
+  query,
+  where,
+} from "firebase/firestore";
+import {
+  createDocRef,
+  fetchData,
+  getChatCollection,
+  recentChatCollection,
+  CHAT_COLLECTION,
+  RECENT_CHAT_COLLECTION,
+} from "../index/db";
+import type { Chat, ChatData } from "../../../types/user";
+
+export async function createChatApiRequest(data: ChatData): Promise<Chat> {
+  const chatCollection = getChatCollection(data.channelId);
+  const createdChat = await addDoc(chatCollection, {
+    ...data,
+    createdAt: serverTimestamp(),
+  });
+  const channelCollection = `${CHAT_COLLECTION}/ch_${data.channelId}/${data.channelId}`;
+  const chatDocRef = createDocRef(channelCollection, createdChat.id);
+  const chatDoc = await getDoc(chatDocRef);
+
+  if (!chatDoc.exists) throw new Error("Failed to add chats");
+
+  const chat = chatDoc.data();
+  if (chat === undefined) throw new Error("Chat data not found");
+
+  //update recent chat
+  const setRecentChatDocRef = createDocRef(
+    RECENT_CHAT_COLLECTION,
+    data.channelId
+  );
+  await setDoc(setRecentChatDocRef, chat);
+
+  return {
+    ...data,
+    id: createdChat.id,
+    createdAt: "",
+  };
+}
+export async function fetchRecentChatsApiRequest(userId: string) {
+  const recentChatsQuery = query(
+    recentChatCollection,
+    where("source", "==", userId),
+    where("destination", "==", userId)
+  );
+
+  return await fetchData<Chat>(recentChatsQuery);
+}
+export async function fetchChatHistoryApiRequest(channelId: string) {
+  const chatCollection = getChatCollection(channelId);
+  const fetchChatsQuery = query(chatCollection);
+
+  return await fetchData<Chat>(fetchChatsQuery);
+}

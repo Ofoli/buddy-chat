@@ -6,10 +6,10 @@ import {
   deleteDoc,
   query,
   where,
-  getDocs,
 } from "firebase/firestore";
 import {
   createDocRef,
+  fetchData,
   contactCollection,
   CONTACT_COLLECTION,
 } from "../index/db";
@@ -71,19 +71,5 @@ export async function fetchContactsApiRequest(userId: string) {
     where("userId", "==", userId)
   );
 
-  const contacts: Contact[] = [];
-  const contactsSnapshot = await getDocs(fetchContactQuery);
-  contactsSnapshot.forEach((doc) => {
-    const data = doc.data();
-    const contact = {
-      id: doc.id,
-      fullname: data.fullname,
-      email: data.email,
-      userId: data.userId,
-      photoUrl: data.photoUrl ?? "",
-    };
-    contacts.push(contact);
-  });
-
-  return contacts;
+  return await fetchData<Contact>(fetchContactQuery);
 }

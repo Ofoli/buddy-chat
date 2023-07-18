@@ -1,4 +1,5 @@
 import RecentChat from "../components/RecentChat";
+import useRecentChatsLogic from "../logic-hooks/recent-chats";
 
 const styles = {
   height: "800px",
@@ -6,79 +7,18 @@ const styles = {
 };
 
 export default function RecentChats() {
-  const recentChats = [
-    {
-      id: "chat_00",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-    {
-      id: "chat_01",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-    {
-      id: "chat_02",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-    {
-      id: "chat_03",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-    {
-      id: "chat_04",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-    {
-      id: "chat_05",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-    {
-      id: "chat_06",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-    {
-      id: "chat_07",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-    {
-      id: "chat_08",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-    {
-      id: "chat_09",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-    {
-      id: "chat_10",
-      name: "Albert Kubus",
-      message: "hi, how are you",
-      picUrl: "",
-    },
-  ];
+  const { recentChats, getContactInfo, handleRecentChatClick } =
+    useRecentChatsLogic();
 
   return (
     <div style={styles}>
-      {recentChats.map((recentChat) => (
-        <RecentChat key={recentChat.id} chat={recentChat} />
+      {recentChats.map(({ id, message, channelId }) => (
+        <RecentChat
+          key={id}
+          message={message}
+          contactInfo={getContactInfo(channelId)}
+          onClick={() => handleRecentChatClick(channelId)}
+        />
       ))}
     </div>
   );

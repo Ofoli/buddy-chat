@@ -1,4 +1,4 @@
-import ChatInput from "../components/ChatInput";
+import ChatInputForm from "./AddChat";
 import Chats from "./Chats";
 import ChatSpaceHeader from "./ChatSpaceHeader";
 
@@ -10,7 +10,7 @@ export default function ChatSpace() {
     <div style={styles}>
       <ChatSpaceHeader />
       <Chats />
-      <ChatInput />
+      <ChatInputForm />
     </div>
   );
 }
