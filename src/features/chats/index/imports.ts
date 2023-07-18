@@ -5,10 +5,8 @@ import BaseButton from "../../../components/form/button";
 import CardTemplate from "../../../components/ui/CardTemplate";
 import { logoutRequested } from "../../../libs/redux/ducks/auth";
 import useReduxHooks from "../../../libs/redux/use-redux";
+import { requestCreateChat } from "../../../libs/redux/ducks/chat";
 
-import type { AuthState, UIState } from "../../../types/store-slices";
-
-export type { AuthState, UIState };
 export {
   CustomMenu,
   BasicFormContainer,
@@ -19,4 +17,5 @@ export {
   //redux
   logoutRequested,
   useReduxHooks,
+  requestCreateChat,
 };

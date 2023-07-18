@@ -48,8 +48,12 @@ export default function chatReducer(
   switch (type) {
     case CREATE_CHAT_SUCCESSFUL: {
       const chat = payload as Chat;
+      const uniqueRecentChats = state.recentChats.filter(
+        (c) => c.channelId !== chat.channelId
+      );
+      const updatedRecentChats = [...uniqueRecentChats, chat];
       return {
-        recentChats: [...state.recentChats, chat],
+        recentChats: updatedRecentChats,
         chats: [...state.chats, chat],
       };
     }
@@ -62,6 +66,6 @@ export default function chatReducer(
       return { ...state, recentChats };
     }
     default:
-      return initialState;
+      return state;
   }
 }

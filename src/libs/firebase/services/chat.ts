@@ -9,7 +9,7 @@ import {
 import {
   createDocRef,
   fetchData,
-  chatCollection,
+  getChatCollection,
   recentChatCollection,
   CHAT_COLLECTION,
   RECENT_CHAT_COLLECTION,
@@ -17,11 +17,13 @@ import {
 import type { Chat, ChatData } from "../../../types/user";
 
 export async function createChatApiRequest(data: ChatData): Promise<Chat> {
+  const chatCollection = getChatCollection(data.channelId);
   const createdChat = await addDoc(chatCollection, {
     ...data,
     createdAt: serverTimestamp(),
   });
-  const chatDocRef = createDocRef(CHAT_COLLECTION, createdChat.id);
+  const channelCollection = `${CHAT_COLLECTION}/ch_${data.channelId}/${data.channelId}`;
+  const chatDocRef = createDocRef(channelCollection, createdChat.id);
   const chatDoc = await getDoc(chatDocRef);
 
   if (!chatDoc.exists) throw new Error("Failed to add chats");
@@ -39,7 +41,7 @@ export async function createChatApiRequest(data: ChatData): Promise<Chat> {
   return {
     ...data,
     id: createdChat.id,
-    createdAt: chat.createdAt,
+    createdAt: "",
   };
 }
 export async function fetchRecentChatsApiRequest(userId: string) {
@@ -52,10 +54,8 @@ export async function fetchRecentChatsApiRequest(userId: string) {
   return await fetchData<Chat>(recentChatsQuery);
 }
 export async function fetchChatHistoryApiRequest(channelId: string) {
-  const fetchChatsQuery = query(
-    recentChatCollection,
-    where("channelId", "==", channelId)
-  );
+  const chatCollection = getChatCollection(channelId);
+  const fetchChatsQuery = query(chatCollection);
 
   return await fetchData<Chat>(fetchChatsQuery);
 }

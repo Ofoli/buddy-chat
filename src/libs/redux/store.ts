@@ -3,11 +3,12 @@ import createSagaMiddleware from "redux-saga";
 import rootReducer from "./root-reducer";
 import rootSaga from "../sagas/root";
 
+const BUDDY_CHAT_STORAGE = "buddy-chat";
 //functions to persist state in local storage
 const saveStateToLocalStorage = (state: StoreType) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem("partner-admin-panel", serializedState);
+    localStorage.setItem(BUDDY_CHAT_STORAGE, serializedState);
   } catch (err) {
     console.log(err);
   }
@@ -15,7 +16,7 @@ const saveStateToLocalStorage = (state: StoreType) => {
 
 const loadStateFromLocalStorage = () => {
   try {
-    const serializedState = localStorage.getItem("partner-admin-panel");
+    const serializedState = localStorage.getItem(BUDDY_CHAT_STORAGE);
     if (serializedState == null) {
       return undefined;
     }

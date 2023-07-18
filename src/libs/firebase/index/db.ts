@@ -8,9 +8,10 @@ export const CHAT_COLLECTION = "chats";
 export const RECENT_CHAT_COLLECTION = "recentChats";
 
 export const userCollection = collection(db, USER_COLLECTION);
-export const chatCollection = collection(db, CHAT_COLLECTION);
 export const contactCollection = collection(db, CONTACT_COLLECTION);
 export const recentChatCollection = collection(db, RECENT_CHAT_COLLECTION);
+export const getChatCollection = (channelId: string) =>
+  collection(db, `${CHAT_COLLECTION}/ch_${channelId}/${channelId}`);
 
 export const createDocRef = (col: string, id: string) => doc(db, col, id);
 export async function fetchData<T>(query: Query<DocumentData>) {
