@@ -15,6 +15,7 @@ type UIState = {
 
 type ContactState = {
   selectedContactId: string;
+  isSelectedContactActive: boolean;
   contacts: Contact[];
 };
 

@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { useState, createContext, useContext, SetStateAction } from "react";
+import { useState, createContext, useContext } from "react";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import classes from "../styles/side-space.module.css";
 import RecentChats from "../../chats/containers/RecentChats";

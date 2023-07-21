@@ -14,11 +14,11 @@ import {
 } from "../../../libs/redux/ducks/contact";
 import type {
   Contact,
-  DeleteContactType,
+  DeleteContactData,
   ContactData,
 } from "../../../types/user";
 
-export type { Contact, DeleteContactType, ContactData };
+export type { Contact, DeleteContactData, ContactData };
 
 export {
   CustomMenu,

@@ -13,7 +13,7 @@ import {
   deleteContactApiRequest,
   fetchContactsApiRequest,
 } from "../firebase/services/contact";
-import type { Contact, DeleteContactType } from "../../types/user";
+import type { Contact, DeleteContactData } from "../../types/user";
 import type { FirebaseError } from "firebase/app";
 
 function* createContact({
@@ -65,7 +65,7 @@ function* deleteContact({
 }: ReturnType<typeof actions.requestDeleteContact>) {
   try {
     yield put(startAction(actions.DELETE_CONTACT_REQUESTED));
-    const contact: DeleteContactType = yield deleteContactApiRequest(payload);
+    const contact: DeleteContactData = yield deleteContactApiRequest(payload);
     yield put(actions.receiveDeleteContactSuccess(contact.id));
   } catch (err) {
     const { message } = err as FirebaseError;

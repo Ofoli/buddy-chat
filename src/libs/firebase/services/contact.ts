@@ -1,9 +1,9 @@
 import {
   serverTimestamp,
-  setDoc,
   getDoc,
   addDoc,
   deleteDoc,
+  updateDoc,
   query,
   where,
 } from "firebase/firestore";
@@ -16,19 +16,30 @@ import {
 import type {
   ContactData,
   Contact,
-  DeleteContactType,
+  UpdateContactData,
+  DeleteContactData,
 } from "../../../types/user";
+import { fetchUserByEmailApiRequest } from "./user";
 
 export async function createContactApiRequest(contact: ContactData) {
+  const isContactActive = isContactActiveApiRequest(contact.email);
+
   const newContact = await addDoc(contactCollection, {
     ...contact,
+    photoUrl: "",
+    isActive: isContactActive,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
 
-  return { ...contact, id: newContact.id, photoUrl: "" };
+  const newContactRef = createDocRef(CONTACT_COLLECTION, newContact.id);
+  const newContactDoc = await getDoc(newContactRef);
+  const newContactInfo = newContactDoc.data();
+
+  return { id: newContactDoc.id, ...newContactInfo } as Contact;
 }
-export async function updateContactApiRequest(contact: Contact) {
+export async function updateContactApiRequest(data: UpdateContactData) {
+  const { userId, contact } = data;
   const contactRef = createDocRef(CONTACT_COLLECTION, contact.id);
   const contactDoc = await getDoc(contactRef);
 
@@ -37,11 +48,11 @@ export async function updateContactApiRequest(contact: Contact) {
   const currentContactInfo = contactDoc.data();
   if (!currentContactInfo) throw new Error("Could Not Fetch Contact to update");
 
-  if (contact.userId !== currentContactInfo.userId) {
+  if (currentContactInfo.ownerId !== userId) {
     throw new Error("You cannot update this contact");
   }
 
-  await setDoc(contactRef, {
+  await updateDoc(contactRef, {
     ...currentContactInfo,
     ...contact,
     updatedAt: serverTimestamp(),
@@ -49,7 +60,7 @@ export async function updateContactApiRequest(contact: Contact) {
 
   return contact;
 }
-export async function deleteContactApiRequest(data: DeleteContactType) {
+export async function deleteContactApiRequest(data: DeleteContactData) {
   const contactRef = createDocRef(CONTACT_COLLECTION, data.id);
   const contactDoc = await getDoc(contactRef);
 
@@ -66,10 +77,26 @@ export async function deleteContactApiRequest(data: DeleteContactType) {
   return data;
 }
 export async function fetchContactsApiRequest(userId: string) {
-  const fetchContactQuery = query(
+  const fetchContactsQuery = query(
     contactCollection,
     where("userId", "==", userId)
   );
 
-  return await fetchData<Contact>(fetchContactQuery);
+  return await fetchData<Contact>(fetchContactsQuery);
+}
+
+export async function fetchContactApiRequest(email: string) {
+  const fetchContactQuery = query(
+    contactCollection,
+    where("email", "==", email)
+  );
+
+  const res = await fetchData<Contact>(fetchContactQuery);
+  if (res.length === 1) return res[1];
+  return null;
+}
+
+export async function isContactActiveApiRequest(email: string) {
+  const user = await fetchUserByEmailApiRequest(email);
+  return user !== null;
 }

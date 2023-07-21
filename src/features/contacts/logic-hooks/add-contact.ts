@@ -20,7 +20,7 @@ export default function useAddContactLogic(onClose: () => void) {
   );
 
   const handleSubmit = (data: ContactFormData) =>
-    dispatch(requestAddContact({ ...data, userId: user!.id }));
+    dispatch(requestAddContact({ ...data, ownerId: user!.id }));
   const closeModal = () => {
     onClose();
     setTimeout(
