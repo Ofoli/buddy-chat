@@ -22,7 +22,7 @@ import type {
 import { fetchUserByEmailApiRequest } from "./user";
 
 export async function createContactApiRequest(contact: ContactData) {
-  const isContactActive = isContactActiveApiRequest(contact.email);
+  const isContactActive = await isContactActiveApiRequest(contact.email);
 
   const newContact = await addDoc(contactCollection, {
     ...contact,
@@ -32,11 +32,10 @@ export async function createContactApiRequest(contact: ContactData) {
     updatedAt: serverTimestamp(),
   });
 
-  const newContactRef = createDocRef(CONTACT_COLLECTION, newContact.id);
-  const newContactDoc = await getDoc(newContactRef);
-  const newContactInfo = newContactDoc.data();
+  const contactInfo = await fetchContactApiRequest(newContact.id);
+  if (contactInfo === null) throw new Error("Contact Could not be fetched");
 
-  return { id: newContactDoc.id, ...newContactInfo } as Contact;
+  return contactInfo;
 }
 export async function updateContactApiRequest(data: UpdateContactData) {
   const { userId, contact } = data;
@@ -84,8 +83,18 @@ export async function fetchContactsApiRequest(userId: string) {
 
   return await fetchData<Contact>(fetchContactsQuery);
 }
+async function fetchContactApiRequest(contactId: string) {
+  const contactRef = createDocRef(CONTACT_COLLECTION, contactId);
+  const contactDoc = await getDoc(contactRef);
 
-export async function fetchContactApiRequest(email: string) {
+  if (!contactDoc.exists) return null;
+
+  const contact = contactDoc.data();
+  if (!contact) throw new Error("Could Not Fetch User Info");
+
+  return { id: contactId, ...contact } as Contact;
+}
+export async function fetchContactByEmailApiRequest(email: string) {
   const fetchContactQuery = query(
     contactCollection,
     where("email", "==", email)

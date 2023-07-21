@@ -22,9 +22,9 @@ import type { User, LoginData, RegisterData } from "../../../types/user";
 export async function registerUserApiRequest(data: RegisterData) {
   const { fullname, email, password } = data;
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
-  const { uid: id, photoURL } = user;
+  const { uid: id } = user;
 
-  const setUserDocRef = createDocRef(USER_COLLECTION, user.uid);
+  const setUserDocRef = createDocRef(USER_COLLECTION, id);
   await setDoc(setUserDocRef, {
     fullname,
     email,
@@ -33,7 +33,15 @@ export async function registerUserApiRequest(data: RegisterData) {
     updatedAt: serverTimestamp(),
   });
 
-  return { email, fullname, id, photoUrl: photoURL ?? "" };
+  const userInfo = await fetchUserApiRequest(id);
+
+  if (userInfo === null) {
+    throw new Error(
+      "Login attempt failed after registration \n Continue at login page"
+    );
+  }
+
+  return userInfo;
 }
 export async function loginUserApiRequest(data: LoginData) {
   const { email, password } = data;
