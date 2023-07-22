@@ -1,13 +1,21 @@
+type Timestamp = {
+  seconds: number;
+  nanoseconds: number;
+};
+
 export interface User {
   id: string;
   email: string;
   fullname: string;
   photoUrl: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  // onlineStatus: "Online" | "Offline";
 }
 
 export interface Contact extends User {
+  ownerId: string;
   userId: string;
-  // onlineStatus: "Online" | "Offline";
 }
 
 export interface Chat {
@@ -34,10 +42,15 @@ export type RegisterData = LoginData & {
 export type ContactData = {
   fullname: string;
   email: string;
+  ownerId: string;
+};
+
+export type DeleteContactData = {
+  id: string;
   userId: string;
 };
 
-export type DeleteContactType = {
-  id: string;
+export type UpdateContactData = {
   userId: string;
+  contact: Contact;
 };

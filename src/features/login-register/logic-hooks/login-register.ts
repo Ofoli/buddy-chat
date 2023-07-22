@@ -7,7 +7,6 @@ import {
   LOGIN_REQUESTED,
   REGISTER_REQUESTED,
 } from "../../../libs/redux/ducks/auth";
-import { UIState } from "../../../types/store-slices";
 import { removeRequestError } from "../../../libs/redux/ducks/ui";
 
 type ComponentType = "Login" | "Register";

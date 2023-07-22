@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import {
   useReduxHooks,
   requestFetchContacts,
-  setSelectedContact,
+  setSelectedBuddy,
   useSideSpaceContext,
 } from "../index/imports";
 
@@ -11,13 +11,18 @@ export default function useContactsLogicHook() {
   const { setShowContacts } = useSideSpaceContext();
   const { dispatch, slices } = useReduxHooks();
   const { user } = slices.authSlice;
-  const { contacts } = slices.contactSlice;
+  const contacts = slices.contactSlice;
 
   const openAddContactForm = () => setIsAddContactFormOpen(true);
   const closeAddContactForm = () => setIsAddContactFormOpen(false);
   const handleContactClick = (id: string) => {
+    const contact = contacts.find((c) => c.id === id)!;
+    const buddyId = contact.userId;
+
+    if (buddyId === "") return;
+
     setShowContacts(false);
-    dispatch(setSelectedContact(id));
+    return dispatch(setSelectedBuddy(buddyId));
   };
 
   useEffect(() => {

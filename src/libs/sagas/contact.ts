@@ -12,8 +12,9 @@ import {
   updateContactApiRequest,
   deleteContactApiRequest,
   fetchContactsApiRequest,
+  updateContactUserIdsApiRequest,
 } from "../firebase/services/contact";
-import type { Contact, DeleteContactType } from "../../types/user";
+import type { Contact, DeleteContactData } from "../../types/user";
 import type { FirebaseError } from "firebase/app";
 
 function* createContact({
@@ -65,7 +66,7 @@ function* deleteContact({
 }: ReturnType<typeof actions.requestDeleteContact>) {
   try {
     yield put(startAction(actions.DELETE_CONTACT_REQUESTED));
-    const contact: DeleteContactType = yield deleteContactApiRequest(payload);
+    const contact: DeleteContactData = yield deleteContactApiRequest(payload);
     yield put(actions.receiveDeleteContactSuccess(contact.id));
   } catch (err) {
     const { message } = err as FirebaseError;
@@ -79,7 +80,6 @@ function* deleteContact({
     yield put(stopAction(actions.DELETE_CONTACT_REQUESTED));
   }
 }
-
 function* fetchContacts({
   payload,
 }: ReturnType<typeof actions.requestFetchContacts>) {
@@ -99,7 +99,25 @@ function* fetchContacts({
     yield put(stopAction(actions.FETCH_CONTACTS_REQUESTED));
   }
 }
-
+function* updateContactsWithUserId({
+  payload,
+}: ReturnType<typeof actions.requestUpdateContactsWithUserId>) {
+  try {
+    yield put(startAction(actions.UPDATE_CONTACTS_WITH_USERID_REQUESTED));
+    yield updateContactUserIdsApiRequest(payload);
+  } catch (err) {
+    const { message } = err as FirebaseError;
+    yield put(
+      addRequestError({
+        action: actions.UPDATE_CONTACTS_WITH_USERID_REQUESTED,
+        message,
+      })
+    );
+  } finally {
+    yield put(stopAction(actions.UPDATE_CONTACTS_WITH_USERID_REQUESTED));
+    yield put(actions.requestFetchContacts(payload.id));
+  }
+}
 /*
 ===== CONTACT WATCHERS =====
 */
@@ -107,16 +125,20 @@ function* fetchContacts({
 function* watchCreateContactRequest() {
   yield takeLatest(actions.ADD_CONTACT_REQUESTED, createContact);
 }
-
 function* watchUpdateContactRequest() {
   yield takeLatest(actions.UPDATE_CONTACT_REQUESTED, updateContact);
 }
 function* watchDeleteContactRequest() {
   yield takeLatest(actions.DELETE_CONTACT_REQUESTED, deleteContact);
 }
-
 function* watchfetchContactsRequest() {
   yield takeLatest(actions.FETCH_CONTACTS_REQUESTED, fetchContacts);
+}
+function* watchUpdateContactsWithUserId() {
+  yield takeLatest(
+    actions.UPDATE_CONTACTS_WITH_USERID_REQUESTED,
+    updateContactsWithUserId
+  );
 }
 
 export default function* contactSaga() {
@@ -125,6 +147,7 @@ export default function* contactSaga() {
     watchUpdateContactRequest,
     watchDeleteContactRequest,
     watchfetchContactsRequest,
+    watchUpdateContactsWithUserId,
   ]);
   yield all(sagas);
 }

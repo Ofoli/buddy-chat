@@ -1,13 +1,26 @@
 import type { Chat, ChatData } from "../../../types/user";
 import type { ChatState } from "../../../types/store-slices";
 
-export const CREATE_CHAT_REQUESTED = "CREATE_CHAT_REQUESTED";
-export const FETCH_RECENT_CHATS_REQUESTED = "FETCH_RECENT_CHATS_REQUESTED";
-export const FETCH_CHATS_REQUESTED = "FETCH_CHATS_REQUESTED";
+type ChatPayload = string | Chat | Chat[];
 
-export const CREATE_CHAT_SUCCESSFUL = "CREATE_CHAT_SUCCESSFUL";
-export const FETCH_RECENT_CHATS_SUCCESSFUL = "FETCH_RECENT_CHATS_SUCCESSFUL";
-export const FETCH_CHATS_SUCCESSFUL = "FECTH_CHATS_SUCESSFUL";
+export const SELECT_BUDDY = "SELECT_BUDDY";
+export const CLEAR_SELECTED_BUDDY = "CLEAR_SELECTED_BUDDY";
+
+export const CREATE_CHAT_REQUESTED = "CREATE_CHAT_REQUESTED";
+export const FETCH_CHATS_REQUESTED = "FETCH_CHATS_REQUESTED";
+export const IS_BUDDY_ACTIVE_REQUESTED = "IS_BUDDY_ACTIVE_REQUESTED";
+export const FETCH_RECENT_CHATS_REQUESTED = "FETCH_RECENT_CHATS_REQUESTED";
+
+const CREATE_CHAT_SUCCESSFUL = "CREATE_CHAT_SUCCESSFUL";
+const FETCH_CHATS_SUCCESSFUL = "FECTH_CHATS_SUCCESSFUL";
+const IS_BUDDY_ACTIVE_SUCCESS = "IS_BUDDY_ACTIVE_SUCCESS";
+const FETCH_RECENT_CHATS_SUCCESSFUL = "FETCH_RECENT_CHATS_SUCCESSFUL";
+
+export const clearSelectedBuddy = () => ({ type: CLEAR_SELECTED_BUDDY });
+export const setSelectedBuddy = (id: string) => ({
+  type: SELECT_BUDDY,
+  payload: id,
+});
 
 export const requestCreateChat = (payload: ChatData) => ({
   type: CREATE_CHAT_REQUESTED,
@@ -20,6 +33,10 @@ export const requestFetchRecentChats = (userId: string) => ({
 export const requestFetchChats = (channelId: string) => ({
   type: FETCH_CHATS_REQUESTED,
   payload: channelId,
+});
+export const requestIsBuddyActive = (email: string) => ({
+  type: IS_BUDDY_ACTIVE_REQUESTED,
+  payload: email,
 });
 
 export const receiveCreateChat = (payload: Chat) => ({
@@ -34,15 +51,20 @@ export const receiveFetchChats = (payload: Chat[]) => ({
   type: FETCH_CHATS_SUCCESSFUL,
   payload,
 });
+export const receiveIsBuddyActiveSuccess = (isActive: boolean) => ({
+  type: IS_BUDDY_ACTIVE_SUCCESS,
+  payload: isActive,
+});
 
 const initialState: ChatState = {
   recentChats: [],
   chats: [],
+  buddyId: "NO_BUDDY_SELECTED",
 };
 
 export default function chatReducer(
   state = initialState,
-  action: { type: string; payload: Chat | Chat[] }
+  action: { type: string; payload: ChatPayload }
 ): ChatState {
   const { type, payload } = action;
   switch (type) {
@@ -53,6 +75,7 @@ export default function chatReducer(
       );
       const updatedRecentChats = [...uniqueRecentChats, chat];
       return {
+        ...state,
         recentChats: updatedRecentChats,
         chats: [...state.chats, chat],
       };
@@ -64,6 +87,12 @@ export default function chatReducer(
     case FETCH_RECENT_CHATS_SUCCESSFUL: {
       const recentChats = payload as Chat[];
       return { ...state, recentChats };
+    }
+    case SELECT_BUDDY: {
+      return { ...state, buddyId: payload as string };
+    }
+    case CLEAR_SELECTED_BUDDY: {
+      return { ...state, buddyId: "NO_BUDDY_SELECTED" };
     }
     default:
       return state;

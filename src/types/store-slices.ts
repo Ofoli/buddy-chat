@@ -13,14 +13,12 @@ type UIState = {
   isResultPanelOpen: boolean;
 };
 
-type ContactState = {
-  selectedContactId: string;
-  contacts: Contact[];
-};
+type ContactState = Contact[];
 
 type ChatState = {
   recentChats: Chat[];
   chats: Chat[];
+  buddyId: string;
 };
 
 export type { AuthState, UIState, ContactState, ChatState };

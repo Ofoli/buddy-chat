@@ -1,6 +1,7 @@
 import classes from "../styles/chats-and-chat.module.css";
 import Chat from "../components/Chat";
 import useChatsLogic from "../logic-hooks/chats";
+
 export default function Chats() {
   const { chats, userId } = useChatsLogic();
 

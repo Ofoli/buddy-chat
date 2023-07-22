@@ -16,7 +16,9 @@ function AddContact({ onClose }: AddContactProps) {
       onSubmit={handleSubmit}
       isLoading={isLoading}
     >
-      <p>{error !== undefined && error.message}</p>
+      <p style={{ color: "red", textAlign: "center", fontWeight: "bold" }}>
+        {error !== undefined && error.message}
+      </p>
       <Text name="fullname" label="Full Name" type="text" />
       <Text name="email" label="Email" type="email" />
     </BasicFormContainer>

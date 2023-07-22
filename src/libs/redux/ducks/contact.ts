@@ -2,27 +2,23 @@ import type { ContactState } from "../../../types/store-slices";
 import type {
   Contact,
   ContactData,
-  DeleteContactType,
+  DeleteContactData,
+  User,
 } from "../../../types/user";
 
-export const SELECT_CONTACT = "SELECT_CONTACT";
-export const CLEAR_SELECTED_CONTACT = "CLEAR_SELECTED_CONTACT";
+type ContactPayload = string | Contact | Contact[];
 
 export const ADD_CONTACT_REQUESTED = "ADD_CONTACT_REQUESTED";
 export const UPDATE_CONTACT_REQUESTED = "UPDATE_CONTACT_REQUESTED";
 export const DELETE_CONTACT_REQUESTED = "DELETE_CONTACT_REQUESTED";
 export const FETCH_CONTACTS_REQUESTED = "FETCH_CONTACTS_REQUESTED";
+export const UPDATE_CONTACTS_WITH_USERID_REQUESTED =
+  "UPDATE_CONTACTS_WITH_USERID_REQUESTED";
 
-export const ADD_CONTACT_SUCCESS = "ADD_CONTACT_SUCCESS";
-export const UPDATE_CONTACT_SUCCESS = "UPDATE_CONTACT_SUCCESS";
-export const DELETE_CONTACT_SUCCESS = "DELETE_CONTACT_SUCCESS";
-export const FETCH_CONTACTS_SUCCESS = "FETCH_CONTACTS_SUCCESS";
-
-export const clearSelectedContact = () => ({ type: CLEAR_SELECTED_CONTACT });
-export const setSelectedContact = (id: string) => ({
-  type: SELECT_CONTACT,
-  payload: id,
-});
+const ADD_CONTACT_SUCCESSFUL = "ADD_CONTACT_SUCCESSFUL";
+const UPDATE_CONTACT_SUCCESSFUL = "UPDATE_CONTACT_SUCCESSFUL";
+const DELETE_CONTACT_SUCCESSFUL = "DELETE_CONTACT_SUCCESSFUL";
+const FETCH_CONTACTS_SUCCESSFUL = "FETCH_CONTACTS_SUCCESSFUL";
 
 export const requestAddContact = (payload: ContactData) => ({
   type: ADD_CONTACT_REQUESTED,
@@ -32,7 +28,7 @@ export const requestUpdateContact = (payload: Contact) => ({
   type: UPDATE_CONTACT_REQUESTED,
   payload,
 });
-export const requestDeleteContact = (payload: DeleteContactType) => ({
+export const requestDeleteContact = (payload: DeleteContactData) => ({
   type: DELETE_CONTACT_REQUESTED,
   payload,
 });
@@ -40,69 +36,57 @@ export const requestFetchContacts = (userId: string) => ({
   type: FETCH_CONTACTS_REQUESTED,
   payload: userId,
 });
+export const requestUpdateContactsWithUserId = (user: User) => ({
+  type: UPDATE_CONTACTS_WITH_USERID_REQUESTED,
+  payload: user,
+});
 
 export const receiveAddContactSuccess = (payload: Contact) => ({
-  type: ADD_CONTACT_SUCCESS,
+  type: ADD_CONTACT_SUCCESSFUL,
   payload,
 });
 export const receiveUpdateContactSuccess = (payload: Contact) => ({
-  type: UPDATE_CONTACT_SUCCESS,
+  type: UPDATE_CONTACT_SUCCESSFUL,
   payload,
 });
 export const receiveDeleteContactSuccess = (id: string) => ({
-  type: DELETE_CONTACT_SUCCESS,
+  type: DELETE_CONTACT_SUCCESSFUL,
   payload: id,
 });
-
 export const receiveFetchContactsSuccess = (payload: Contact[]) => ({
-  type: FETCH_CONTACTS_SUCCESS,
+  type: FETCH_CONTACTS_SUCCESSFUL,
   payload,
 });
 
-const initialState = {
-  selectedContactId: "",
-  contacts: [],
-};
+const initialState: ContactState = [];
 
 export default function contactReducer(
-  state: ContactState = initialState,
-  action: { type: string; payload: string | Contact | Contact[] }
+  state = initialState,
+  action: { type: string; payload: ContactPayload }
 ): ContactState {
   const { type, payload } = action;
   switch (type) {
-    case SELECT_CONTACT: {
-      return { ...state, selectedContactId: payload as string };
-    }
-    case CLEAR_SELECTED_CONTACT: {
-      return { ...state, selectedContactId: "" };
-    }
-    case ADD_CONTACT_SUCCESS: {
+    case ADD_CONTACT_SUCCESSFUL: {
       const contact = payload as Contact;
-      return { ...state, contacts: [...state.contacts, contact] };
+      return [...state, contact];
     }
-    case UPDATE_CONTACT_SUCCESS: {
+    case UPDATE_CONTACT_SUCCESSFUL: {
       const updatedContact = payload as Contact;
-      return {
-        ...state,
-        contacts: state.contacts.map((contact) =>
-          contact.id === updatedContact.id ? updatedContact : contact
-        ),
-      };
+      const updatedContacts = state.map((contact) =>
+        contact.id === updatedContact.id ? updatedContact : contact
+      );
+      return updatedContacts;
     }
-    case DELETE_CONTACT_SUCCESS: {
+    case DELETE_CONTACT_SUCCESSFUL: {
       const deletedContactId = payload as string;
-      return {
-        ...state,
-        contacts: state.contacts.filter(
-          (contact) => contact.id !== deletedContactId
-        ),
-      };
+      const updatedContacts = state.filter(
+        (contact) => contact.id !== deletedContactId
+      );
+      return updatedContacts;
     }
-    case FETCH_CONTACTS_SUCCESS: {
-      const contacts = payload as Contact[];
-      return { ...state, contacts };
+    case FETCH_CONTACTS_SUCCESSFUL: {
+      return payload as Contact[];
     }
-
     default:
       return state;
   }

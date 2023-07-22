@@ -5,6 +5,8 @@ import {
   addDoc,
   query,
   where,
+  orderBy,
+  onSnapshot,
 } from "firebase/firestore";
 import {
   createDocRef,
@@ -14,6 +16,7 @@ import {
   CHAT_COLLECTION,
   RECENT_CHAT_COLLECTION,
 } from "../index/db";
+import { QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 import type { Chat, ChatData } from "../../../types/user";
 
 export async function createChatApiRequest(data: ChatData): Promise<Chat> {
@@ -55,7 +58,20 @@ export async function fetchRecentChatsApiRequest(userId: string) {
 }
 export async function fetchChatHistoryApiRequest(channelId: string) {
   const chatCollection = getChatCollection(channelId);
-  const fetchChatsQuery = query(chatCollection);
+  const fetchChatsQuery = query(chatCollection, orderBy("createdAt"));
 
   return await fetchData<Chat>(fetchChatsQuery);
+}
+
+export function monitorOngoingChats(
+  channelId: string,
+  updator: (doc: QueryDocumentSnapshot<DocumentData>) => void
+) {
+  const chatCollection = getChatCollection(channelId);
+  const searchQuery = query(chatCollection, orderBy("createdAt"));
+  return onSnapshot(searchQuery, (querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      updator(doc);
+    });
+  });
 }

@@ -7,7 +7,7 @@ const styles = {
 };
 
 export default function RecentChats() {
-  const { recentChats, getContactInfo, handleRecentChatClick } =
+  const { recentChats, getBuddyInfo, handleRecentChatClick } =
     useRecentChatsLogic();
 
   return (
@@ -16,7 +16,7 @@ export default function RecentChats() {
         <RecentChat
           key={id}
           message={message}
-          contactInfo={getContactInfo(channelId)}
+          contactInfo={getBuddyInfo(channelId)}
           onClick={() => handleRecentChatClick(channelId)}
         />
       ))}
