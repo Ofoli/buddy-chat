@@ -10,8 +10,12 @@ import {
   ADD_CONTACT_REQUESTED,
   requestAddContact,
   requestFetchContacts,
-  setSelectedContact,
+  requestIsActiveUser,
 } from "../../../libs/redux/ducks/contact";
+import {
+  setSelectedBuddy,
+  clearSelectedBuddy,
+} from "../../../libs/redux/ducks/chat";
 import type {
   Contact,
   DeleteContactData,
@@ -30,8 +34,10 @@ export {
   //redux
   ADD_CONTACT_REQUESTED,
   useReduxHooks,
-  setSelectedContact,
+  setSelectedBuddy,
+  clearSelectedBuddy,
   requestAddContact,
   requestFetchContacts,
+  requestIsActiveUser,
   removeRequestSuccessMessage,
 };

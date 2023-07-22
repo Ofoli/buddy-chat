@@ -6,7 +6,7 @@ export default function useAddChatLogic() {
   const [message, setMessage] = useState("");
   const { dispatch, slices } = useReduxHooks();
   const { id: source } = slices.authSlice.user!;
-  const { selectedContactId: destination } = slices.contactSlice;
+  const { buddyId: destination } = slices.chatSlice;
 
   const handleMessageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const message = e.currentTarget.value;
@@ -15,7 +15,7 @@ export default function useAddChatLogic() {
 
   const handleChatSubmit = () => {
     if (message === "") return;
-    const channelId = getChannelId(source, destination);
+    const channelId = createChannelId(source, destination);
     setMessage("");
     dispatch(requestCreateChat({ channelId, message, source, destination }));
   };
@@ -32,5 +32,5 @@ export default function useAddChatLogic() {
   };
 }
 
-export const getChannelId = (src: string, dst: string) =>
+export const createChannelId = (src: string, dst: string) =>
   [src, dst].sort().join("-");

@@ -14,8 +14,8 @@ export interface User {
 }
 
 export interface Contact extends User {
-  isActive: boolean;
   ownerId: string;
+  userId: string;
 }
 
 export interface Chat {

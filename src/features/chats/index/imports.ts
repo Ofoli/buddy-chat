@@ -5,8 +5,14 @@ import BaseButton from "../../../components/form/button";
 import CardTemplate from "../../../components/ui/CardTemplate";
 import useReduxHooks from "../../../libs/redux/use-redux";
 import { logoutRequested } from "../../../libs/redux/ducks/auth";
-import { requestCreateChat } from "../../../libs/redux/ducks/chat";
-import { setSelectedContact } from "../../../libs/redux/ducks/contact";
+import {
+  requestCreateChat,
+  setSelectedBuddy,
+} from "../../../libs/redux/ducks/chat";
+import { monitorOngoingChats } from "../../../libs/firebase/services/chat";
+import { QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
+
+export type ChatDoc = QueryDocumentSnapshot<DocumentData>;
 
 export {
   CustomMenu,
@@ -19,5 +25,7 @@ export {
   logoutRequested,
   useReduxHooks,
   requestCreateChat,
-  setSelectedContact,
+  setSelectedBuddy,
+  // firebase
+  monitorOngoingChats,
 };

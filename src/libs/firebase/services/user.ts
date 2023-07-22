@@ -69,7 +69,7 @@ export async function fetchUserByEmailApiRequest(email: string) {
   const userQuery = query(userCollection, where("email", "==", email));
   const res = await fetchData<User>(userQuery);
 
-  if (res.length === 1) return res[1];
+  if (res.length === 1) return res.pop();
   return null;
 }
 

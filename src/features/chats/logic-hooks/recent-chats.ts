@@ -1,10 +1,10 @@
-import { useReduxHooks, setSelectedContact } from "../index/imports";
+import { useReduxHooks, setSelectedBuddy } from "../index/imports";
 
 export default function useRecentChatsLogic() {
   const { dispatch, slices } = useReduxHooks();
   const { user } = slices.authSlice;
   const { recentChats } = slices.chatSlice;
-  const { contacts } = slices.contactSlice;
+  const contacts = slices.contactSlice;
 
   const getContactInfo = (channelId: string) => {
     const contactId = getContactIdFromChannelId(user!.id, channelId);
@@ -16,7 +16,8 @@ export default function useRecentChatsLogic() {
 
   const handleRecentChatClick = (channelId: string) => {
     const contactId = getContactIdFromChannelId(user!.id, channelId);
-    dispatch(setSelectedContact(contactId));
+    const buddyId = contacts.find((c) => c.id === contactId)!.userId;
+    dispatch(setSelectedBuddy(buddyId));
   };
 
   return { recentChats, getContactInfo, handleRecentChatClick };
