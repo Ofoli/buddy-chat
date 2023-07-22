@@ -3,6 +3,7 @@ import type {
   Contact,
   ContactData,
   DeleteContactData,
+  User,
 } from "../../../types/user";
 
 type ContactPayload = string | Contact | Contact[];
@@ -11,7 +12,8 @@ export const ADD_CONTACT_REQUESTED = "ADD_CONTACT_REQUESTED";
 export const UPDATE_CONTACT_REQUESTED = "UPDATE_CONTACT_REQUESTED";
 export const DELETE_CONTACT_REQUESTED = "DELETE_CONTACT_REQUESTED";
 export const FETCH_CONTACTS_REQUESTED = "FETCH_CONTACTS_REQUESTED";
-export const IS_ACTIVE_USER_REQUESTED = "IS_ACTIVE_USER_REQUESTED";
+export const UPDATE_CONTACTS_WITH_USERID_REQUESTED =
+  "UPDATE_CONTACTS_WITH_USERID_REQUESTED";
 
 const ADD_CONTACT_SUCCESSFUL = "ADD_CONTACT_SUCCESSFUL";
 const UPDATE_CONTACT_SUCCESSFUL = "UPDATE_CONTACT_SUCCESSFUL";
@@ -34,9 +36,9 @@ export const requestFetchContacts = (userId: string) => ({
   type: FETCH_CONTACTS_REQUESTED,
   payload: userId,
 });
-export const requestIsActiveUser = (contact: Contact) => ({
-  type: IS_ACTIVE_USER_REQUESTED,
-  payload: contact,
+export const requestUpdateContactsWithUserId = (user: User) => ({
+  type: UPDATE_CONTACTS_WITH_USERID_REQUESTED,
+  payload: user,
 });
 
 export const receiveAddContactSuccess = (payload: Contact) => ({

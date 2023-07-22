@@ -20,9 +20,17 @@ import type {
 } from "../../../types/user";
 import { fetchUserByEmailApiRequest } from "./user";
 
-export async function createContactApiRequest(contact: ContactData) {
-  const contactUser = await fetchUserByEmailApiRequest(contact.email);
+type UpdateUserId = {
+  id: string;
+  email: string;
+};
 
+export async function createContactApiRequest(contact: ContactData) {
+  const existingContact = await fetchContactByEmailApiRequest(contact.email);
+  console.log({ existingContact });
+  if (existingContact !== null) throw new Error("Contact already exist");
+
+  const contactUser = await fetchUserByEmailApiRequest(contact.email);
   const newContact = await addDoc(contactCollection, {
     ...contact,
     photoUrl: "",
@@ -96,6 +104,23 @@ export async function fetchContactByEmailApiRequest(email: string) {
   );
 
   const res = await fetchData<Contact>(fetchContactQuery);
-  if (res.length === 1) return res[1];
+  if (res.length > 0) return res[0];
   return null;
+}
+export async function updateContactUserIdsApiRequest(data: UpdateUserId) {
+  const fetchContactsQuery = query(
+    contactCollection,
+    where("email", "==", data.email),
+    where("userId", "==", "")
+  );
+
+  const contacts = await fetchData<Contact>(fetchContactsQuery);
+
+  for (const contact of contacts) {
+    const contactRef = createDocRef(CONTACT_COLLECTION, contact.id);
+    await updateDoc(contactRef, {
+      userId: data.id,
+      updatedAt: serverTimestamp(),
+    });
+  }
 }

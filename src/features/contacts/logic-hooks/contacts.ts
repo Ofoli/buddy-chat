@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import {
   useReduxHooks,
   requestFetchContacts,
-  requestIsActiveUser,
   setSelectedBuddy,
-  clearSelectedBuddy,
   useSideSpaceContext,
 } from "../index/imports";
 
@@ -18,15 +16,13 @@ export default function useContactsLogicHook() {
   const openAddContactForm = () => setIsAddContactFormOpen(true);
   const closeAddContactForm = () => setIsAddContactFormOpen(false);
   const handleContactClick = (id: string) => {
-    setShowContacts(false);
     const contact = contacts.find((c) => c.id === id)!;
     const buddyId = contact.userId;
 
-    if (buddyId !== "") return dispatch(setSelectedBuddy(buddyId));
+    if (buddyId === "") return;
 
-    //check whether the contact is currently active and update it
-    dispatch(clearSelectedBuddy());
-    return dispatch(requestIsActiveUser(contact));
+    setShowContacts(false);
+    return dispatch(setSelectedBuddy(buddyId));
   };
 
   useEffect(() => {

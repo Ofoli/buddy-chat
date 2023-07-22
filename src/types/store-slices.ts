@@ -19,7 +19,6 @@ type ChatState = {
   recentChats: Chat[];
   chats: Chat[];
   buddyId: string;
-  isBuddyActive: boolean;
 };
 
 export type { AuthState, UIState, ContactState, ChatState };

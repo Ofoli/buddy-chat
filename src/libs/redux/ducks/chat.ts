@@ -1,7 +1,7 @@
 import type { Chat, ChatData } from "../../../types/user";
 import type { ChatState } from "../../../types/store-slices";
 
-type ChatPayload = boolean | string | Chat | Chat[];
+type ChatPayload = string | Chat | Chat[];
 
 export const SELECT_BUDDY = "SELECT_BUDDY";
 export const CLEAR_SELECTED_BUDDY = "CLEAR_SELECTED_BUDDY";
@@ -11,10 +11,10 @@ export const FETCH_CHATS_REQUESTED = "FETCH_CHATS_REQUESTED";
 export const IS_BUDDY_ACTIVE_REQUESTED = "IS_BUDDY_ACTIVE_REQUESTED";
 export const FETCH_RECENT_CHATS_REQUESTED = "FETCH_RECENT_CHATS_REQUESTED";
 
-export const CREATE_CHAT_SUCCESSFUL = "CREATE_CHAT_SUCCESSFUL";
-export const FETCH_CHATS_SUCCESSFUL = "FECTH_CHATS_SUCCESSFUL";
-export const IS_BUDDY_ACTIVE_SUCCESS = "IS_BUDDY_ACTIVE_SUCCESS";
-export const FETCH_RECENT_CHATS_SUCCESSFUL = "FETCH_RECENT_CHATS_SUCCESSFUL";
+const CREATE_CHAT_SUCCESSFUL = "CREATE_CHAT_SUCCESSFUL";
+const FETCH_CHATS_SUCCESSFUL = "FECTH_CHATS_SUCCESSFUL";
+const IS_BUDDY_ACTIVE_SUCCESS = "IS_BUDDY_ACTIVE_SUCCESS";
+const FETCH_RECENT_CHATS_SUCCESSFUL = "FETCH_RECENT_CHATS_SUCCESSFUL";
 
 export const clearSelectedBuddy = () => ({ type: CLEAR_SELECTED_BUDDY });
 export const setSelectedBuddy = (id: string) => ({
@@ -59,8 +59,7 @@ export const receiveIsBuddyActiveSuccess = (isActive: boolean) => ({
 const initialState: ChatState = {
   recentChats: [],
   chats: [],
-  buddyId: "",
-  isBuddyActive: false,
+  buddyId: "NO_BUDDY_SELECTED",
 };
 
 export default function chatReducer(
@@ -94,9 +93,6 @@ export default function chatReducer(
     }
     case CLEAR_SELECTED_BUDDY: {
       return { ...state, buddyId: "NO_BUDDY_SELECTED" };
-    }
-    case IS_BUDDY_ACTIVE_SUCCESS: {
-      return { ...state, isBuddyActive: payload as boolean };
     }
     default:
       return state;

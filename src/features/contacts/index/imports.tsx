@@ -10,7 +10,6 @@ import {
   ADD_CONTACT_REQUESTED,
   requestAddContact,
   requestFetchContacts,
-  requestIsActiveUser,
 } from "../../../libs/redux/ducks/contact";
 import {
   setSelectedBuddy,
@@ -38,6 +37,5 @@ export {
   clearSelectedBuddy,
   requestAddContact,
   requestFetchContacts,
-  requestIsActiveUser,
   removeRequestSuccessMessage,
 };

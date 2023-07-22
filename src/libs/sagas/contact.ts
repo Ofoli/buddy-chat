@@ -7,15 +7,14 @@ import {
   addRequestSuccessMessage,
 } from "../redux/ducks/ui";
 import * as actions from "../redux/ducks/contact";
-import { setSelectedBuddy } from "../redux/ducks/chat";
 import {
   createContactApiRequest,
   updateContactApiRequest,
   deleteContactApiRequest,
   fetchContactsApiRequest,
+  updateContactUserIdsApiRequest,
 } from "../firebase/services/contact";
-import { fetchUserByEmailApiRequest } from "../firebase/services/user";
-import type { Contact, DeleteContactData, User } from "../../types/user";
+import type { Contact, DeleteContactData } from "../../types/user";
 import type { FirebaseError } from "firebase/app";
 
 function* createContact({
@@ -100,38 +99,23 @@ function* fetchContacts({
     yield put(stopAction(actions.FETCH_CONTACTS_REQUESTED));
   }
 }
-function* isActiveUser({
+function* updateContactsWithUserId({
   payload,
-}: ReturnType<typeof actions.requestIsActiveUser>) {
-  let updatedContact = null;
+}: ReturnType<typeof actions.requestUpdateContactsWithUserId>) {
   try {
-    yield put(startAction(actions.IS_ACTIVE_USER_REQUESTED));
-    const user: User | null = yield fetchUserByEmailApiRequest(payload.email);
-
-    if (user === null) {
-      yield put(
-        addRequestError({
-          action: actions.IS_ACTIVE_USER_REQUESTED,
-          message: "Sorry, contact is not an active user",
-        })
-      );
-    } else {
-      updatedContact = { ...payload, userId: user.id };
-      yield put(setSelectedBuddy(user.id));
-    }
+    yield put(startAction(actions.UPDATE_CONTACTS_WITH_USERID_REQUESTED));
+    yield updateContactUserIdsApiRequest(payload);
   } catch (err) {
     const { message } = err as FirebaseError;
     yield put(
       addRequestError({
-        action: actions.IS_ACTIVE_USER_REQUESTED,
+        action: actions.UPDATE_CONTACTS_WITH_USERID_REQUESTED,
         message,
       })
     );
   } finally {
-    yield put(stopAction(actions.IS_ACTIVE_USER_REQUESTED));
-    if (updatedContact !== null) {
-      yield put(actions.requestUpdateContact(updatedContact));
-    }
+    yield put(stopAction(actions.UPDATE_CONTACTS_WITH_USERID_REQUESTED));
+    yield put(actions.requestFetchContacts(payload.id));
   }
 }
 /*
@@ -150,8 +134,11 @@ function* watchDeleteContactRequest() {
 function* watchfetchContactsRequest() {
   yield takeLatest(actions.FETCH_CONTACTS_REQUESTED, fetchContacts);
 }
-function* watchIsActiveUserRequest() {
-  yield takeLatest(actions.IS_ACTIVE_USER_REQUESTED, isActiveUser);
+function* watchUpdateContactsWithUserId() {
+  yield takeLatest(
+    actions.UPDATE_CONTACTS_WITH_USERID_REQUESTED,
+    updateContactsWithUserId
+  );
 }
 
 export default function* contactSaga() {
@@ -160,7 +147,7 @@ export default function* contactSaga() {
     watchUpdateContactRequest,
     watchDeleteContactRequest,
     watchfetchContactsRequest,
-    watchIsActiveUserRequest,
+    watchUpdateContactsWithUserId,
   ]);
   yield all(sagas);
 }

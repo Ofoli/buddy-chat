@@ -1,6 +1,7 @@
 import { takeLatest, all, put } from "redux-saga/effects";
 import { combineWatchers } from "./root";
 import { startAction, stopAction, addRequestError } from "../redux/ducks/ui";
+import { requestUpdateContactsWithUserId } from "../redux/ducks/contact";
 import {
   LOGIN_REQUESTED,
   LOGOUT_REQUESTED,
@@ -11,6 +12,7 @@ import {
   registerRequested,
   registerSuccessful,
 } from "../redux/ducks/auth";
+
 import {
   registerUserApiRequest,
   loginUserApiRequest,
@@ -43,6 +45,7 @@ function* registerUser({ payload }: ReturnType<typeof registerRequested>) {
     yield put(startAction(REGISTER_REQUESTED));
     const user: User = yield registerUserApiRequest(payload);
     yield put(registerSuccessful(user));
+    yield put(requestUpdateContactsWithUserId(user));
   } catch (err) {
     const { message } = err as FirebaseError;
     yield put(
