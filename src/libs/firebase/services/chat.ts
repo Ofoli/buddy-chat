@@ -58,7 +58,7 @@ export async function fetchRecentChatsApiRequest(userId: string) {
 }
 export async function fetchChatHistoryApiRequest(channelId: string) {
   const chatCollection = getChatCollection(channelId);
-  const fetchChatsQuery = query(chatCollection);
+  const fetchChatsQuery = query(chatCollection, orderBy("createdAt"));
 
   return await fetchData<Chat>(fetchChatsQuery);
 }
