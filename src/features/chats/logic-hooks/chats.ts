@@ -23,7 +23,10 @@ export default function useChatsLogic() {
     monitorOngoingChats(channelId, populateOngoingChatsArray);
   };
 
-  useEffect(() => updateReduxWithOngoingChats, [buddyId]);
+  useEffect(() => {
+    console.log("MONITOR_RUNNING");
+    updateReduxWithOngoingChats;
+  }, [buddyId, updateReduxWithOngoingChats]);
 
   useEffect(() => {
     dispatch(requestFetchChats(channelId));

@@ -18,6 +18,7 @@ import {
 } from "../index/db";
 import { QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 import type { Chat, ChatData } from "../../../types/user";
+import { error } from "console";
 
 export async function createChatApiRequest(data: ChatData): Promise<Chat> {
   const chatCollection = getChatCollection(data.channelId);
@@ -68,9 +69,13 @@ export function monitorOngoingChats(
 ) {
   const chatCollection = getChatCollection(channelId);
   const searchQuery = query(chatCollection, orderBy("createdAt"));
-  return onSnapshot(searchQuery, (querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      updator(doc);
-    });
-  });
+  return onSnapshot(
+    searchQuery,
+    (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        updator(doc);
+      });
+    },
+    (err) => console.log({ FIREBASE_ONSNAPSHOT_ERROR: err })
+  );
 }
