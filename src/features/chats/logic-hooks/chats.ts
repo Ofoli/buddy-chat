@@ -16,17 +16,22 @@ export default function useChatsLogic() {
   const channelId = createChannelId(id, buddyId);
 
   const updateReduxWithOngoingChats = () => {
+    console.log("MONITOR_RUNNING");
     const populateOngoingChatsArray = (chatDoc: ChatDoc) => {
       const chat = { ...(chatDoc.data() as Chat), id: chatDoc.id };
-      if (chat.source !== id) dispatch(addSnapshotChat(chat));
+      console.log({ MONITOR_CHAT: chat });
+      if (chat.source !== id) {
+        console.log({ DISPATCHING_MONITOR_CHAT_REDUX: chat.message });
+        dispatch(addSnapshotChat(chat));
+      }
     };
     monitorOngoingChats(channelId, populateOngoingChatsArray);
   };
 
-  useEffect(() => {
-    console.log("MONITOR_RUNNING");
-    updateReduxWithOngoingChats;
-  }, [buddyId, updateReduxWithOngoingChats]);
+  useEffect(
+    () => updateReduxWithOngoingChats,
+    [buddyId, updateReduxWithOngoingChats]
+  );
 
   useEffect(() => {
     dispatch(requestFetchChats(channelId));

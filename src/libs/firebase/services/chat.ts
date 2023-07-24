@@ -67,12 +67,14 @@ export function monitorOngoingChats(
   channelId: string,
   updator: (doc: QueryDocumentSnapshot<DocumentData>) => void
 ) {
+  console.log({ "@CHAT_SERVICE_CH": channelId });
   const chatCollection = getChatCollection(channelId);
   const searchQuery = query(chatCollection, orderBy("createdAt"));
   return onSnapshot(
     searchQuery,
     (querySnapshot) => {
       querySnapshot.forEach((doc) => {
+        console.log({ "@CHAT_SERVICE_DOC_ID": doc.id });
         updator(doc);
       });
     },
