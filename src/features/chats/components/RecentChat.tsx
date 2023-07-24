@@ -2,12 +2,14 @@ import { CardTemplate } from "../index/imports";
 
 interface RecentChatProps {
   message: string;
+  timestamp: string;
   contactInfo: { name: string; picUrl: string };
   onClick: () => void;
 }
 
 export default function RecentChat({
   message,
+  timestamp,
   contactInfo,
   onClick,
 }: RecentChatProps) {
@@ -17,7 +19,7 @@ export default function RecentChat({
       text={message}
       picUrl={contactInfo.picUrl}
       onClick={onClick}
-      isChatCard
+      chatCardProps={{ timestamp, unreadChatCount: 0 }}
     />
   );
 }
