@@ -27,7 +27,6 @@ type UpdateUserId = {
 
 export async function createContactApiRequest(contact: ContactData) {
   const existingContact = await fetchContactByEmailApiRequest(contact.email);
-  console.log({ existingContact });
   if (existingContact !== null) throw new Error("Contact already exist");
 
   const contactUser = await fetchUserByEmailApiRequest(contact.email);

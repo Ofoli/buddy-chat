@@ -42,9 +42,8 @@ export async function createChatApiRequest(data: ChatData): Promise<Chat> {
   await setDoc(setRecentChatDocRef, chat);
 
   return {
-    ...data,
+    ...(chat as Chat),
     id: createdChat.id,
-    createdAt: "",
   };
 }
 export async function fetchRecentChatsApiRequest(userId: string) {

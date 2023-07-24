@@ -1,7 +1,4 @@
-type Timestamp = {
-  seconds: number;
-  nanoseconds: number;
-};
+import { Timestamp } from "firebase/firestore";
 
 export interface User {
   id: string;
@@ -24,7 +21,7 @@ export interface Chat {
   source: string;
   destination: string;
   message: string;
-  createdAt: string;
+  createdAt: Timestamp;
   // isPhoto: boolean;
   // photoUrl: string;
 }
