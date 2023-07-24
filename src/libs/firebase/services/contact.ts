@@ -26,10 +26,11 @@ type UpdateUserId = {
 };
 
 export async function createContactApiRequest(contact: ContactData) {
-  const existingContact = await fetchContactByEmailApiRequest(contact.email);
+  const { email, ownerId } = contact;
+  const existingContact = await fetchContactByEmailApiRequest(email, ownerId);
   if (existingContact !== null) throw new Error("Contact already exist");
 
-  const contactUser = await fetchUserByEmailApiRequest(contact.email);
+  const contactUser = await fetchUserByEmailApiRequest(email);
   const newContact = await addDoc(contactCollection, {
     ...contact,
     photoUrl: "",
@@ -96,10 +97,14 @@ async function fetchContactApiRequest(contactId: string) {
 
   return { id: contactId, ...contact } as Contact;
 }
-export async function fetchContactByEmailApiRequest(email: string) {
+export async function fetchContactByEmailApiRequest(
+  email: string,
+  ownerId: string
+) {
   const fetchContactQuery = query(
     contactCollection,
-    where("email", "==", email)
+    where("email", "==", email),
+    where("ownerId", "==", ownerId)
   );
 
   const res = await fetchData<Contact>(fetchContactQuery);

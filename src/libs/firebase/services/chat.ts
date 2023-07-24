@@ -68,9 +68,13 @@ export function monitorOngoingChats(
 ) {
   const chatCollection = getChatCollection(channelId);
   const searchQuery = query(chatCollection, orderBy("createdAt"));
-  return onSnapshot(searchQuery, (querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      updator(doc);
-    });
-  });
+  return onSnapshot(
+    searchQuery,
+    (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        updator(doc);
+      });
+    },
+    (err) => console.log({ FIREBASE_ONSNAPSHOT_ERROR: err })
+  );
 }
