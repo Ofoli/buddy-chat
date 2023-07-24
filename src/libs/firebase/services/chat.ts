@@ -18,7 +18,6 @@ import {
 } from "../index/db";
 import { QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 import type { Chat, ChatData } from "../../../types/user";
-import { error } from "console";
 
 export async function createChatApiRequest(data: ChatData): Promise<Chat> {
   const chatCollection = getChatCollection(data.channelId);
