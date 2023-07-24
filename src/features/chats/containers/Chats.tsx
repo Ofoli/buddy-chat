@@ -12,7 +12,7 @@ export default function Chats() {
           key={chat.id}
           userIsSource={chat.source === userId}
           message={chat.message}
-          createdAt={new Date()}
+          createdAt={chat.createdAt}
         />
       ))}
     </div>
