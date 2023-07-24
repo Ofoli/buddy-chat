@@ -8,6 +8,7 @@ import { logoutRequested } from "../../../libs/redux/ducks/auth";
 import {
   requestCreateChat,
   requestFetchChats,
+  addSnapshotChat,
   setSelectedBuddy,
 } from "../../../libs/redux/ducks/chat";
 import { monitorOngoingChats } from "../../../libs/firebase/services/chat";
@@ -27,6 +28,7 @@ export {
   useReduxHooks,
   requestCreateChat,
   requestFetchChats,
+  addSnapshotChat,
   setSelectedBuddy,
   // firebase
   monitorOngoingChats,

@@ -3,8 +3,9 @@ import type { ChatState } from "../../../types/store-slices";
 
 type ChatPayload = string | Chat | Chat[];
 
-export const SELECT_BUDDY = "SELECT_BUDDY";
-export const CLEAR_SELECTED_BUDDY = "CLEAR_SELECTED_BUDDY";
+const SELECT_BUDDY = "SELECT_BUDDY";
+const CLEAR_SELECTED_BUDDY = "CLEAR_SELECTED_BUDDY";
+const ADD_SNAPSHOT_CHAT = "ADD_SNAPSHOT_CHAT";
 
 export const CREATE_CHAT_REQUESTED = "CREATE_CHAT_REQUESTED";
 export const FETCH_CHATS_REQUESTED = "FETCH_CHATS_REQUESTED";
@@ -20,6 +21,10 @@ export const clearSelectedBuddy = () => ({ type: CLEAR_SELECTED_BUDDY });
 export const setSelectedBuddy = (id: string) => ({
   type: SELECT_BUDDY,
   payload: id,
+});
+export const addSnapshotChat = (chat: Chat) => ({
+  type: ADD_SNAPSHOT_CHAT,
+  payload: chat,
 });
 
 export const requestCreateChat = (payload: ChatData) => ({
@@ -93,6 +98,23 @@ export default function chatReducer(
     }
     case CLEAR_SELECTED_BUDDY: {
       return { ...state, buddyId: "NO_BUDDY_SELECTED" };
+    }
+    case ADD_SNAPSHOT_CHAT: {
+      const chat = payload as Chat;
+      const chatExist =
+        state.chats.find(({ id }) => id === chat.id) !== undefined;
+
+      if (chatExist) return state;
+
+      const uniqueRecentChats = state.recentChats.filter(
+        (c) => c.channelId !== chat.channelId
+      );
+      const updatedRecentChats = [...uniqueRecentChats, chat];
+      return {
+        ...state,
+        recentChats: updatedRecentChats,
+        chats: [...state.chats, chat],
+      };
     }
     default:
       return state;
