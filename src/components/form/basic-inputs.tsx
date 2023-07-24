@@ -106,7 +106,7 @@ function NumberInput({ name, label }: BaseInputProps) {
   );
 }
 
-function validateNumber(_: any, value: { number: number }) {
+function validateNumber(_: Rule, value: { number: number }) {
   const phoneNumberLength = value?.toString().length;
   const minlengthError = "Phone number length must be at least 9 characters!";
   const maxlengthError = "Phone number length must be less than 13 characters!";
