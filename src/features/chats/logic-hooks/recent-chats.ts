@@ -7,7 +7,7 @@ export default function useRecentChatsLogic() {
   const contacts = slices.contactSlice;
 
   const getBuddyInfo = (channelId: string) => {
-    const buddyId = getContactIdFromChannelId(user!.id, channelId);
+    const buddyId = getBuddyIdFromChannelId(user!.id, channelId);
     const buddy = contacts.find((c) => c.userId === buddyId);
 
     if (!buddy) return { name: "", picUrl: "" };
@@ -15,15 +15,14 @@ export default function useRecentChatsLogic() {
   };
 
   const handleRecentChatClick = (channelId: string) => {
-    const contactId = getContactIdFromChannelId(user!.id, channelId);
-    const buddyId = contacts.find((c) => c.id === contactId)!.userId;
+    const buddyId = getBuddyIdFromChannelId(user!.id, channelId);
     dispatch(setSelectedBuddy(buddyId));
   };
 
   return { recentChats, getBuddyInfo, handleRecentChatClick };
 }
 
-const getContactIdFromChannelId = (userId: string, channelId: string) => {
+const getBuddyIdFromChannelId = (userId: string, channelId: string) => {
   const ids = channelId.split("-");
   return ids.filter((id) => id !== userId).pop() ?? "";
 };
