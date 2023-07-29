@@ -1,6 +1,7 @@
 import Header from "./Header";
 import classes from "../styles/dashboard.module.css";
 import SideSpace from "./SideSpace";
+import ResultPanel from "./ResultPanel";
 import { ChatSpace } from "../index/imports";
 import useDashboardLogic from "../logic-hooks/dashboard";
 
@@ -32,7 +33,9 @@ export default function Dashboard() {
           <div className={currentClasses.chatPanel}>
             <ChatSpace />
           </div>
-          <div className={currentClasses.resultPanel}>a</div>
+          <div className={currentClasses.resultPanel}>
+            <ResultPanel />
+          </div>
         </div>
       </div>
     </div>

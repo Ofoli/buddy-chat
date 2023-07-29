@@ -1,7 +1,7 @@
 import { Paper } from "@mui/material";
 import classes from "./app.module.css";
 import Dashboard from "./features/dashboard/containers/Dashboard";
-import LoginRegisterBase from "./features/login-register/containers/login-register-base";
+import LoginRegisterBase from "./features/user/containers/login-register-base";
 
 import useReduxHooks from "./libs/redux/use-redux";
 
