@@ -13,6 +13,13 @@ export default function useHeaderLogic() {
   const handleUserLogout = () => dispatch(logoutRequested());
   const handleShowProfile = () =>
     dispatch(openResultPanel(RESULT_PANEL_ITEMS.PROFILE));
+  const handleShowSettings = () =>
+    dispatch(openResultPanel(RESULT_PANEL_ITEMS.SETTINGS));
 
-  return { currentUser, handleUserLogout, handleShowProfile };
+  return {
+    currentUser,
+    handleUserLogout,
+    handleShowProfile,
+    handleShowSettings,
+  };
 }

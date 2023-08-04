@@ -6,7 +6,12 @@ import { CustomMenu } from "../index/imports";
 import useHeaderLogic from "../logic-hooks/header";
 
 export default function Header() {
-  const { currentUser, handleUserLogout, handleShowProfile } = useHeaderLogic();
+  const {
+    currentUser,
+    handleUserLogout,
+    handleShowProfile,
+    handleShowSettings,
+  } = useHeaderLogic();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const handleCloseMenu = () => setAnchorEl(null);
   const handleOpenMenu = (event: React.BaseSyntheticEvent) =>
@@ -28,8 +33,8 @@ export default function Header() {
       </Grid>
       <CustomMenu anchorEl={anchorEl} onClose={handleCloseMenu}>
         <div style={{ width: "120px" }}>
-          <MenuItem>Profile</MenuItem>
-          <MenuItem>Settings</MenuItem>
+          <MenuItem onClick={handleShowProfile}>Profile</MenuItem>
+          <MenuItem onClick={handleShowSettings}>Settings</MenuItem>
           <MenuItem onClick={handleUserLogout}>Logout</MenuItem>
         </div>
       </CustomMenu>
