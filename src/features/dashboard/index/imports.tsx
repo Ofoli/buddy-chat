@@ -11,9 +11,6 @@ import {
 } from "../../../libs/redux/ducks/ui";
 import useReduxHooks from "../../../libs/redux/use-redux";
 
-import type { UIState } from "../../../types/store-slices";
-export type { UIState };
-
 export {
   CustomMenu,
   CustomModal,

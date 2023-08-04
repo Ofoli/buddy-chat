@@ -10,7 +10,7 @@ type UIState = {
   loadingActions: string[];
   errors: RequestStatus[];
   successMessages: RequestStatus[];
-  isResultPanelOpen: boolean;
+  resultPanelItem: string;
 };
 
 type ContactState = Contact[];
