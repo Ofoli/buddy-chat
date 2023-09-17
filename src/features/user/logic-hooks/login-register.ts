@@ -1,13 +1,13 @@
 import { useState } from "react";
-import type { LoginData, RegisterData } from "../index/imports";
-import useReduxHooks from "../../../libs/redux/use-redux";
 import {
+  useReduxHooks,
   loginRequested,
   registerRequested,
   LOGIN_REQUESTED,
   REGISTER_REQUESTED,
-} from "../../../libs/redux/ducks/auth";
-import { removeRequestError } from "../../../libs/redux/ducks/ui";
+  removeRequestError,
+} from "../index/imports";
+import type { LoginData, RegisterData } from "../index/imports";
 
 type ComponentType = "Login" | "Register";
 

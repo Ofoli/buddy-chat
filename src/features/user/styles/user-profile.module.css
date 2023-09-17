@@ -10,6 +10,7 @@
   width: 200px !important;
   height: 200px !important;
   margin: 15px !important;
+  cursor: pointer !important;
 }
 
 .info_group__label {
