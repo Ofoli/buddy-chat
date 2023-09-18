@@ -1,13 +1,13 @@
 import { useState } from "react";
-import type { LoginData, RegisterData } from "../index/imports";
-import useReduxHooks from "../../../libs/redux/use-redux";
 import {
+  useReduxHooks,
   loginRequested,
   registerRequested,
   LOGIN_REQUESTED,
   REGISTER_REQUESTED,
-} from "../../../libs/redux/ducks/auth";
-import { removeRequestError } from "../../../libs/redux/ducks/ui";
+  removeRequestError,
+} from "../index/imports";
+import type { LoginData, RegisterData } from "../index/imports";
 
 type ComponentType = "Login" | "Register";
 
@@ -19,10 +19,7 @@ const COMPONENTS = {
 export default function useLoginRegisterLogic() {
   const [component, setComponent] = useState<ComponentType>(COMPONENTS.LOGIN);
   const { dispatch, slices } = useReduxHooks();
-  const { errors, loadingActions } = slices.uiSlice;
-  const error = errors.find(
-    ({ action }) => action === LOGIN_REQUESTED || action === REGISTER_REQUESTED
-  );
+  const { loadingActions } = slices.uiSlice;
 
   const isLoginComponent = component === COMPONENTS.LOGIN;
   const isRegisterComponent = component === COMPONENTS.REGISTER;
@@ -34,7 +31,6 @@ export default function useLoginRegisterLogic() {
   const isRegisterLoading = loadingActions.includes(REGISTER_REQUESTED);
 
   const toggleComponent = () => setComponent(toggleButtonLabel);
-  const handleErrorClose = () => dispatch(removeRequestError(error!.action));
   const handleLoginSubmit = (values: LoginData) =>
     dispatch(loginRequested(values));
   const handleRegisterSubmit = (values: RegisterData) =>
@@ -47,13 +43,11 @@ export default function useLoginRegisterLogic() {
       isLoginLoading,
       isRegisterLoading,
       toggleButtonLabel,
-      error,
     },
     handlers: {
       toggleComponent,
       handleLoginSubmit,
       handleRegisterSubmit,
-      handleErrorClose,
     },
   };
 }

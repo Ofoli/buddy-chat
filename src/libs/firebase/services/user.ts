@@ -1,3 +1,4 @@
+import { auth } from "../index/config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -7,17 +8,27 @@ import {
   serverTimestamp,
   setDoc,
   getDoc,
+  updateDoc,
   query,
   where,
 } from "firebase/firestore";
-import { auth } from "../index/config";
 import {
   createDocRef,
   USER_COLLECTION,
   fetchData,
   userCollection,
 } from "../index/db";
-import type { User, LoginData, RegisterData } from "../../../types/user";
+import {
+  PROFILE_BUCKET,
+  uploadFileToBucket,
+  getFileUrlFromBucket,
+} from "../index/bucket";
+import type {
+  User,
+  LoginData,
+  RegisterData,
+  UploadProfileData,
+} from "../../../types/user";
 
 export async function registerUserApiRequest(data: RegisterData) {
   const { fullname, email, password } = data;
@@ -77,4 +88,12 @@ export async function logoutUserApiRequest() {
   await signOut(auth);
 }
 
-//sazUWm7QeEaDYXorASwXL05RJYF2
+export async function uploadProfileApiRequest(data: UploadProfileData) {
+  const { userId, file } = data;
+  const filepath = await uploadFileToBucket(file, PROFILE_BUCKET);
+  const photoUrl = await getFileUrlFromBucket(filepath);
+
+  const userRef = createDocRef(USER_COLLECTION, userId);
+  await updateDoc(userRef, { photoUrl });
+  return photoUrl;
+}

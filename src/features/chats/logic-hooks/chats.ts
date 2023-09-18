@@ -36,10 +36,10 @@ export default function useChatsLogic() {
   const getChatRef = (chatIdx: number) =>
     chats.length - 1 === chatIdx ? lastChatRef : null;
 
-  useEffect(
-    () => updateReduxWithOngoingChats,
-    [buddyId, updateReduxWithOngoingChats]
-  );
+  // useEffect(
+  //   () => updateReduxWithOngoingChats,
+  //   [buddyId, updateReduxWithOngoingChats]
+  // );
 
   useEffect(() => {
     dispatch(requestFetchChats(channelId));

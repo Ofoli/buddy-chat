@@ -1,6 +1,8 @@
+import { Paper } from "@mui/material";
 import Header from "./Header";
 import classes from "../styles/dashboard.module.css";
 import SideSpace from "./SideSpace";
+import ResultPanel from "./ResultPanel";
 import { ChatSpace } from "../index/imports";
 import useDashboardLogic from "../logic-hooks/dashboard";
 
@@ -22,19 +24,23 @@ export default function Dashboard() {
     : classStrs.default;
 
   return (
-    <div style={{ height: "100%" }}>
-      <Header />
-      <div className={classes.spaces}>
-        <div className={classes.side_space}>
-          <SideSpace />
-        </div>
-        <div className={classes.chat_space}>
-          <div className={currentClasses.chatPanel}>
-            <ChatSpace />
+    <Paper className={classes.app_paper} elevation={0}>
+      <div style={{ height: "100%" }}>
+        <Header />
+        <div className={classes.spaces}>
+          <div className={classes.side_space}>
+            <SideSpace />
           </div>
-          <div className={currentClasses.resultPanel}>a</div>
+          <div className={classes.chat_space}>
+            <div className={currentClasses.chatPanel}>
+              <ChatSpace />
+            </div>
+            <div className={currentClasses.resultPanel}>
+              <ResultPanel />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </Paper>
   );
 }

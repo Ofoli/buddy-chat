@@ -60,14 +60,17 @@ export const resetAllRequestSuccessMessages = () => ({
 });
 
 //result panel
-export const openResultPanel = () => ({ type: OPEN_RESULT_PANEL });
+export const openResultPanel = (item: string) => ({
+  type: OPEN_RESULT_PANEL,
+  payload: item,
+});
 export const closeResultPanel = () => ({ type: CLOSE_RESULT_PANEL });
 
 const initialState: UIState = {
   loadingActions: [],
   errors: [],
   successMessages: [],
-  isResultPanelOpen: false,
+  resultPanelItem: "NO_ITEM",
 };
 
 export default function uiReducer(
@@ -126,9 +129,9 @@ export default function uiReducer(
       };
     }
     case OPEN_RESULT_PANEL:
-      return { ...state, isResultPanelOpen: true };
+      return { ...state, resultPanelItem: payload as string };
     case CLOSE_RESULT_PANEL:
-      return { ...state, isResultPanelOpen: false };
+      return { ...state, resultPanelItem: initialState.resultPanelItem };
     default:
       return state;
   }

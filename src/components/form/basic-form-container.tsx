@@ -18,7 +18,9 @@ export default function BasicFormContainer<T>({
   return (
     <Form layout="vertical" onFinish={onSubmit} form={form}>
       {children}
-      <BaseButton label={btnLabel} onClick={form.submit} loading={isLoading} />
+      <BaseButton onClick={form.submit} loading={isLoading}>
+        {btnLabel}
+      </BaseButton>
     </Form>
   );
 }

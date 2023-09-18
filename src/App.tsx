@@ -1,23 +1,41 @@
-import { Paper } from "@mui/material";
+import { useEffect } from "react";
+import { notification } from "antd";
 import classes from "./app.module.css";
 import Dashboard from "./features/dashboard/containers/Dashboard";
-import LoginRegisterBase from "./features/login-register/containers/login-register-base";
-
+import LoginRegisterBase from "./features/user/containers/login-register-base";
 import useReduxHooks from "./libs/redux/use-redux";
+import {
+  removeRequestError,
+  removeRequestSuccessMessage,
+} from "./libs/redux/ducks/ui";
 
-function App() {
-  const { slices } = useReduxHooks();
+export default function App() {
+  const { dispatch, slices } = useReduxHooks();
   const { loggedIn } = slices.authSlice;
+  const { errors, successMessages } = slices.uiSlice;
 
-  const loginRegister = <LoginRegisterBase />;
-  const dashboard = (
-    <Paper className={classes.app_paper} elevation={0}>
-      <Dashboard />
-    </Paper>
+  const notifyOnError = () =>
+    errors.forEach(({ message, action }) => {
+      notification.error({
+        message,
+        onClose: () => dispatch(removeRequestError(action)),
+      });
+    });
+
+  const notifyOnSuccess = () =>
+    successMessages.forEach(({ message, action }) => {
+      notification.success({
+        message,
+        onClose: () => dispatch(removeRequestSuccessMessage(action)),
+      });
+    });
+
+  useEffect(() => notifyOnError(), [errors]);
+  useEffect(() => notifyOnSuccess(), [successMessages]);
+
+  return (
+    <div className={classes.app}>
+      {loggedIn ? <Dashboard /> : <LoginRegisterBase />}
+    </div>
   );
-
-  const component = loggedIn ? dashboard : loginRegister;
-  return <div className={classes.app}>{component}</div>;
 }
-
-export default App;

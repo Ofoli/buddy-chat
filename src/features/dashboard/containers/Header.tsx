@@ -6,7 +6,12 @@ import { CustomMenu } from "../index/imports";
 import useHeaderLogic from "../logic-hooks/header";
 
 export default function Header() {
-  const { currentUser, handleUserLogout } = useHeaderLogic();
+  const {
+    currentUser,
+    handleUserLogout,
+    handleShowProfile,
+    handleShowSettings,
+  } = useHeaderLogic();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const handleCloseMenu = () => setAnchorEl(null);
   const handleOpenMenu = (event: React.BaseSyntheticEvent) =>
@@ -20,7 +25,11 @@ export default function Header() {
         </Grid>
         <Grid item>
           <Grid container alignItems="center" justifyContent="center" gap={2}>
-            <Avatar src="" alt="PK" />
+            <Avatar
+              src={currentUser!.photoUrl}
+              alt="PK"
+              onClick={handleShowProfile}
+            />
             <p className={classes.name}>{currentUser!.fullname}</p>
             <KeyboardArrowDownIcon onClick={handleOpenMenu} />
           </Grid>
@@ -28,8 +37,8 @@ export default function Header() {
       </Grid>
       <CustomMenu anchorEl={anchorEl} onClose={handleCloseMenu}>
         <div style={{ width: "120px" }}>
-          <MenuItem>Profile</MenuItem>
-          <MenuItem>Settings</MenuItem>
+          <MenuItem onClick={handleShowProfile}>Profile</MenuItem>
+          <MenuItem onClick={handleShowSettings}>Settings</MenuItem>
           <MenuItem onClick={handleUserLogout}>Logout</MenuItem>
         </div>
       </CustomMenu>

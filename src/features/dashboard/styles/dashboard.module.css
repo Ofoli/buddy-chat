@@ -24,13 +24,19 @@
   height: inherit;
 }
 .chat_panel {
-  width: 50%;
+  width: 60%;
   height: inherit;
 }
 .result_panel_default {
   display: none;
 }
 .result_panel {
+  width: 40%;
   height: inherit;
   border-left: 1px solid var(--clr-primary-300);
+}
+
+.app_paper {
+  width: 90%;
+  height: 96%;
 }

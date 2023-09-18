@@ -1,22 +1,31 @@
 import { takeLatest, all, put } from "redux-saga/effects";
 import { combineWatchers } from "./root";
-import { startAction, stopAction, addRequestError } from "../redux/ducks/ui";
+import { getBucketError } from "../firebase/index/bucket";
+import {
+  startAction,
+  stopAction,
+  addRequestError,
+  addRequestSuccessMessage,
+} from "../redux/ducks/ui";
 import { requestUpdateContactsWithUserId } from "../redux/ducks/contact";
 import {
   LOGIN_REQUESTED,
   LOGOUT_REQUESTED,
   REGISTER_REQUESTED,
+  PROFILE_UPLOAD_REQUESTED,
   logoutSuccessful,
   loginRequested,
   loginSuccessful,
   registerRequested,
   registerSuccessful,
+  requestProfileUpload,
+  receiveProfileUploadSuccess,
 } from "../redux/ducks/auth";
-
 import {
   registerUserApiRequest,
   loginUserApiRequest,
   logoutUserApiRequest,
+  uploadProfileApiRequest,
 } from "../firebase/services/user";
 import type { User } from "../../types/user";
 import type { FirebaseError } from "firebase/app";
@@ -67,6 +76,30 @@ function* logoutUser() {
     console.log(err);
   }
 }
+function* uploadProfile({ payload }: ReturnType<typeof requestProfileUpload>) {
+  try {
+    yield put(startAction(PROFILE_UPLOAD_REQUESTED));
+    const photoUrl: string = yield uploadProfileApiRequest(payload);
+    yield put(receiveProfileUploadSuccess(photoUrl));
+    yield put(
+      addRequestSuccessMessage({
+        action: PROFILE_UPLOAD_REQUESTED,
+        message: "Profile Updated Successfully",
+      })
+    );
+  } catch (err) {
+    const { code } = err as FirebaseError;
+    const message = getBucketError(code);
+    yield put(
+      addRequestError({
+        action: PROFILE_UPLOAD_REQUESTED,
+        message,
+      })
+    );
+  } finally {
+    yield put(stopAction(PROFILE_UPLOAD_REQUESTED));
+  }
+}
 
 //====================
 //---WATCHERS---------
@@ -81,12 +114,16 @@ function* watchRegiserRequest() {
 function* watchLogoutRequest() {
   yield takeLatest(LOGOUT_REQUESTED, logoutUser);
 }
+function* watchProfileUploadRequest() {
+  yield takeLatest(PROFILE_UPLOAD_REQUESTED, uploadProfile);
+}
 
 function* authSaga() {
   const sagas = combineWatchers([
     watchLoginRequest,
     watchRegiserRequest,
     watchLogoutRequest,
+    watchProfileUploadRequest,
   ]);
   yield all(sagas);
 }
