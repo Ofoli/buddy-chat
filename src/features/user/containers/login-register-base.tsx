@@ -46,11 +46,9 @@ export default function LoginRegisterBase() {
               Stay connect at all times
             </p>
             <div className={classes.side_info__btn_container}>
-              <BaseButton
-                type="secondary"
-                label={toggleButtonLabel}
-                onClick={toggleComponent}
-              />
+              <BaseButton type="secondary" onClick={toggleComponent}>
+                {toggleButtonLabel}
+              </BaseButton>
             </div>
           </Grid>
         </Grid>

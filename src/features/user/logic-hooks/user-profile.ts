@@ -6,6 +6,7 @@ const ACCEPTED_FILES_TYPES = ["image/jpeg", "image/png", "image/jpg"];
 export default function useUserProfileLogic() {
   const [isUploadAvartar, setIsUploadAvartar] = useState(false);
   const [showImagePreview, setShowImagePreview] = useState(false);
+  const [isUploadImageLoading, setIsUploadImageLoading] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
 
   const showUploadAvartar = () => setIsUploadAvartar(true);
@@ -28,14 +29,36 @@ export default function useUserProfileLogic() {
     };
     reader.readAsDataURL(file);
   };
+  const onImageUpload = async () => {
+    setIsUploadImageLoading(true);
+
+    //upload image to firestore and update localstorage
+    await uploadImageToFirestoreApiRequest(imageSrc);
+
+    setImageSrc("");
+    setIsUploadImageLoading(false);
+    setShowImagePreview(false);
+    notification.success({ message: "Profile Updated Successfully" });
+  };
 
   return {
-    state: { isUploadAvartar, showImagePreview, imageSrc },
+    state: {
+      isUploadAvartar,
+      showImagePreview,
+      imageSrc,
+      isUploadImageLoading,
+    },
     handlers: {
       showUploadAvartar,
       removeUploadAvartar,
       onImageSelect,
+      onImageUpload,
       closeImagePreview,
     },
   };
 }
+
+const uploadImageToFirestoreApiRequest = (img: string) =>
+  new Promise((resolve) =>
+    setTimeout(() => resolve(console.log({ UPLOAD_IMAGE: img })), 5000)
+  );

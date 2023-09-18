@@ -18,13 +18,13 @@ const SECONDARY_STYLES: React.CSSProperties = {
 type BtnType = "primary" | "secondary";
 interface ButtonProps {
   type?: BtnType;
-  label: string;
+  children: string;
   loading?: boolean;
   onClick: () => void;
 }
-function BaseButton({
-  label,
+export default function BaseButton({
   onClick,
+  children,
   type = "primary",
   loading = false,
 }: ButtonProps) {
@@ -37,7 +37,7 @@ function BaseButton({
       style={styles}
       loading={loading}
     >
-      {label}
+      {children}
     </Button>
   );
 }
@@ -46,4 +46,3 @@ const selectStyle = (type: BtnType) =>
   type === "primary"
     ? DEFAULT_STYLES
     : { ...DEFAULT_STYLES, ...SECONDARY_STYLES };
-export default BaseButton;

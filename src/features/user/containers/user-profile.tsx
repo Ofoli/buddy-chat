@@ -1,18 +1,21 @@
 import { Avatar, Grid } from "@mui/material";
 import classes from "../styles/user-profile.module.css";
-import { CustomModal, Notification } from "../index/imports";
+import { CustomModal } from "../index/imports";
 import UserInfoGroup from "../components/UserInfoGroup";
+import UserProfileUpload from "../components/profile-upload";
 import svg from "../../../data/images/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg";
 import useUserProfileLogic from "../logic-hooks/user-profile";
 
 export default function UserProfile() {
   const { state, handlers } = useUserProfileLogic();
-  const { imageSrc, isUploadAvartar, showImagePreview } = state;
+  const { imageSrc, isUploadAvartar, showImagePreview, isUploadImageLoading } =
+    state;
   const {
     showUploadAvartar,
     onImageSelect,
     closeImagePreview,
     removeUploadAvartar,
+    onImageUpload,
   } = handlers;
 
   return (
@@ -44,10 +47,10 @@ export default function UserProfile() {
         open={showImagePreview}
         onCancel={closeImagePreview}
       >
-        <Avatar
-          className={classes.user_profile__avartar}
-          src={imageSrc}
-          alt="PK"
+        <UserProfileUpload
+          imageSrc={imageSrc}
+          isLoading={isUploadImageLoading}
+          onImageUpload={onImageUpload}
         />
       </CustomModal>
     </div>
