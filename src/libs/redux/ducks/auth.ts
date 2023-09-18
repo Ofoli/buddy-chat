@@ -7,6 +7,8 @@ export const REGISTER_REQUESTED = "REGISTER_REQUESTED";
 export const REGISTER_SUCCESSFUL = "REGISTER_SUCCESSFUL";
 export const LOGOUT_REQUESTED = "LOGOUT_REQUESTED";
 export const LOGOUT_SUCCESSFUL = "LOGOUT_SUCCESSFUL";
+export const PROFILE_UPLOAD_REQUESTED = "PROFILE_UPLOAD_REQUESTED";
+export const PROFILE_UPLOAD_SUCCESSFUL = "PROFILE_UPLOAD_SUCCESSFUL";
 
 export const logoutRequested = () => ({ type: LOGOUT_REQUESTED });
 export const logoutSuccessful = () => ({ type: LOGOUT_SUCCESSFUL });
@@ -26,6 +28,14 @@ export const registerSuccessful = (payload: User) => ({
   type: REGISTER_SUCCESSFUL,
   payload,
 });
+export const requestProfileUpload = (file: File) => ({
+  type: PROFILE_UPLOAD_REQUESTED,
+  payload: file,
+});
+export const receiveProfileUploadSuccess = (photoUrl: string) => ({
+  type: PROFILE_UPLOAD_SUCCESSFUL,
+  payload: photoUrl,
+});
 /*
 ===== REDUCER ===== 
 */
@@ -36,7 +46,7 @@ const initialState = {
 
 export default function authReducer(
   state: AuthState = initialState,
-  action: { type: string; payload: User | undefined }
+  action: { type: string; payload: User | string | undefined }
 ): AuthState {
   const { type, payload } = action;
   switch (type) {
@@ -45,6 +55,12 @@ export default function authReducer(
       const user = payload as User;
       return { user, loggedIn: true };
     }
+    case PROFILE_UPLOAD_SUCCESSFUL: {
+      const photoUrl = payload as string;
+      const updatedUser = { ...state.user, photoUrl } as User;
+      return { ...state, user: updatedUser };
+    }
+
     case LOGOUT_SUCCESSFUL:
       return initialState;
     default:

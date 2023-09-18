@@ -83,8 +83,6 @@ export async function logoutUserApiRequest() {
 }
 
 export async function uploadProfileApiRequest(file: File) {
-  const result = await uploadFileToBucket(file, PROFILE_BUCKET);
-  const url = await getFileUrlFromBucket(result.path);
-
-  return { result, url };
+  const filepath = await uploadFileToBucket(file, PROFILE_BUCKET);
+  return await getFileUrlFromBucket(filepath);
 }

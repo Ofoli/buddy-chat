@@ -1,6 +1,5 @@
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { bucket } from "./config";
-import { FirebaseError } from "firebase/app";
 
 export const PROFILE_BUCKET = "profiles";
 
@@ -8,30 +7,16 @@ export const uploadFileToBucket = async (file: File, dir: string) => {
   const filename = `${dir}/${Date.now()}_${file.name}`;
   const bucketRef = ref(bucket, filename);
 
-  try {
-    const { metadata } = await uploadBytes(bucketRef, file);
-    return { error: "", path: metadata.fullPath };
-  } catch (err) {
-    const { code } = err as FirebaseError;
-    const message = getBucketError(code);
-    return { error: message, path: "" };
-  }
+  const { metadata } = await uploadBytes(bucketRef, file);
+  return metadata.fullPath;
 };
 
 export const getFileUrlFromBucket = async (filepath: string) => {
   const bucketRef = ref(bucket, filepath);
-
-  try {
-    const url = await getDownloadURL(bucketRef);
-    return { erorr: "", url };
-  } catch (err) {
-    const { code } = err as FirebaseError;
-    const message = getBucketError(code);
-    return { error: message, path: "" };
-  }
+  return await getDownloadURL(bucketRef);
 };
 
-const getBucketError = (code: string) => {
+export const getBucketError = (code: string) => {
   switch (code) {
     case "storage/object-not-found":
       return "File doesn't exist";
