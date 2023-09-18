@@ -1,16 +1,25 @@
 import { useState } from "react";
 import { notification } from "antd";
-import { uploadProfileApiRequest } from "../index/imports";
+import {
+  PROFILE_UPLOAD_REQUESTED,
+  useReduxHooks,
+  requestProfileUpload,
+} from "../index/imports";
 
 const ACCEPTED_FILES_TYPES = ["image/jpeg", "image/png", "image/jpg"];
 
 export default function useUserProfileLogic() {
+  const { dispatch, slices } = useReduxHooks();
+  const { user } = slices.authSlice;
+  const { loadingActions } = slices.uiSlice;
+  const [imageSrc, setImageSrc] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [isUploadAvartar, setIsUploadAvartar] = useState(false);
   const [showImagePreview, setShowImagePreview] = useState(false);
-  const [isUploadImageLoading, setIsUploadImageLoading] = useState(false);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageSrc, setImageSrc] = useState("");
-  const [profileUrl, setProfileUrl] = useState("");
+
+  const isUploadImageLoading = loadingActions.includes(
+    PROFILE_UPLOAD_REQUESTED
+  );
 
   const showUploadAvartar = () => setIsUploadAvartar(true);
   const removeUploadAvartar = () => setIsUploadAvartar(false);
@@ -21,7 +30,10 @@ export default function useUserProfileLogic() {
 
     const file = files[0];
     if (!ACCEPTED_FILES_TYPES.includes(file.type)) {
-      return notification.error({ message: "File Type Not Accepted" });
+      return notification.error({
+        message: "File Type Not Accepted",
+        onClose: () => console.log("ERROR_CLOSED"),
+      });
     }
 
     const reader = new FileReader();
@@ -33,24 +45,18 @@ export default function useUserProfileLogic() {
     reader.readAsDataURL(file);
     setImageFile(file);
   };
-  const onImageUpload = async () => {
+  const onImageUpload = () => {
     if (imageFile === null) return;
-    setIsUploadImageLoading(true);
 
-    //upload image to firestore and update localstorage
-    const res = await uploadProfileApiRequest(imageFile);
-    console.log({ UPLOAD_RESULT: res });
-    // await uploadImageToFirestoreApiRequest(imageSrc);
-    setProfileUrl(res.url.url!);
+    dispatch(requestProfileUpload(imageFile));
+
     setImageSrc("");
-    setIsUploadImageLoading(false);
     setShowImagePreview(false);
-    notification.success({ message: "Profile Updated Successfully" });
   };
 
   return {
     state: {
-      profileUrl,
+      user,
       isUploadAvartar,
       showImagePreview,
       imageSrc,
@@ -65,8 +71,3 @@ export default function useUserProfileLogic() {
     },
   };
 }
-
-const uploadImageToFirestoreApiRequest = (img: string) =>
-  new Promise((resolve) =>
-    setTimeout(() => resolve(console.log({ UPLOAD_IMAGE: img })), 5000)
-  );

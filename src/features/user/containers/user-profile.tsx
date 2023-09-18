@@ -9,7 +9,7 @@ import useUserProfileLogic from "../logic-hooks/user-profile";
 export default function UserProfile() {
   const { state, handlers } = useUserProfileLogic();
   const {
-    profileUrl,
+    user,
     imageSrc,
     isUploadAvartar,
     showImagePreview,
@@ -29,7 +29,7 @@ export default function UserProfile() {
         <label>
           <Avatar
             className={classes.user_profile__avartar}
-            src={isUploadAvartar ? svg : profileUrl}
+            src={isUploadAvartar ? svg : user!.photoUrl}
             alt="PK"
             onMouseEnter={showUploadAvartar}
             onMouseLeave={removeUploadAvartar}
@@ -43,10 +43,10 @@ export default function UserProfile() {
       </Grid>
       <UserInfoGroup
         label="Fullname"
-        name="Amo Kojo"
+        name={user!.fullname}
         onEdit={() => console.log("Editing")}
       />
-      <UserInfoGroup label="Email" name="amokojo@gmail.come" />
+      <UserInfoGroup label="Email" name={user!.email} />
       <CustomModal
         title="Upload Profile"
         open={showImagePreview}

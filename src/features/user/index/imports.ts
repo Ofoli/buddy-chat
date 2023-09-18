@@ -12,14 +12,12 @@ import useReduxHooks from "../../../libs/redux/use-redux";
 import {
   loginRequested,
   registerRequested,
+  requestProfileUpload,
   LOGIN_REQUESTED,
   REGISTER_REQUESTED,
+  PROFILE_UPLOAD_REQUESTED,
 } from "../../../libs/redux/ducks/auth";
-import {
-  addRequestError,
-  removeRequestError,
-} from "../../../libs/redux/ducks/ui";
-import { uploadProfileApiRequest } from "../../../libs/firebase/services/user";
+import { removeRequestError } from "../../../libs/redux/ducks/ui";
 
 import type { LoginData, RegisterData } from "../../../types/user";
 
@@ -35,13 +33,12 @@ export {
   AppLogo,
   Notification,
   //redux
+  LOGIN_REQUESTED,
+  REGISTER_REQUESTED,
+  PROFILE_UPLOAD_REQUESTED,
   useReduxHooks,
   loginRequested,
   registerRequested,
-  LOGIN_REQUESTED,
-  REGISTER_REQUESTED,
-  addRequestError,
   removeRequestError,
-  //test
-  uploadProfileApiRequest,
+  requestProfileUpload,
 };
