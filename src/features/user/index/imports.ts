@@ -19,6 +19,7 @@ import {
   addRequestError,
   removeRequestError,
 } from "../../../libs/redux/ducks/ui";
+import { uploadProfileApiRequest } from "../../../libs/firebase/services/user";
 
 import type { LoginData, RegisterData } from "../../../types/user";
 
@@ -41,4 +42,6 @@ export {
   REGISTER_REQUESTED,
   addRequestError,
   removeRequestError,
+  //test
+  uploadProfileApiRequest,
 };

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { notification } from "antd";
+import { uploadProfileApiRequest } from "../index/imports";
 
 const ACCEPTED_FILES_TYPES = ["image/jpeg", "image/png", "image/jpg"];
 
@@ -7,7 +8,9 @@ export default function useUserProfileLogic() {
   const [isUploadAvartar, setIsUploadAvartar] = useState(false);
   const [showImagePreview, setShowImagePreview] = useState(false);
   const [isUploadImageLoading, setIsUploadImageLoading] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageSrc, setImageSrc] = useState("");
+  const [profileUrl, setProfileUrl] = useState("");
 
   const showUploadAvartar = () => setIsUploadAvartar(true);
   const removeUploadAvartar = () => setIsUploadAvartar(false);
@@ -28,13 +31,17 @@ export default function useUserProfileLogic() {
       setShowImagePreview(true);
     };
     reader.readAsDataURL(file);
+    setImageFile(file);
   };
   const onImageUpload = async () => {
+    if (imageFile === null) return;
     setIsUploadImageLoading(true);
 
     //upload image to firestore and update localstorage
-    await uploadImageToFirestoreApiRequest(imageSrc);
-
+    const res = await uploadProfileApiRequest(imageFile);
+    console.log({ UPLOAD_RESULT: res });
+    // await uploadImageToFirestoreApiRequest(imageSrc);
+    setProfileUrl(res.url.url!);
     setImageSrc("");
     setIsUploadImageLoading(false);
     setShowImagePreview(false);
@@ -43,6 +50,7 @@ export default function useUserProfileLogic() {
 
   return {
     state: {
+      profileUrl,
       isUploadAvartar,
       showImagePreview,
       imageSrc,

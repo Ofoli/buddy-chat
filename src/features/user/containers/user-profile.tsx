@@ -8,8 +8,13 @@ import useUserProfileLogic from "../logic-hooks/user-profile";
 
 export default function UserProfile() {
   const { state, handlers } = useUserProfileLogic();
-  const { imageSrc, isUploadAvartar, showImagePreview, isUploadImageLoading } =
-    state;
+  const {
+    profileUrl,
+    imageSrc,
+    isUploadAvartar,
+    showImagePreview,
+    isUploadImageLoading,
+  } = state;
   const {
     showUploadAvartar,
     onImageSelect,
@@ -24,7 +29,7 @@ export default function UserProfile() {
         <label>
           <Avatar
             className={classes.user_profile__avartar}
-            src={isUploadAvartar ? svg : ""}
+            src={isUploadAvartar ? svg : profileUrl}
             alt="PK"
             onMouseEnter={showUploadAvartar}
             onMouseLeave={removeUploadAvartar}
