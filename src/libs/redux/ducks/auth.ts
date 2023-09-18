@@ -1,5 +1,10 @@
 import type { AuthState } from "../../../types/store-slices";
-import type { User, LoginData, RegisterData } from "../../../types/user";
+import type {
+  User,
+  LoginData,
+  RegisterData,
+  UploadProfileData,
+} from "../../../types/user";
 
 export const LOGIN_REQUESTED = "LOGIN_REQUESTED";
 export const LOGIN_SUCCESSFUL = "LOGIN_SUCCESSFUL";
@@ -28,9 +33,9 @@ export const registerSuccessful = (payload: User) => ({
   type: REGISTER_SUCCESSFUL,
   payload,
 });
-export const requestProfileUpload = (file: File) => ({
+export const requestProfileUpload = (payload: UploadProfileData) => ({
   type: PROFILE_UPLOAD_REQUESTED,
-  payload: file,
+  payload,
 });
 export const receiveProfileUploadSuccess = (photoUrl: string) => ({
   type: PROFILE_UPLOAD_SUCCESSFUL,

@@ -1,6 +1,6 @@
 import classes from "../styles/login-register.module.css";
 import { Paper, Grid } from "@mui/material";
-import { BaseButton, AppLogo, Notification } from "../index/imports";
+import { BaseButton, AppLogo } from "../index/imports";
 import LoginForm from "./login-form";
 import RegisterForm from "./register-form";
 import useLoginRegisterLogic from "../logic-hooks/login-register";
@@ -13,14 +13,8 @@ export default function LoginRegisterBase() {
     isRegisterComponent,
     isLoginLoading,
     isRegisterLoading,
-    error,
   } = state;
-  const {
-    toggleComponent,
-    handleLoginSubmit,
-    handleRegisterSubmit,
-    handleErrorClose,
-  } = handlers;
+  const { toggleComponent, handleLoginSubmit, handleRegisterSubmit } = handlers;
 
   return (
     <Paper elevation={0} className={classes.main}>
@@ -54,13 +48,6 @@ export default function LoginRegisterBase() {
         </Grid>
         <Grid item md={7}>
           <div className={classes.form__container}>
-            {error !== undefined && (
-              <Notification
-                message={error.message}
-                severity="error"
-                onClose={handleErrorClose}
-              />
-            )}
             {isLoginComponent && (
               <LoginForm
                 onSubmit={handleLoginSubmit}

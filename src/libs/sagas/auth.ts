@@ -1,7 +1,12 @@
 import { takeLatest, all, put } from "redux-saga/effects";
 import { combineWatchers } from "./root";
 import { getBucketError } from "../firebase/index/bucket";
-import { startAction, stopAction, addRequestError } from "../redux/ducks/ui";
+import {
+  startAction,
+  stopAction,
+  addRequestError,
+  addRequestSuccessMessage,
+} from "../redux/ducks/ui";
 import { requestUpdateContactsWithUserId } from "../redux/ducks/contact";
 import {
   LOGIN_REQUESTED,
@@ -76,6 +81,12 @@ function* uploadProfile({ payload }: ReturnType<typeof requestProfileUpload>) {
     yield put(startAction(PROFILE_UPLOAD_REQUESTED));
     const photoUrl: string = yield uploadProfileApiRequest(payload);
     yield put(receiveProfileUploadSuccess(photoUrl));
+    yield put(
+      addRequestSuccessMessage({
+        action: PROFILE_UPLOAD_REQUESTED,
+        message: "Profile Updated Successfully",
+      })
+    );
   } catch (err) {
     const { code } = err as FirebaseError;
     const message = getBucketError(code);

@@ -51,3 +51,4 @@ export type UpdateContactData = {
   userId: string;
   contact: Contact;
 };
+export type UploadProfileData = { userId: string; file: File };

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { notification } from "antd";
 import {
   PROFILE_UPLOAD_REQUESTED,
+  addRequestError,
   useReduxHooks,
   requestProfileUpload,
 } from "../index/imports";
@@ -15,32 +15,33 @@ export default function useUserProfileLogic() {
   const [imageSrc, setImageSrc] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isUploadAvartar, setIsUploadAvartar] = useState(false);
-  const [showImagePreview, setShowImagePreview] = useState(false);
 
   const isUploadImageLoading = loadingActions.includes(
     PROFILE_UPLOAD_REQUESTED
   );
+  const showImagePreview = isUploadImageLoading || imageSrc !== "";
 
   const showUploadAvartar = () => setIsUploadAvartar(true);
   const removeUploadAvartar = () => setIsUploadAvartar(false);
-  const closeImagePreview = () => setShowImagePreview(false);
+  const closeImagePreview = () => setImageSrc("");
   const onImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
     const file = files[0];
     if (!ACCEPTED_FILES_TYPES.includes(file.type)) {
-      return notification.error({
-        message: "File Type Not Accepted",
-        onClose: () => console.log("ERROR_CLOSED"),
-      });
+      return dispatch(
+        addRequestError({
+          action: PROFILE_UPLOAD_REQUESTED,
+          message: "File Type Not Accepted",
+        })
+      );
     }
 
     const reader = new FileReader();
     reader.onload = (event) => {
       const result = event.target!.result as string;
       setImageSrc(result);
-      setShowImagePreview(true);
     };
     reader.readAsDataURL(file);
     setImageFile(file);
@@ -48,10 +49,9 @@ export default function useUserProfileLogic() {
   const onImageUpload = () => {
     if (imageFile === null) return;
 
-    dispatch(requestProfileUpload(imageFile));
+    dispatch(requestProfileUpload({ userId: user!.id, file: imageFile }));
 
     setImageSrc("");
-    setShowImagePreview(false);
   };
 
   return {

@@ -4,7 +4,10 @@ import classes from "./app.module.css";
 import Dashboard from "./features/dashboard/containers/Dashboard";
 import LoginRegisterBase from "./features/user/containers/login-register-base";
 import useReduxHooks from "./libs/redux/use-redux";
-import { removeRequestError } from "./libs/redux/ducks/ui";
+import {
+  removeRequestError,
+  removeRequestSuccessMessage,
+} from "./libs/redux/ducks/ui";
 
 export default function App() {
   const { dispatch, slices } = useReduxHooks();
@@ -23,7 +26,7 @@ export default function App() {
     successMessages.forEach(({ message, action }) => {
       notification.success({
         message,
-        onClose: () => dispatch(removeRequestError(action)),
+        onClose: () => dispatch(removeRequestSuccessMessage(action)),
       });
     });
 

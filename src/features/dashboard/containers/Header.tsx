@@ -25,7 +25,11 @@ export default function Header() {
         </Grid>
         <Grid item>
           <Grid container alignItems="center" justifyContent="center" gap={2}>
-            <Avatar src="" alt="PK" onClick={handleShowProfile} />
+            <Avatar
+              src={currentUser!.photoUrl}
+              alt="PK"
+              onClick={handleShowProfile}
+            />
             <p className={classes.name}>{currentUser!.fullname}</p>
             <KeyboardArrowDownIcon onClick={handleOpenMenu} />
           </Grid>

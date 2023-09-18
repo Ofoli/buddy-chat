@@ -41,6 +41,12 @@
     "constructor-super": ["off"],
     "for-direction": ["off"],
     "no-case-declarations": ["warn"],
-    "no-cond-assign": "off"
+    "no-cond-assign": "off",
+    "react/display-name": [
+      "off",
+      {
+        "ignoreTranspilerName": null
+      }
+    ]
   }
 }

@@ -8,6 +8,7 @@ import {
   serverTimestamp,
   setDoc,
   getDoc,
+  updateDoc,
   query,
   where,
 } from "firebase/firestore";
@@ -22,7 +23,12 @@ import {
   uploadFileToBucket,
   getFileUrlFromBucket,
 } from "../index/bucket";
-import type { User, LoginData, RegisterData } from "../../../types/user";
+import type {
+  User,
+  LoginData,
+  RegisterData,
+  UploadProfileData,
+} from "../../../types/user";
 
 export async function registerUserApiRequest(data: RegisterData) {
   const { fullname, email, password } = data;
@@ -82,7 +88,12 @@ export async function logoutUserApiRequest() {
   await signOut(auth);
 }
 
-export async function uploadProfileApiRequest(file: File) {
+export async function uploadProfileApiRequest(data: UploadProfileData) {
+  const { userId, file } = data;
   const filepath = await uploadFileToBucket(file, PROFILE_BUCKET);
-  return await getFileUrlFromBucket(filepath);
+  const photoUrl = await getFileUrlFromBucket(filepath);
+
+  const userRef = createDocRef(USER_COLLECTION, userId);
+  await updateDoc(userRef, { photoUrl });
+  return photoUrl;
 }
