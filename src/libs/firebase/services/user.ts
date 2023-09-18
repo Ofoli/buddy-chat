@@ -1,3 +1,4 @@
+import { auth } from "../index/config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,13 +11,17 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { auth } from "../index/config";
 import {
   createDocRef,
   USER_COLLECTION,
   fetchData,
   userCollection,
 } from "../index/db";
+import {
+  PROFILE_BUCKET,
+  uploadFileToBucket,
+  getFileUrlFromBucket,
+} from "../index/bucket";
 import type { User, LoginData, RegisterData } from "../../../types/user";
 
 export async function registerUserApiRequest(data: RegisterData) {
@@ -77,4 +82,8 @@ export async function logoutUserApiRequest() {
   await signOut(auth);
 }
 
-//sazUWm7QeEaDYXorASwXL05RJYF2
+export async function uploadProfileApiRequest(file: File) {
+  const result = await uploadFileToBucket(file, PROFILE_BUCKET);
+
+  return result;
+}
