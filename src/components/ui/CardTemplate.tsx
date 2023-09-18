@@ -1,11 +1,15 @@
 import { Avatar, Grid } from "@mui/material";
 import classes from "./ui.module.css";
 
+export interface ChatCardProps {
+  timestamp: string;
+  unreadChatCount: number;
+}
 interface CardProps {
   name: string;
   text: string;
   picUrl: string;
-  isChatCard?: boolean;
+  chatCardProps?: ChatCardProps;
   onClick?: () => void;
 }
 
@@ -13,7 +17,7 @@ export default function CardTemplate({
   name,
   text,
   picUrl,
-  isChatCard,
+  chatCardProps,
   onClick,
 }: CardProps) {
   return (
@@ -27,14 +31,18 @@ export default function CardTemplate({
             <div style={{ width: "100%" }}>
               <div className={classes.card_template__text_group_child}>
                 <p className={classes.card_template__text_name}>{name}</p>
-                {isChatCard && (
-                  <p className={classes.card_template__text_time}>11:22</p>
+                {chatCardProps && (
+                  <p className={classes.card_template__text_time}>
+                    {chatCardProps.timestamp}
+                  </p>
                 )}
               </div>
               <div className={classes.card_template__text_group_child}>
                 <p className={classes.card_template__text_message}>{text}</p>
-                {isChatCard && (
-                  <p className={classes.card_template__unread_chat_count}>3</p>
+                {!!chatCardProps?.unreadChatCount && (
+                  <p className={classes.card_template__unread_chat_count}>
+                    {chatCardProps.unreadChatCount}
+                  </p>
                 )}
               </div>
             </div>
