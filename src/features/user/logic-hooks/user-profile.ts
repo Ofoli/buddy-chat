@@ -4,6 +4,7 @@ import {
   addRequestError,
   useReduxHooks,
   requestProfileUpload,
+  requestFullnameUpdate,
 } from "../index/imports";
 
 const ACCEPTED_FILES_TYPES = ["image/jpeg", "image/png", "image/jpg"];
@@ -36,8 +37,7 @@ export default function useUserProfileLogic() {
     const shouldUpdateFullname = fullname !== "" && fullname !== user!.fullname;
 
     if (shouldUpdateFullname) {
-      //call update fullname api request
-      console.log({ SUBMIT: fullname });
+      dispatch(requestFullnameUpdate({ id: user!.id, fullname }));
     }
 
     return toggeleEditFullnameActive();
