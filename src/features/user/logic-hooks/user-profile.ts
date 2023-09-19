@@ -15,6 +15,8 @@ export default function useUserProfileLogic() {
   const [imageSrc, setImageSrc] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isUploadAvartar, setIsUploadAvartar] = useState(false);
+  const [fullname, setFullname] = useState(user!.fullname);
+  const [isEditFullnameActive, setIsEditFullnameActive] = useState(false);
 
   const isUploadImageLoading = loadingActions.includes(
     PROFILE_UPLOAD_REQUESTED
@@ -24,8 +26,24 @@ export default function useUserProfileLogic() {
   const showUploadAvartar = () => setIsUploadAvartar(true);
   const removeUploadAvartar = () => setIsUploadAvartar(false);
   const closeImagePreview = () => setImageSrc("");
-  const onImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
+  const toggeleEditFullnameActive = () =>
+    setIsEditFullnameActive((prev) => !prev);
+  const onFullnameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.value;
+    return setFullname(name);
+  };
+  const onUpdatedFullnameSubmit = () => {
+    const shouldUpdateFullname = fullname !== "" && fullname !== user!.fullname;
+
+    if (shouldUpdateFullname) {
+      //call update fullname api request
+      console.log({ SUBMIT: fullname });
+    }
+
+    return toggeleEditFullnameActive();
+  };
+  const onImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
     if (!files || files.length === 0) return;
 
     const file = files[0];
@@ -61,6 +79,8 @@ export default function useUserProfileLogic() {
       showImagePreview,
       imageSrc,
       isUploadImageLoading,
+      fullname,
+      isEditFullnameActive,
     },
     handlers: {
       showUploadAvartar,
@@ -68,6 +88,9 @@ export default function useUserProfileLogic() {
       onImageSelect,
       onImageUpload,
       closeImagePreview,
+      toggeleEditFullnameActive,
+      onFullnameChange,
+      onUpdatedFullnameSubmit,
     },
   };
 }
