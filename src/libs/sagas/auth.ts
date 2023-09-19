@@ -13,6 +13,7 @@ import {
   LOGOUT_REQUESTED,
   REGISTER_REQUESTED,
   PROFILE_UPLOAD_REQUESTED,
+  FULLNAME_UPDATE_REQUESTED,
   logoutSuccessful,
   loginRequested,
   loginSuccessful,
@@ -20,12 +21,15 @@ import {
   registerSuccessful,
   requestProfileUpload,
   receiveProfileUploadSuccess,
+  requestFullnameUpdate,
+  receiveFullnameUpdateSuccess,
 } from "../redux/ducks/auth";
 import {
   registerUserApiRequest,
   loginUserApiRequest,
   logoutUserApiRequest,
   uploadProfileApiRequest,
+  updateUserFullnameApiRequest,
 } from "../firebase/services/user";
 import type { User } from "../../types/user";
 import type { FirebaseError } from "firebase/app";
@@ -101,6 +105,32 @@ function* uploadProfile({ payload }: ReturnType<typeof requestProfileUpload>) {
   }
 }
 
+function* updateUserFullname({
+  payload,
+}: ReturnType<typeof requestFullnameUpdate>) {
+  try {
+    yield put(startAction(FULLNAME_UPDATE_REQUESTED));
+    const fullname: string = yield updateUserFullnameApiRequest(payload);
+    yield put(receiveFullnameUpdateSuccess(fullname));
+    yield put(
+      addRequestSuccessMessage({
+        action: FULLNAME_UPDATE_REQUESTED,
+        message: "Fullname Updated Successfully",
+      })
+    );
+  } catch (err) {
+    const { message } = err as FirebaseError;
+    yield put(
+      addRequestError({
+        action: FULLNAME_UPDATE_REQUESTED,
+        message,
+      })
+    );
+  } finally {
+    yield put(stopAction(FULLNAME_UPDATE_REQUESTED));
+  }
+}
+
 //====================
 //---WATCHERS---------
 //====================
@@ -117,6 +147,9 @@ function* watchLogoutRequest() {
 function* watchProfileUploadRequest() {
   yield takeLatest(PROFILE_UPLOAD_REQUESTED, uploadProfile);
 }
+function* watchUpdateFullnameRequest() {
+  yield takeLatest(FULLNAME_UPDATE_REQUESTED, updateUserFullname);
+}
 
 function* authSaga() {
   const sagas = combineWatchers([
@@ -124,6 +157,7 @@ function* authSaga() {
     watchRegiserRequest,
     watchLogoutRequest,
     watchProfileUploadRequest,
+    watchUpdateFullnameRequest,
   ]);
   yield all(sagas);
 }

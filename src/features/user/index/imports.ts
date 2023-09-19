@@ -12,6 +12,7 @@ import {
   loginRequested,
   registerRequested,
   requestProfileUpload,
+  requestFullnameUpdate,
   LOGIN_REQUESTED,
   REGISTER_REQUESTED,
   PROFILE_UPLOAD_REQUESTED,
@@ -43,4 +44,5 @@ export {
   addRequestError,
   removeRequestError,
   requestProfileUpload,
+  requestFullnameUpdate,
 };

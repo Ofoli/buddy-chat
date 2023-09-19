@@ -13,7 +13,8 @@
 
 # In-Progress
 
--> Profile picture upload
 -> Fullname edit
 
 # Completed
+
+-> Profile picture upload

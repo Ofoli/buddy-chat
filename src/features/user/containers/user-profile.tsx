@@ -3,6 +3,7 @@ import classes from "../styles/user-profile.module.css";
 import { CustomModal } from "../index/imports";
 import UserInfoGroup from "../components/UserInfoGroup";
 import UserProfileUpload from "../components/profile-upload";
+import UpdateFullnameForm from "../components/update-fullname";
 import svg from "../../../data/images/360_F_218218632_jF6XAkcrlBjv1mAg9Ow0UBMLBaJrhygH.jpg";
 import useUserProfileLogic from "../logic-hooks/user-profile";
 
@@ -14,6 +15,8 @@ export default function UserProfile() {
     isUploadAvartar,
     showImagePreview,
     isUploadImageLoading,
+    fullname,
+    isEditFullnameActive,
   } = state;
   const {
     showUploadAvartar,
@@ -21,6 +24,9 @@ export default function UserProfile() {
     closeImagePreview,
     removeUploadAvartar,
     onImageUpload,
+    toggeleEditFullnameActive,
+    onFullnameChange,
+    onUpdatedFullnameSubmit,
   } = handlers;
 
   return (
@@ -41,11 +47,19 @@ export default function UserProfile() {
           />
         </label>
       </Grid>
-      <UserInfoGroup
-        label="Fullname"
-        name={user!.fullname}
-        onEdit={() => console.log("Editing")}
-      />
+      {isEditFullnameActive ? (
+        <UpdateFullnameForm
+          value={fullname}
+          onChange={onFullnameChange}
+          onSubmit={onUpdatedFullnameSubmit}
+        />
+      ) : (
+        <UserInfoGroup
+          label="Fullname"
+          name={user!.fullname}
+          onEdit={toggeleEditFullnameActive}
+        />
+      )}
       <UserInfoGroup label="Email" name={user!.email} />
       <CustomModal
         title="Upload Profile"

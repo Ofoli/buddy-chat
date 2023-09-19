@@ -52,3 +52,4 @@ export type UpdateContactData = {
   contact: Contact;
 };
 export type UploadProfileData = { userId: string; file: File };
+export type UpdateFullnameData = Pick<User, "id" | "fullname">;
