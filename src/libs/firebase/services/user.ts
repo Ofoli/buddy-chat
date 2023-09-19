@@ -28,6 +28,7 @@ import type {
   LoginData,
   RegisterData,
   UploadProfileData,
+  UpdateFullnameData,
 } from "../../../types/user";
 
 export async function registerUserApiRequest(data: RegisterData) {
@@ -96,4 +97,11 @@ export async function uploadProfileApiRequest(data: UploadProfileData) {
   const userRef = createDocRef(USER_COLLECTION, userId);
   await updateDoc(userRef, { photoUrl });
   return photoUrl;
+}
+export async function updateUserFullnameApiRequest(data: UpdateFullnameData) {
+  const { id, fullname } = data;
+  const userRef = createDocRef(USER_COLLECTION, id);
+
+  await updateDoc(userRef, { fullname });
+  return fullname;
 }
